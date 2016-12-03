@@ -23,7 +23,7 @@ public class EmployeeDAOImpl {
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
-	public List<Employee> getList() {      // 列出進貨單明細
+	public List<Employee> getList() {
 		String sql = "SELECT * FROM Employee";
 		return getList(sql);
 	}

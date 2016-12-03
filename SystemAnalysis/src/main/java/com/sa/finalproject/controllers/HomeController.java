@@ -12,17 +12,15 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HomeController {
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView login() {
-		ModelAndView model = new ModelAndView("home");
-		
-		Date today = new Date();
-		model.addObject("serverTime", today.toString());
-		
-		
-		
-		return model;
-	}
+//	@RequestMapping(value = "/", method = RequestMethod.GET)
+//	public ModelAndView login() {
+//		ModelAndView model = new ModelAndView("home");
+//		
+//		Date today = new Date();
+//		model.addObject("serverTime", today.toString());
+//		
+//		return model;
+//	}
 	
 //	@RequestMapping(value = "/loginSuccessful", method = RequestMethod.GET)
 //	public ModelAndView init() {

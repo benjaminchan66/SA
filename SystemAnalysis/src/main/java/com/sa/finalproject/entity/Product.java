@@ -20,6 +20,10 @@ public class Product {
 		this(0, productName, price, 0, true, supplierID);
 	}
 	
+	public Product(String productName, int price, boolean isInTheMarket, long supplierID) {
+		this(0, productName, price, 0, isInTheMarket, supplierID);
+	}
+	
 	public Product(long productID, String productName, int price, int inventory, boolean isInTheMarket, long supplierID) {
 		super();
 		this.productID = productID;

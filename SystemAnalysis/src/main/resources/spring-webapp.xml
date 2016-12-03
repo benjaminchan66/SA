@@ -16,11 +16,19 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
-	<bean id="purchaseRequisition" class="com.sa.finalproject.DAO.impl.PurchasingRequisitionDAOImpl">
+	<bean id="purchaseRequisitionDAO" class="com.sa.finalproject.DAO.impl.PurchasingRequisitionDAOImpl">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
-	<bean id="BillOfPurchase" class="com.sa.finalproject.DAO.impl.BillOfPurchaseDAOImpl">
+	<bean id="BillOfPurchaseDAO" class="com.sa.finalproject.DAO.impl.BillOfPurchaseDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="RemarkDAO" class="com.sa.finalproject.DAO.impl.RemarkDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="EmployeeDAO" class="com.sa.finalproject.DAO.impl.EmployeeDAOImpl">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
  	
