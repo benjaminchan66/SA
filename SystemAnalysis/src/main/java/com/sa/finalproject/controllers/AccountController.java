@@ -31,6 +31,7 @@ public class AccountController {
 		return model;
 	}
 	
+	// for test
 	@RequestMapping(value = "/Login2", method = RequestMethod.GET)
 	public ModelAndView login2(){
 		// show the page that let user scan their id card
