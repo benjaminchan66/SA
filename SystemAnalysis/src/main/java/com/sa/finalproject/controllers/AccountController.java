@@ -16,7 +16,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.sa.finalproject.DAO.EmployeeDAO;
-
+import com.sa.finalproject.DAO.impl.EmployeeDAOImpl;
 import com.sa.finalproject.entity.Employee;
 
 @Controller
@@ -31,21 +31,38 @@ public class AccountController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/Dashboard", method = RequestMethod.GET)
-	public ModelAndView dashboard(@ModelAttribute("userID") long employeeID){
-		// check the identity
-		ModelAndView model = new ModelAndView("Dashboard");
-		EmployeeDAO staffDAO = (EmployeeDAO)context.getBean("EmployeeDAO");
-		List<Employee> staffList = new ArrayList<Employee>();
-		staffList = staffDAO.getList();
+	@RequestMapping(value = "/Login2", method = RequestMethod.GET)
+	public ModelAndView login2(){
+		// show the page that let user scan their id card
+		ModelAndView model = new ModelAndView("login");
+		return model;
+	}
+	
+	@RequestMapping(value = "/", method = RequestMethod.POST)
+	public ModelAndView checkLogin(@ModelAttribute("userID") String employeeID){
+		// show the page that let user scan their id card
+		ModelAndView model = new ModelAndView("redirect:/productList");
+		EmployeeDAOImpl staffDAO = (EmployeeDAOImpl) context.getBean("EmployeeDAO");
+		List<Employee> staffList = staffDAO.getList();
+		
+		System.out.println("The employee ID is " + employeeID + ".");
+		System.out.println("");
 		
 		for(int i = 0; i < staffList.size(); i++) {
 			Employee currentStaff = staffList.get(i);
-			if(currentStaff.getId() == String.valueOf(employeeID)) {
-				// let user log into the system
+			if(currentStaff.getId().equals(employeeID)) {
+				System.out.println("Current staff ID is " + currentStaff.getId() + ".");
+				model = new ModelAndView("redirect:/Dashboard");
 				break;
 			}
 		}
+		return model;
+	}
+	
+	@RequestMapping(value = "/Dashboard", method = RequestMethod.GET)
+	public ModelAndView dashboard(){
+		// check the identity
+		ModelAndView model = new ModelAndView("Dashboard");
 		
 		
 		return model;

@@ -14,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sa.finalproject.DAO.BillOfPurchaseDAO;
 import com.sa.finalproject.entity.BillOfPurchase;
+import com.sa.finalproject.entity.PurchaseOrder;
 import com.sa.finalproject.entity.PurchasingRequisition;
 import com.sa.finalproject.entity.Remark;
+import com.sa.finalproject.entity.supportingClass.PurchasedProduct;
 
 public class BillOfPurchaseDAOImpl implements BillOfPurchaseDAO {
 	private DataSource dataSource ;
@@ -56,15 +58,29 @@ public class BillOfPurchaseDAOImpl implements BillOfPurchaseDAO {
 	}
 	
 	public void transferIntoBOP(PurchasingRequisition aPurchaseingRequisition) { 
-		   String sql = "INSERT INTO BillOfPurchase (BOP_serial, employee_id, time, has_arrived, total_amount, accountant_id"
-		   		+ "has_paid, passed VALUES(?,null,now(),false,0,?)";	
-			try {
+		   String sql = "INSERT INTO BillOfPurchase (BOP_serial, employee_id, time, has_arrived, total_amount, accountant_id, has_paid, passed) VALUES(?,null,now(),false,?, null, false,false)";	
+		   String sql2 = "INSERT INTO Product_connect_BOP(product_id, BOP_serial, price, quantity) VALUES(?, ?, ?, ?)";
+		   try {
 				conn = dataSource.getConnection();
 				smt = conn.prepareStatement(sql);
 				smt.setLong(1, aPurchaseingRequisition.getPrSerial());
 				smt.setInt(2, aPurchaseingRequisition.getRequisitionContent().getListPrice());
-				smt.executeUpdate();			
+				smt.executeUpdate();		
 				smt.close();
+				
+				// second SQL command
+				PurchaseOrder orderContent = aPurchaseingRequisition.getRequisitionContent();
+				for(int i = 0; i < orderContent.getList().size(); i++) {
+					PurchasedProduct currentItem = orderContent.getList().get(i);
+					smt = conn.prepareStatement(sql2);
+					smt.setLong(1, currentItem.getProductID());
+					smt.setLong(2, aPurchaseingRequisition.getPrSerial());
+					smt.setInt(3, currentItem.getProductPrice());
+					smt.setInt(4, currentItem.getPurchasingAmount());
+					smt.executeUpdate();
+					smt.close();
+				}
+				
 
 			} catch (SQLException e) {
 				throw new RuntimeException(e);
@@ -102,6 +118,25 @@ public class BillOfPurchaseDAOImpl implements BillOfPurchaseDAO {
 			}
 			rs.close();
 			smt.close();
+			
+			String sql2 = "SELECT * FROM Product_connect_BOP WHERE BOP_serial = ?";
+			for(int i = 0; i < billOfPurchaseList.size(); i++) {
+				BillOfPurchase currentBill = billOfPurchaseList.get(i);
+				smt = conn.prepareStatement(sql2);
+				smt.setLong(1, currentBill.getBopSerial());
+				rs = smt.executeQuery();
+				
+				while(rs.next()) {
+					// the product name hasn't been set into the object.
+					PurchasedProduct aProduct = new PurchasedProduct();
+					aProduct.setProductID(rs.getLong("product_id"));
+					aProduct.setProductPrice(rs.getInt("price"));
+					aProduct.setPurchasingAmount(rs.getInt("quantity"));
+					currentBill.getBopContent().add(aProduct);
+				}
+				rs.close();
+				smt.close();
+			}
  
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -129,7 +164,7 @@ public class BillOfPurchaseDAOImpl implements BillOfPurchaseDAO {
 			rs = smt.executeQuery();
 			while(rs.next()){
 				BillOfPurchase aBillOfPurchase = new BillOfPurchase(0, 0, null, false, 0, 0, false, false);
-				aBillOfPurchase.setBopSerial(rs.getInt("BOP_serial"));			
+				aBillOfPurchase.setBopSerial(rs.getLong("BOP_serial"));			
 				aBillOfPurchase.setEmployeeID(rs.getLong("employee_id"));
 				aBillOfPurchase.setDateTime(rs.getDate("time"));
 				aBillOfPurchase.setHasArrived(rs.getBoolean("has_arrived"));
@@ -187,7 +222,7 @@ public class BillOfPurchaseDAOImpl implements BillOfPurchaseDAO {
 		rs = smt.executeQuery();
 		while(rs.next()){
 			Remark aremark = new Remark(0, "", 0);
-			aremark.setBopSerial(rs.getInt("BopSerial"));			
+			aremark.setBopSerial(rs.getLong("BopSerial"));			
 			aremark.setRemark(rs.getString("remark"));
 			aremark.setRemarkIndex(rs.getInt("remark_times"));
 			aremark.setRemarkDate(rs.getDate("remark_time"));

@@ -14,20 +14,34 @@ public class WarehouseWarrant {
 	private long wwSerial = 0;
 	// employeeID means warehouse staff's ID
 	private long employeeID = 0;
-	// bopEmployeeID means inspector's ID
-	private long bopEmployeeID = 0;
 	private Date date = new Date();
 	private long supplierID = 0;
 	
+	//入庫單內容物
+	private PurchaseOrder wwContent = null;
 	
-	public WarehouseWarrant(long wwSerial, long employeeID, long bopEmployeeID, Date date, long supplierID) {
+	public WarehouseWarrant() {
+		
+	}
+	
+	public WarehouseWarrant(long wwSerial, long employeeID, Date date, long supplierID) {
 		super();
 		this.wwSerial = wwSerial;
 		this.employeeID = employeeID;
-		this.bopEmployeeID = bopEmployeeID;
 		this.date = date;
 		this.supplierID = supplierID;
 	}
+	
+	
+	public WarehouseWarrant(long wwSerial, long employeeID, Date date, long supplierID, PurchaseOrder wwContent) {
+		super();
+		this.wwSerial = wwSerial;
+		this.employeeID = employeeID;
+		this.date = date;
+		this.supplierID = supplierID;
+		this.wwContent = wwContent;
+	}
+
 	public long getWwSerial() {
 		return wwSerial;
 	}
@@ -40,12 +54,6 @@ public class WarehouseWarrant {
 	public void setEmployeeID(long employeeID) {
 		this.employeeID = employeeID;
 	}
-	public long getBopEmployeeID() {
-		return bopEmployeeID;
-	}
-	public void setBopEmployeeID(long bopEmployeeID) {
-		this.bopEmployeeID = bopEmployeeID;
-	}
 	public Date getDate() {
 		return date;
 	}
@@ -57,6 +65,12 @@ public class WarehouseWarrant {
 	}
 	public void setSupplierID(long supplierID) {
 		this.supplierID = supplierID;
+	}
+	public PurchaseOrder getWwContent() {
+		return wwContent;
+	}
+	public void setWwContent(PurchaseOrder wwContent) {
+		this.wwContent = wwContent;
 	}
 	
 	

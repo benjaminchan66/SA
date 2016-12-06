@@ -8,6 +8,7 @@ public class BillOfPurchase {
 	// employeeID 表示驗貨人員
 	private long employeeID = 0;
 	private Date dateTime = new Date();
+	private long supplierID = 0;
 	/* Delivery status means whether the goods have arrived, 
 	 in this class we used hasArrived instead of delivery status */
 	private boolean hasArrived = false;
@@ -19,9 +20,13 @@ public class BillOfPurchase {
 	// remarks
 	private String remarks = "";
 	
+	// bill of purchase content
+	private PurchaseOrder bopContent = null;
 	
-	public BillOfPurchase(long bopSerial, long employeeID, Date dateTime, boolean hasArrived, int totalAmount
-			, long accountantId, boolean hasPaid, boolean passed) {
+	public BillOfPurchase() {
+	}
+	
+	public BillOfPurchase(long bopSerial, long employeeID, Date dateTime, boolean hasArrived, int totalAmount, long accountantId, boolean hasPaid, boolean passed) {
 		super();
 		this.bopSerial = bopSerial;
 		this.employeeID = employeeID;
@@ -110,6 +115,22 @@ public class BillOfPurchase {
 
 	public String getRemarks() {
 		return remarks;
+	}
+
+	public PurchaseOrder getBopContent() {
+		return bopContent;
+	}
+
+	public void setBopContent(PurchaseOrder bopContent) {
+		this.bopContent = bopContent;
+	}
+
+	public long getSupplierID() {
+		return supplierID;
+	}
+
+	public void setSupplierID(long supplierID) {
+		this.supplierID = supplierID;
 	}
 	
 }

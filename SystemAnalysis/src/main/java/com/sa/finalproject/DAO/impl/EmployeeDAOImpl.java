@@ -40,9 +40,10 @@ public class EmployeeDAOImpl {
 					employee.setId(rs.getString("employee_id"));			
 					employee.setName(rs.getString("employee_name"));
 					employee.setPhone(rs.getString("employee_phone"));
-					employee.setAddress(rs.getString("employeee_address"));
+					employee.setAddress(rs.getString("employee_address"));
 					employee.setLevel(rs.getString("employee_level"));
 					employee.setDep(rs.getString("employee_dep"));
+					Employee.add(employee);
 
 				}
 				rs.close();

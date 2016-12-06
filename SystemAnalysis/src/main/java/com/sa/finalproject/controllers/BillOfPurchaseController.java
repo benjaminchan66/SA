@@ -25,20 +25,20 @@ public class BillOfPurchaseController {
 	ApplicationContext context =  new ClassPathXmlApplicationContext("spring-module.xml");
 	
 	
-	@RequestMapping(value = "/billofpurchase", method = RequestMethod.GET) //顯示所有進貨單
-	public ModelAndView getProductList(){
-		ModelAndView model = new ModelAndView("billofpurchase");
-		BillOfPurchaseDAO billOfPurchaseDAO = (BillOfPurchaseDAO)context.getBean("BillOfPurchaseDAO");
-	    ArrayList<BillOfPurchase> billOfPurchaseList = new ArrayList<BillOfPurchase>();
-		billOfPurchaseList = billOfPurchaseDAO.getList();
-		model.addObject("billofpurchaselist", billOfPurchaseList);
+	@RequestMapping(value = "/bopList", method = RequestMethod.GET) //顯示所有進貨單
+	public ModelAndView getBOPList(){
+		ModelAndView model = new ModelAndView("Order");
+//		BillOfPurchaseDAO billOfPurchaseDAO = (BillOfPurchaseDAO)context.getBean("BillOfPurchaseDAO");
+//	    ArrayList<BillOfPurchase> billOfPurchaseList = new ArrayList<BillOfPurchase>();
+//		billOfPurchaseList = billOfPurchaseDAO.getList();
+//		model.addObject("billofpurchaselist", billOfPurchaseList);
 		
 		return model;
 	}
 	
-	@RequestMapping(value = "/billofpurchase", method = RequestMethod.POST) // 驗貨
+	@RequestMapping(value = "/bopList", method = RequestMethod.POST) // 驗貨
 	public ModelAndView examineGoods(long aBopSerial,boolean passed){
-		ModelAndView model = new ModelAndView("billofpurchase");
+		ModelAndView model = new ModelAndView("redirect:/bopList");
 		BillOfPurchaseDAO examieGoods = (BillOfPurchaseDAO)context.getBean("BillOfPurchaseDAO");
 		examieGoods.examineGoods(aBopSerial,passed);
 		return model;
@@ -53,13 +53,13 @@ public class BillOfPurchaseController {
 //	}
 	
 	
-	@RequestMapping(value = "/unpaidList", method = RequestMethod.GET) //顯示到貨且未付款商品
+	@RequestMapping(value = "/unpaidList", method = RequestMethod.GET) //顯示到貨且未付款訂單
 	public ModelAndView showUnpaidProductList(){
-		ModelAndView model = new ModelAndView("billofpurchase");
-		BillOfPurchaseDAO billOfPurchaseDAO = (BillOfPurchaseDAO)context.getBean("BillOfPurchaseDAO");
-		List<BillOfPurchase> billOfPurchaseList = new ArrayList<BillOfPurchase>();
-		billOfPurchaseList = billOfPurchaseDAO.showUnpaidProduct();
-		model.addObject("showUnpaidProductlist", billOfPurchaseList);
+		ModelAndView model = new ModelAndView("Order");
+//		BillOfPurchaseDAO billOfPurchaseDAO = (BillOfPurchaseDAO)context.getBean("BillOfPurchaseDAO");
+//		List<BillOfPurchase> billOfPurchaseList = new ArrayList<BillOfPurchase>();
+//		billOfPurchaseList = billOfPurchaseDAO.showUnpaidProduct();
+//		model.addObject("showUnpaidProductlist", billOfPurchaseList);
 		
 		return model;
 	}
@@ -115,7 +115,7 @@ public class BillOfPurchaseController {
 		return model;
 	}
 
-	@RequestMapping(value = "/", method = RequestMethod.POST)
+	@RequestMapping(value = "/123", method = RequestMethod.POST)
 	public ModelAndView deleteProduct(@ModelAttribute long bop_serial, Remark remark){
 		ModelAndView model = new ModelAndView("redirect:/billofpurchase");
 		RemarkDAO remarkDelete = (RemarkDAO) context.getBean("RemarkDAO");

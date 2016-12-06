@@ -13,8 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.sa.finalproject.entity.Product;
+import com.sa.finalproject.entity.Supplier;
 import com.sa.finalproject.DAO.ProductDAO;
 //import com.sa.finalproject.DAO.impl.ProductDAOImpl;
+import com.sa.finalproject.DAO.impl.SupplierDAOImpl;
 
 // tell the spring this is a controller(auto scan)
 @Controller
@@ -30,8 +32,14 @@ public class ProductController {
 		ProductDAO productDAO = (ProductDAO) context.getBean("productDAO");
 		ArrayList<Product> productList = new ArrayList<Product>();
 		productList = productDAO.getAvailableList();
+		model.addObject("productList", productList);
 		
 //		List<Product> productList = new ArrayList<Product>();
+//		SupplierDAOImpl supplierDAO = (SupplierDAOImpl) context.getBean("supplierDAO");
+//		for(int i = 0; i < productList.size(); i++) {
+//			long supplierID = productList.get(i).getSupplierID();
+//			Supplier supplier = supplierDAO.get(supplierID);
+//		}
 		
 		return model;
 	}
@@ -43,11 +51,7 @@ public class ProductController {
 		ProductDAO productDAO = (ProductDAO)context.getBean("productDAO");
 		Product preparedProduct = new Product(name, price, supCode);
 		long newProductCode = productDAO.insert(preparedProduct);
-		System.out.println("The ID of the product is : " + newProductCode);
-//		model.addObject("productCode", newProductCode);
-//		model.addObject("productName", name);
-//		model.addObject("productPrice" , price);
-//		model.addObject("supplierCode", supCode);
+		System.out.println("The ID of the product is : " + newProductCode + ".");
 		
 		return model;
 	}

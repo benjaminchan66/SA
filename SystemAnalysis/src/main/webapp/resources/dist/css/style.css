@@ -1,0 +1,12 @@
+
+
+.fixed {
+	/*position: fixed;*/
+}
+
+.hideOverflow {
+	white-space: nowrap; 
+	width: 250px; 
+	overflow: hidden; 
+	text-overflow: ellipsis;
+}
