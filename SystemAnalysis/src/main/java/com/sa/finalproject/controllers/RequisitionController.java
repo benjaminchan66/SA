@@ -22,7 +22,7 @@ public class RequisitionController {
 	@RequestMapping(value = "/insertRequisition", method = RequestMethod.GET)
 	public ModelAndView checkRequisition(){
 		// 開立請購單
-		ModelAndView model = new ModelAndView("OpenRequisition");
+		ModelAndView model = new ModelAndView("insertRequisition");
 		
 		return model;
 	}

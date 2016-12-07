@@ -116,7 +116,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h4 class="modal-title" id="myModalLabel">新增商品</h4>
                         </div>
-                        <form role="form" action="productList">
+                        <form role="form" action="newProduct" method="GET">
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>商品名稱</label>
@@ -130,7 +130,7 @@
                                     <label>選擇廠商</label>
                                     <select class="form-control" name="productSupplier">
                                         <c:forEach items="${supplierList}" var="supplier">
-                                            <option value="supplierList.id">supplierList.name</option>
+                                            <option value=${supplier.getSupplierID()}>${supplier.getSupplierName()}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
