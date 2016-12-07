@@ -77,18 +77,18 @@
                                         <h4 class="modal-title" id="myModalLabel">新增廠商</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <form role="form">
+                                        <form role="form" action="supplierList" method="post">
                                             <div class="form-group">
                                                 <label>廠商名稱</label>
-                                                <input class="form-control" placeholder="輸入廠商名稱">
+                                                <input class="form-control" placeholder="輸入廠商名稱" name="supplierName">
                                             </div>
                                             <div class="form-group">
                                                 <label>聯絡電話</label>
-                                                <input class="form-control" placeholder="輸入聯絡電話">
+                                                <input class="form-control" placeholder="輸入聯絡電話" name="supplierPhone">
                                             </div>
                                             <div class="form-group">
                                                 <label>廠商地址</label>
-                                                <input class="form-control" placeholder="輸入廠商地址">
+                                                <input class="form-control" placeholder="輸入廠商地址" name="supplierAddress">
                                             </div>
                                         </form>
                                     </div>
@@ -115,127 +115,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="odd gradeA">
-                                        <td>001</td>
-                                        <td><p>Apple</p></td>
-                                        <td>02 8772 3353</td>
-                                        <td>105台北市松山區復興南路一段39號</td>
-                                        <td>A</td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger">降級</button>
-                                            <button type="button" class="btn btn-warning">修改</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>002</td>
-                                        <td><p>ADATA</p></td>
-                                        <td>02 8780 1000</td>
-                                        <td class="center">236新北市土城區金城路三段244號</td>
-                                        <td>B</td>
-                                        <td>
-                                            <button type="button" class="btn btn-info">升級</button>
-                                            <button type="button" class="btn btn-warning">修改</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>003</td>
-                                        <td><p>ONPRO</p></td>
-                                        <td>02 7729 1310</td>
-                                        <td class="center">238樹林區保安二街5號</td>
-                                        <td>A</td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger">降級</button>
-                                            <button type="button" class="btn btn-warning">修改</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>004</td>
-                                        <td><p>HTC</td>
-                                        <td>02 2723 1757</td></td>
-                                        <td class="center">408台中市南屯區文心南三路230巷17號</td>
-                                        <td>A</td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger">降級</button>
-                                            <button type="button" class="btn btn-warning">修改</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>005</td>
-                                        <td><p>SONY</p></td>
-                                        <td>02 8780 5566</td>
-                                        <td class="center">408台中市南屯區大業路188號</td>
-                                        <td>A</td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger">降級</button>
-                                            <button type="button" class="btn btn-warning">修改</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>006</td>
-                                        <td><p>FLIR</p></td>
-                                        <td>02 8780 8111</td>
-                                        <td class="center">701台南市東區勝利路20-11號</td>
-                                        <td>A</td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger">降級</button>
-                                            <button type="button" class="btn btn-warning">修改</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>007</td>
-                                        <td><p>GoPro</p></td>
-                                        <td>02 8789 3388</td>
-                                        <td class="center">709台南市安南區頂安街379巷1號</td>
-                                        <td>A</td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger">降級</button>
-                                            <button type="button" class="btn btn-warning">修改</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>008</td>
-                                        <td><p>Twelve South</p></td>
-                                        <td>02 8789 5911</td>
-                                        <td class="center">Google</td>
-                                        <td>A</td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger">降級</button>
-                                            <button type="button" class="btn btn-warning">修改</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>009</td>
-                                        <td><p>Google</td>
-                                        <td>02 8729 6000</td></td>
-                                        <td class="center">110台北市信義區信義路五段7號台北101大樓</td>
-                                        <td>A</td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger">降級</button>
-                                            <button type="button" class="btn btn-warning">修改</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>010</td>
-                                        <td><p>統亞電子科技股份有限公司</p></td>
-                                        <td>02 2758 8008</td>
-                                        <td class="center">702安南區頂安街406號</td>
-                                        <td>A</td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger">降級</button>
-                                            <button type="button" class="btn btn-warning">修改</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>011</td>
-                                        <td><p>TTTTTT</td>
-                                        <td>02 2753 5968</td></td>
-                                        <td class="center">702安南區海佃路二段531號</td>
-                                        <td>A</td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger">降級</button>
-                                            <button type="button" class="btn btn-warning">修改</button>
-                                        </td>
-                                    </tr>
+                                    <c:forEach items="${supplierList}" var="supplier">
+                                        <tr class="odd gradeA">
+                                            <td>${supplier.getSupplierID()}</td>
+                                            <td><p>${supplier.getSupplierName()}</p></td>
+                                            <td>${supplier.getPhone()}</td>
+                                            <td>${supplier.getAddress()}</td>
+                                            <td>${supplier.getLevel()}</td>
+                                            <td>
+                                                <a class="btn btn-warning" href="updateProduct?id=${supplier.getSupplierID()}">修改</a>
+                                            </td>
+                                        </tr>
+
                                 </tbody>
                             </table>
                             <!-- /.table-responsive -->

@@ -61,11 +61,14 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <div class="col-lg-2">
-                                <h4>所有商品</h4>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <h4>所有商品</h4>
+                                </div>
+                                <div class="col-lg-2 col-lg-offset-6">
+                                    <button class="btn btn-default" data-toggle="modal" data-target="#myModal">新增商品</button>
+                                </div>
                             </div>
-                            <div class="col-lg-8"></div>
-                            <button class="btn btn-default" data-toggle="modal" data-target="#myModal" style="margin-left: 70px">新增商品</button>
                         </div>
                         
                         <div class="panel-body">
