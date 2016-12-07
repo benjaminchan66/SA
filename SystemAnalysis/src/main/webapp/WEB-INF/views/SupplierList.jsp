@@ -72,30 +72,30 @@
                         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title" id="myModalLabel">新增廠商</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form role="form" action="supplierList" method="post">
-                                            <div class="form-group">
-                                                <label>廠商名稱</label>
-                                                <input class="form-control" placeholder="輸入廠商名稱" name="supplierName">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>聯絡電話</label>
-                                                <input class="form-control" placeholder="輸入聯絡電話" name="supplierPhone">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>廠商地址</label>
-                                                <input class="form-control" placeholder="輸入廠商地址" name="supplierAddress">
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
-                                        <button type="submit" class="btn btn-primary">Save</button>
-                                    </div>
+                                    <form role="form" action="newSupplier" method="POST">
+	                                    <div class="modal-header">
+	                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                                        <h4 class="modal-title" id="myModalLabel">新增廠商</h4>
+	                                    </div>
+	                                    <div class="modal-body">
+	                                    	<div class="form-group">
+	                                           	<label>廠商名稱</label>
+	                                            <input class="form-control" placeholder="輸入廠商名稱" name="supplierName">
+	                                        </div>
+	                                        <div class="form-group">
+	                                            <label>聯絡電話</label>
+	                                            <input class="form-control" placeholder="輸入聯絡電話" name="supplierPhone">
+	                                        </div>
+	                                        <div class="form-group">
+	                                            <label>廠商地址</label>
+	                                            <input class="form-control" placeholder="輸入廠商地址" name="supplierAddress">
+	                                        </div>
+	                                    </div>
+	                                    <div class="modal-footer">
+	                                        <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+	                                        <button type="submit" class="btn btn-primary">Save</button>
+	                                    </div>
+                                    </form>
                                 </div>
                                 <!-- /.modal-content -->
                             </div>
@@ -126,7 +126,7 @@
                                                 <a class="btn btn-warning" href="updateProduct?id=${supplier.getSupplierID()}">修改</a>
                                             </td>
                                         </tr>
-
+									</c:forEach>
                                 </tbody>
                             </table>
                             <!-- /.table-responsive -->

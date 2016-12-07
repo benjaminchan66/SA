@@ -18,13 +18,32 @@ public class SupplierController {
 	ApplicationContext context = new ClassPathXmlApplicationContext("spring-module.xml");
 	
 	
-	@RequestMapping(value = "/supplierList", method = RequestMethod.GET)
+	@RequestMapping(value = "/SupplierList", method = RequestMethod.GET)
 	public ModelAndView listSupplier(){
 		// 開立請購單
 		ModelAndView model = new ModelAndView("SupplierList");
 		SupplierDAOImpl supplierDAO = (SupplierDAOImpl)context.getBean("supplierDAO");
 		ArrayList<Supplier> supplierList = new ArrayList<Supplier>();
 		supplierList = supplierDAO.getList();
+		model.addObject("supplierList", supplierList);
+		
+		return model;
+	}
+	
+	
+	@RequestMapping(value = "/newSupplier", method = RequestMethod.POST)
+	public ModelAndView addSupplier(@ModelAttribute("supplierName")String supplierName, @ModelAttribute("supplierPhone")String supplierPhone, @ModelAttribute("supplierAddress")String supplierAddress){
+		// Add the supplier information
+		ModelAndView model = new ModelAndView("redirect:/SupplierList");
+		SupplierDAOImpl supplierDAO = (SupplierDAOImpl)context.getBean("supplierDAO");
+		Supplier newSupplier = new Supplier();
+		
+		newSupplier.setSupplierName(supplierName);
+		newSupplier.setPhone(supplierPhone);
+		newSupplier.setAddress(supplierAddress);
+		System.out.println(newSupplier.getSupplierName());
+		supplierDAO.insert(newSupplier);
+		
 		
 		return model;
 	}
