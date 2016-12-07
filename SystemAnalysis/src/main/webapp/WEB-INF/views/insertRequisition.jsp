@@ -63,19 +63,14 @@
                                 <div class="col-lg-7">
                                     <label class="h4" style="margin-right: 5px">廠商:</label>
                                     <select class="form-control">
-                                        <option value="1">Apple</option>
-                                        <option value="2">Sony</option>
-                                        <option value="3">HTC</option>
-                                        <option value="4">ADATA</option>
-                                        <option value="5">ONPRO</option>
+                                        <c:forEach items="${supplierList}" var="supplier">
+                                            <option value=${supplier.getSupplierID()}>${supplier.getSupplierName()}</option>
+                                        </c:forEach>
                                     </select>
                                     <button type="submit" class="btn btn-default btn-hide" id="btn-view">選擇</button>
                                 </div>
-                                
-                                
-                                
                             </form>
-                            <a href="previewDetailRequisition"><button class="btn btn-primary">明細預覽</button></a>
+                            <a class="btn btn-primary" href="previewDetailRequisition">明細預覽</a>
                         </div>
                         
 
