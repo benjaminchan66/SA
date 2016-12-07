@@ -15,6 +15,7 @@ import java.util.List;
 import com.sa.finalproject.entity.Product;
 import com.sa.finalproject.entity.Supplier;
 import com.sa.finalproject.DAO.ProductDAO;
+import com.sa.finalproject.DAO.SupplierDAO;
 //import com.sa.finalproject.DAO.impl.ProductDAOImpl;
 import com.sa.finalproject.DAO.impl.SupplierDAOImpl;
 
@@ -34,28 +35,40 @@ public class ProductController {
 		productList = productDAO.getAvailableList();
 		model.addObject("productList", productList);
 		
-//		List<Product> productList = new ArrayList<Product>();
-//		SupplierDAOImpl supplierDAO = (SupplierDAOImpl) context.getBean("supplierDAO");
-//		for(int i = 0; i < productList.size(); i++) {
-//			long supplierID = productList.get(i).getSupplierID();
-//			Supplier supplier = supplierDAO.get(supplierID);
-//		}
+		SupplierDAO  supplierDAO = (SupplierDAO)context.getBean("supplierDAO");
+		ArrayList<Supplier> supplierList = new ArrayList<Supplier>();
+		supplierList= supplierDAO.getList();
+		model.addObject("supplierList", supplierList);
 		
 		return model;
 	}
 	
 	// To add the product into the database, after inserting the product back to product list
-	@RequestMapping(value = "/productList", method = RequestMethod.POST)
-	public ModelAndView insertProduct(@ModelAttribute("productName") String name, @ModelAttribute("price") int price, @ModelAttribute("supplierID") long supCode){
+	@RequestMapping(value = "/newProduct", method = RequestMethod.GET)
+	public ModelAndView insertProduct(@ModelAttribute("productName") String name, @ModelAttribute("productPrice") String price, @ModelAttribute("productSupplier") long supCode){
 		ModelAndView model = new ModelAndView("redirect:/productList");
 		ProductDAO productDAO = (ProductDAO)context.getBean("productDAO");
-		Product preparedProduct = new Product(name, price, supCode);
+		Product preparedProduct = new Product(name, Integer.parseInt(price), supCode);
 		long newProductCode = productDAO.insert(preparedProduct);
 		System.out.println("The ID of the product is : " + newProductCode + ".");
 		
 		return model;
 	}
 	
+	@RequestMapping(value = "/updateProduct", method = RequestMethod.GET)
+	public ModelAndView updateProduct(@ModelAttribute("id") String productID){
+		// Update the product information
+		ModelAndView model = new ModelAndView("redirect:/productList");
+		ProductDAO productDAO = (ProductDAO)context.getBean("productDAO");
+		Product newProductInfo = productDAO.get(Long.parseLong(productID));
+//		productDAO.update(productID, newProductInfo);
+		System.out.println("ID" + newProductInfo.getProductID());
+		System.out.println("Name : " + newProductInfo.getProductName());
+		System.out.println("Supplier : " + newProductInfo.getSupplierID());
+		return model;
+	}
+	
+	/*
 	@RequestMapping(value = "/updateProduct", method = RequestMethod.POST)
 	public ModelAndView updateProduct(@ModelAttribute("producID") long productID, @ModelAttribute("productName") String newName, @ModelAttribute("productPrice") int newPrice, @ModelAttribute("isInTheMarket") boolean newProductStatus, @ModelAttribute("supplierID") long newSupplierID){
 		// Update the product information
@@ -65,7 +78,7 @@ public class ProductController {
 		productDAO.update(productID, newProductInfo);
 		
 		return model;
-	}
+	}*/
 	
 	
 //	@RequestMapping(value = "/productIDSearch", method = RequestMethod.GET)

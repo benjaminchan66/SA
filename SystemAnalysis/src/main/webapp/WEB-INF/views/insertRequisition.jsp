@@ -54,7 +54,7 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <form class="form-inline">
+                            <form class="form-inline" action="" method="POST">
                             
                                 <div class="col-lg-3 form-group">
                                     <h4>請購商品</h4>
