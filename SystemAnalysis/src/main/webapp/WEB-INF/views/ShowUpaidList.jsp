@@ -64,7 +64,7 @@
 				  		<th>驗貨狀況</th>
 				  		<th>備註</th>
 				  	</tr>
-				  	<c:forEach items="${billofpurchaselist}" var="billofpurchase">
+				  	<c:forEach items="${showUnpaidProductlist}" var="billofpurchase">
 					  	<tr>
 					  		<td>${billofpurchase.getBopSerial()}</td>
 					  		<td>${billofpurchase.getEmployeeID()}</td>

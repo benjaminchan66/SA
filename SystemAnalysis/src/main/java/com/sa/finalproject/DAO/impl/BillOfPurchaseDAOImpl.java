@@ -19,6 +19,7 @@ import com.sa.finalproject.entity.PurchasingRequisition;
 import com.sa.finalproject.entity.Remark;
 import com.sa.finalproject.entity.supportingClass.PurchasedProduct;
 
+
 public class BillOfPurchaseDAOImpl implements BillOfPurchaseDAO {
 	private DataSource dataSource ;
 	private Connection conn = null ;
@@ -29,11 +30,48 @@ public class BillOfPurchaseDAOImpl implements BillOfPurchaseDAO {
 		this.dataSource = dataSource;
 	}
 	
-	public ArrayList<BillOfPurchase> getList() {      // 列出進貨單明細
+	public ArrayList<BillOfPurchase> getList() {      // 列出所有進貨單
 		String sql = "SELECT * FROM BillOfPurchase";
 		return getList(sql);
 	}
+	public BillOfPurchase get(long bopserial) {   //列出進貨單明細
+		
+		String sql = "SELECT * FROM BillOfPurchase WHERE BOP_serial = ?";
+		BillOfPurchase bop = new BillOfPurchase();
+		try {
+			conn = dataSource.getConnection();
+			smt = conn.prepareStatement(sql);
+			smt.setLong(1, bopserial);
+			rs = smt.executeQuery();
+			if(rs.next()){
+				bop.setBopSerial(rs.getInt("BOP_serial"));			
+				bop.setEmployeeID(rs.getLong("employee_id"));
+				bop.setDateTime(rs.getDate("time"));
+				bop.setHasArrived(rs.getBoolean("has_arrived"));
+				bop.setTotalAmount(rs.getInt("total_amount"));			
+				bop.setAccountantId(rs.getInt("accountant_id"));
+				bop.setHasPaid(rs.getBoolean("has_paid"));
+				bop.setPassed(rs.getBoolean("passed"));
+				bop.setRemarks(rs.getString("remark"));
+			}
+			rs.close();
+			smt.close();
+ 
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+ 
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
+		return bop;
+	}
+
 	
+
 	public void examineGoods(long bopSerial, boolean passed){   //驗貨
 		String sql = "UPDATE BillOfPurchase SET passed=?"
 				+ "WHERE  BOP_ serial= ? ";
@@ -104,7 +142,7 @@ public class BillOfPurchaseDAOImpl implements BillOfPurchaseDAO {
 			smt = conn.prepareStatement(sql);
 			rs = smt.executeQuery();
 			while(rs.next()){
-				BillOfPurchase aBillOfPurchase = new BillOfPurchase(0, 0, null, false, 0, 0, false, false);
+				BillOfPurchase aBillOfPurchase = new BillOfPurchase(0, 0, null, false, 0, 0, false, false, "");
 				aBillOfPurchase.setBopSerial(rs.getInt("BOP_serial"));			
 				aBillOfPurchase.setEmployeeID(rs.getLong("employee_id"));
 				aBillOfPurchase.setDateTime(rs.getDate("time"));
@@ -112,7 +150,8 @@ public class BillOfPurchaseDAOImpl implements BillOfPurchaseDAO {
 				aBillOfPurchase.setTotalAmount(rs.getInt("total_amount"));			
 				aBillOfPurchase.setAccountantId(rs.getInt("accountant_id"));
 				aBillOfPurchase.setHasPaid(rs.getBoolean("has_paid"));
-				aBillOfPurchase.setHasPaid(rs.getBoolean("passed"));
+				aBillOfPurchase.setPassed(rs.getBoolean("passed"));
+				aBillOfPurchase.setRemarks(rs.getString("remark"));
 				billOfPurchaseList.add(aBillOfPurchase);
 
 			}
@@ -150,11 +189,34 @@ public class BillOfPurchaseDAOImpl implements BillOfPurchaseDAO {
 		}
 		 return billOfPurchaseList;	
 	}
-   
+   public ArrayList<BillOfPurchase> getList(long bopSerial) {      // 列出所有進貨單方法
+		String sql = "SELECT * FROM BillOfPurchase where BOP_serial = ?";
+		try {
+			conn = dataSource.getConnection();
+			smt = conn.prepareStatement(sql);
+			smt.setLong(1, bopSerial);
+			smt.executeUpdate();			
+			smt.close();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
+		
+		return getList(sql);
+	}
+	
+  
    
 
    public ArrayList<BillOfPurchase> showUnpaidProduct() {  //顯示到貨且未付款商品
-	 String sql=("SELECT * from BillOfPurchase WHERE has_arrived = ? and has_paid = ?");
+	 String sql= "SELECT * from BillOfPurchase WHERE has_arrived = ? and has_paid = ?";
 	 ArrayList<BillOfPurchase> billOfPurchaseList = new ArrayList<BillOfPurchase>();
 	 try {
 			conn = dataSource.getConnection();
@@ -163,7 +225,7 @@ public class BillOfPurchaseDAOImpl implements BillOfPurchaseDAO {
 			smt.setBoolean(2, false);
 			rs = smt.executeQuery();
 			while(rs.next()){
-				BillOfPurchase aBillOfPurchase = new BillOfPurchase(0, 0, null, false, 0, 0, false, false);
+				BillOfPurchase aBillOfPurchase = new BillOfPurchase(0, 0, null, false, 0, 0, false, false, "");
 				aBillOfPurchase.setBopSerial(rs.getLong("BOP_serial"));			
 				aBillOfPurchase.setEmployeeID(rs.getLong("employee_id"));
 				aBillOfPurchase.setDateTime(rs.getDate("time"));
@@ -172,6 +234,7 @@ public class BillOfPurchaseDAOImpl implements BillOfPurchaseDAO {
 				aBillOfPurchase.setAccountantId(rs.getInt("accountant_id"));
 				aBillOfPurchase.setHasPaid(rs.getBoolean("has_paid"));
 				aBillOfPurchase.setHasPaid(rs.getBoolean("passed"));
+				aBillOfPurchase.setRemarks(rs.getString("remark"));
 				billOfPurchaseList.add(aBillOfPurchase);
 			}
 			rs.close();
@@ -208,115 +271,150 @@ public class BillOfPurchaseDAOImpl implements BillOfPurchaseDAO {
 			if (conn != null) {
 				try {
 					conn.close();
-				} catch (SQLException e) {}
-			}
+				} catch (SQLException e) {
+					}
+				}
 		}
-	}
-   public ArrayList<Remark> showRemark(long aBopSerial){ //顯示備註
-	String sql = "SELECT * FROM Remarks where BOP_Serial = ?";
-	ArrayList<Remark> remarks = new ArrayList<Remark>();
-	try {
-		conn = dataSource.getConnection();
-		smt = conn.prepareStatement(sql);
-		smt.setLong(1,aBopSerial);
-		rs = smt.executeQuery();
-		while(rs.next()){
-			Remark aremark = new Remark(0, "", 0);
-			aremark.setBopSerial(rs.getLong("BopSerial"));			
-			aremark.setRemark(rs.getString("remark"));
-			aremark.setRemarkIndex(rs.getInt("remark_times"));
-			aremark.setRemarkDate(rs.getDate("remark_time"));
-			remarks.add(aremark);
-		}
-		smt.close();
-
-	} catch (SQLException e) {
-		throw new RuntimeException(e);
-
-	} finally {
-		if (conn != null) {
-			try {
-				conn.close();
-			} catch (SQLException e) {}
-		}
-	}
-	return remarks;
    }
+		
+		public void update(long serial,BillOfPurchase aBillOfPurchase){  //更新資料
+			String sql = "UPDATE BillOfPurchase SET has_arrived=?,passed=? ,has_paid= ? ,remark=?"
+					+ "WHERE BOP_serial = ?";
+			
+			try {
+				conn = dataSource.getConnection();
+				smt = conn.prepareStatement(sql);
+				smt.setBoolean(1, aBillOfPurchase.isHasArrived());
+				smt.setBoolean(2, aBillOfPurchase.isPassed());
+				smt.setBoolean(3, aBillOfPurchase.isHasPaid());
+				smt.setString(4, aBillOfPurchase.getRemarks());
+				smt.setLong(5,serial);
+				smt.executeUpdate();			
+				smt.close();
 
-public void addRemark(long aBopSerial,Remark remark){ // 新增備註
-	
-	 String sql = "INSERT INTO Remarks (Bop_Serial, remark_times, remark, remark_time) VALUES(?, ?, ?, ?)";	
-		try {
-			conn = dataSource.getConnection();
-			smt = conn.prepareStatement(sql);
-			//Remark aRemark = new Remark(aBopSerial, "", 0);
-			smt.setLong(1, aBopSerial);
-			smt.setInt(2, remark.getRemarkIndex());
-			smt.setString(3, remark.getRemark());
-			smt.setDate(4, (Date) remark.getRemarkDate());
-			smt.executeUpdate();			
-			smt.close();
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
 
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-
-		} finally {
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {}
+			} finally {
+				if (conn != null) {
+					try {
+						conn.close();
+					} catch (SQLException e) {}
+				}
 			}
 		}
-		
-}
-public void deleteRemark(long aBopSerial, Remark remark) { //刪除備註
-	
-	String sql = "DELETE FROM Remarks WHERE BOP_Serial = ? AND remark_times = ?";
-	try {
-		conn = dataSource.getConnection();
-		smt = conn.prepareStatement(sql);
-		smt.setLong(1, aBopSerial);
-		smt.setInt(2,remark.getRemarkIndex());
-		smt.executeUpdate();			
-		smt.close();
-
-	} catch (SQLException e) {
-		throw new RuntimeException(e);
-
-	} finally {
-		if (conn != null) {
-			try {
-				conn.close();
-			} catch (SQLException e) {}
 		}
-	}
-}
-public void updateRemark(long aBopSerial,Remark remark ) {  //修改備註
-	
-	String sql = "UPDATE Remarks SET remark=?, remark_time=? "
-			+ "WHERE  BOP_Serial = ? AND remark_times = ?";
-	try {
-		conn = dataSource.getConnection();
-		smt = conn.prepareStatement(sql);
-		smt.setString(1, remark.getRemark());
-		smt.setDate(2,(Date) remark.getRemarkDate());
-		smt.setLong(3,aBopSerial);
-		smt.setInt(4,remark.getRemarkIndex());
-		smt.executeUpdate();			
-		smt.close();
 
-	} catch (SQLException e) {
-		throw new RuntimeException(e);
-
-	} finally {
-		if (conn != null) {
-			try {
-				conn.close();
-			} catch (SQLException e) {}
-		}
-	}
 	
-}
+//   
+//   public ArrayList<Remark> showRemark(long aBopSerial){ //顯示備註
+//	String sql = "SELECT * FROM Remarks where BOP_Serial = ?";
+//	ArrayList<Remark> remarks = new ArrayList<Remark>();
+//	try {
+//		conn = dataSource.getConnection();
+//		smt = conn.prepareStatement(sql);
+//		smt.setLong(1,aBopSerial);
+//		rs = smt.executeQuery();
+//		while(rs.next()){
+//			Remark aremark = new Remark(0, "", 0);
+//			aremark.setBopSerial(rs.getLong("BopSerial"));			
+//			aremark.setRemark(rs.getString("remark"));
+//			aremark.setRemarkIndex(rs.getInt("remark_times"));
+//			aremark.setRemarkDate(rs.getDate("remark_time"));
+//			remarks.add(aremark);
+//		}
+//		smt.close();
+//
+//	} catch (SQLException e) {
+//		throw new RuntimeException(e);
+//
+//	} finally {
+//		if (conn != null) {
+//			try {
+//				conn.close();
+//			} catch (SQLException e) {}
+//		}
+//	}
+//	return remarks;
+//   }
+//
+//public void addRemark(long aBopSerial,Remark remark){ // 新增備註
+//	
+//	 String sql = "INSERT INTO Remarks (Bop_Serial, remark_times, remark, remark_time) VALUES(?, ?, ?, ?)";	
+//		try {
+//			conn = dataSource.getConnection();
+//			smt = conn.prepareStatement(sql);
+//			//Remark aRemark = new Remark(aBopSerial, "", 0);
+//			smt.setLong(1, aBopSerial);
+//			smt.setInt(2, remark.getRemarkIndex());
+//			smt.setString(3, remark.getRemark());
+//			smt.setDate(4, (Date) remark.getRemarkDate());
+//			smt.executeUpdate();			
+//			smt.close();
+//
+//		} catch (SQLException e) {
+//			throw new RuntimeException(e);
+//
+//		} finally {
+//			if (conn != null) {
+//				try {
+//					conn.close();
+//				} catch (SQLException e) {}
+//			}
+//		}
+//		
+//}
+//public void deleteRemark(long aBopSerial, Remark remark) { //刪除備註
+//	
+//	String sql = "DELETE FROM Remarks WHERE BOP_Serial = ? AND remark_times = ?";
+//	try {
+//		conn = dataSource.getConnection();
+//		smt = conn.prepareStatement(sql);
+//		smt.setLong(1, aBopSerial);
+//		smt.setInt(2,remark.getRemarkIndex());
+//		smt.executeUpdate();			
+//		smt.close();
+//
+//	} catch (SQLException e) {
+//		throw new RuntimeException(e);
+//
+//	} finally {
+//		if (conn != null) {
+//			try {
+//				conn.close();
+//			} catch (SQLException e) {}
+//		}
+//	}
+//}
+//public void updateRemark(long aBopSerial,Remark remark ) {  //修改備註
+//	
+//	String sql = "UPDATE Remarks SET remark=?, remark_time=? "
+//			+ "WHERE  BOP_Serial = ? AND remark_times = ?";
+//	try {
+//		conn = dataSource.getConnection();
+//		smt = conn.prepareStatement(sql);
+//		smt.setString(1, remark.getRemark());
+//		smt.setDate(2,(Date) remark.getRemarkDate());
+//		smt.setLong(3,aBopSerial);
+//		smt.setInt(4,remark.getRemarkIndex());
+//		smt.executeUpdate();			
+//		smt.close();
+//
+//	} catch (SQLException e) {
+//		throw new RuntimeException(e);
+//
+//	} finally {
+//		if (conn != null) {
+//			try {
+//				conn.close();
+//			} catch (SQLException e) {}
+//		}
+//	}
+//	
+//}
+
+
+
 
 //public List<Remark> getListRemark(String sql) {
 //	
@@ -351,4 +449,4 @@ public void updateRemark(long aBopSerial,Remark remark ) {  //修改備註
 //	 return remark;	
 //}
 //  
-}
+

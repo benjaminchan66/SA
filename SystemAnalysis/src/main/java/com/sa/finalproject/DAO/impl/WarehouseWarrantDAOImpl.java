@@ -58,16 +58,16 @@ public class WarehouseWarrantDAOImpl implements WarehouseWarrantDAO{
 			smt.close();
 			
 			//second SQL command
-			PurchaseOrder bopContent = bop.getBopContent();
-			for(int i = 0; i < bopContent.getList().size(); i++) {
-				PurchasedProduct currentItem = bopContent.getList().get(i);
-				smt = conn.prepareStatement(sql2);
-				smt.setLong(1, currentItem.getProductID());
-				smt.setLong(2, bop.getBopSerial());
-				smt.setInt(3, currentItem.getPurchasingAmount());
-				smt.executeUpdate();
-				smt.close();
-			}
+//			PurchaseOrder bopContent = bop.getBopContent();
+//			for(int i = 0; i < bopContent.getList().size(); i++) {
+//				PurchasedProduct currentItem = bopContent.getList().get(i);
+//				smt = conn.prepareStatement(sql2);
+//				smt.setLong(1, currentItem.getProductID());
+//				smt.setLong(2, bop.getBopSerial());
+//				smt.setInt(3, currentItem.getPurchasingAmount());
+//				smt.executeUpdate();
+//				smt.close();
+//			}
 			
 		} catch (SQLException e) {
 			throw new RuntimeException(e);

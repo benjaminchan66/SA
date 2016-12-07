@@ -18,7 +18,7 @@ public class BillOfPurchase {
 	private boolean passed = false;
 	
 	// remarks
-	private String remarks = "";
+	private String remarks;
 	
 	// bill of purchase content
 	private PurchaseOrder bopContent = null;
@@ -26,7 +26,7 @@ public class BillOfPurchase {
 	public BillOfPurchase() {
 	}
 	
-	public BillOfPurchase(long bopSerial, long employeeID, Date dateTime, boolean hasArrived, int totalAmount, long accountantId, boolean hasPaid, boolean passed) {
+	public BillOfPurchase(long bopSerial, long employeeID, Date dateTime, boolean hasArrived, int totalAmount, long accountantId, boolean hasPaid, boolean passed, String remarks) {
 		super();
 		this.bopSerial = bopSerial;
 		this.employeeID = employeeID;
@@ -36,6 +36,7 @@ public class BillOfPurchase {
 		this.accountantId = accountantId;
 		this.hasPaid = hasPaid;
 		this.passed = passed;
+		this.remarks = remarks;
 	}
 	
 	public long getBopSerial() {
