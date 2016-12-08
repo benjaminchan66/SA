@@ -45,7 +45,7 @@
 		<div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">請購單明細預覽</h1>
+                    <h1 class="page-header">開立請購單</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -54,44 +54,56 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h4>請購單明細</h4>
+                            <form class="form-inline" action="insertRequisition" method="POST">
+                            
+                                <div class="col-lg-3 form-group">
+                                    <h4>請購商品</h4>
+                                </div>
+                                
+                                <div class="col-lg-7">
+                                    <label class="h4" style="margin-right: 5px">廠商:</label>
+                                    <select class="form-control" name="chosenSupplierID">
+                                        <c:forEach items="${supplierList}" var="supplier">
+                                            <option value=${supplier.getSupplierID()}>${supplier.getSupplierName()}</option>
+                                        </c:forEach>
+                                    </select>
+                                    <button type="submit" name="submit" class="btn btn-default btn-hide" id="btn-view">選擇</button>
+                                </div>
+                            </form>
+                            <a class="btn btn-primary" href="previewDetailRequisition">明細預覽</a>
                         </div>
-                        <div class="panel-body">
-                            <form action="previewDetailRequisition">
+                        
+                        <%if (request.getParameter("submit")!=null) {%>
+                            <div class="panel-body">
                                 <table width="100%" class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
                                             <th>id</th>
                                             <th>名稱</th>
-                                            <th>廠商</th>
                                             <th>價格</th>
-                                            <th>數量</th>
-                                            <th>金額</th>
+                                            <th>動作</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
+                                        <c:forEach items="${productList}" var="product">
                                             <tr>
-                                                <td>014</td>
-                                                <td>Apple Lightning 8pin 原廠USB傳輸線</td>
-                                                <th>Apple</th>
-                                                <td>$349</td>
-                                                <td><input type="number" name="" value="" placeholder="0" required="required"></td>
-                                                <td>$11,517</td>
+                                                <td>${product.getProductID()}</td>
+                                                <td>${product.getProductName()}</td>
+                                                <td>${product.getPrice()}</td>
+                                                <td><a class="btn btn-default" href="insertRequisition?id=${product.getProductID()}">訂購</a></td>
                                             </tr>
-                                        
+                                        </c:forEach>
                                     </tbody>
                                 </table>
-                                <div class="col-lg-10"></div>
-                                <font>總計: $30,087</font>
-                                <button type="submit" class="btn btn-primary">送出</button>
-                            </form>
-                        </div>
-                    </div>
+                            </div>
+                        <%}else{%>
 
+                        <%}%>
+                    </div>
                 </div>
             </div>
             <!-- /.row -->
+            
         </div>
         <!-- /#page-wrapper -->
 

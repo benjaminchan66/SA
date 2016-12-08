@@ -145,8 +145,7 @@ public class ProductDAOImpl implements ProductDAO {
 			conn = dataSource.getConnection();
 			smt = conn.prepareStatement(sql);
 			
-			this.rs = smt.executeQuery();
-			smt.close();
+			rs = smt.executeQuery();
 			
 			while(rs.next()) {
 				long productID = rs.getLong("product_id");
@@ -160,6 +159,7 @@ public class ProductDAOImpl implements ProductDAO {
 				
 			}
 			rs.close();
+			smt.close();
 			
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -280,6 +280,41 @@ public class ProductDAOImpl implements ProductDAO {
 				}
 			} catch (SQLException e){}
 		}
+	}
+	
+	public ArrayList<Product> getProductOf(long aSupplierID) {
+		ArrayList<Product> productList = new ArrayList<Product>();
+		String sql = "SELECT * FROM Product WHERE supplier_id = ?";
+		try {
+			conn = dataSource.getConnection();
+			smt = conn.prepareStatement(sql);
+			smt.setLong(1, aSupplierID);
+			
+			ArrayList<Long> idList = new ArrayList<Long>();
+			rs = smt.executeQuery();
+			while(rs.next()) {
+				idList.add(rs.getLong("product_id"));
+			}
+			rs.close();
+			smt.close();
+			
+			for(int i = 0; i < idList.size(); i++) {
+				Product currentProduct = this.get(idList.get(i));
+				productList.add(currentProduct);
+			}
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e); 
+		}finally {
+			try {
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e){}
+		}
+		
+		
+		return productList;
 	}
 	
 }

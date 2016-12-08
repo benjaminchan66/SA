@@ -48,6 +48,17 @@ public class SupplierController {
 		return model;
 	}
 	
+	@RequestMapping(value = "/updateSupplier", method = RequestMethod.POST)
+	public ModelAndView updateSupplier(@ModelAttribute("id")String id, @ModelAttribute("supplierName")String supplierName, @ModelAttribute("supplierPhone")String supplierPhone, @ModelAttribute("supplierAddress")String supplierAddress, @ModelAttribute("supplierLevel")String supplierLevel){
+		// Add the supplier information
+		ModelAndView model = new ModelAndView("redirect:/SupplierList");
+		SupplierDAOImpl supplierDAO = (SupplierDAOImpl)context.getBean("supplierDAO");
+		Supplier newSupplierInfo = new Supplier(Long.parseLong(id), supplierName, supplierPhone, supplierAddress, supplierLevel);
+		supplierDAO.update(Long.parseLong(id), newSupplierInfo);
+		
+		return model;
+	}
+	
 	
 	@RequestMapping(value = "/remarkedSupplierList", method = RequestMethod.GET)
 	public ModelAndView listRemarkedSupplier(){

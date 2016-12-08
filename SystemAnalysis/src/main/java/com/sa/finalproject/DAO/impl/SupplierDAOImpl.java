@@ -205,4 +205,30 @@ public class SupplierDAOImpl implements SupplierDAO{
 		}
 		return supplierList;
 	}
+	
+	
+	// 修正供應商的資料
+	public void update(long supplierID, Supplier supplier) {
+		String sql = "update Supplier SET supplier_name = ?, supplier_phone = ?, supplier_address = ?, supplier_level = ? WHERE supplier_id = ?";
+			try {
+				conn = dataSource.getConnection();
+				smt = conn.prepareStatement(sql);
+				smt.setString(1, supplier.getSupplierName());
+				smt.setString(2, supplier.getPhone());
+				smt.setString(3, supplier.getAddress());
+				smt.setString(4, supplier.getLevel());
+				smt.setLong(5, supplierID);
+				
+				smt.executeUpdate();
+				smt.close();
+			} catch(SQLException e) {
+				throw new RuntimeException(e);
+			}finally {
+				if (conn != null) {
+					try {
+						conn.close();
+					} catch (SQLException e) {}
+				}
+			}
+	}
 }

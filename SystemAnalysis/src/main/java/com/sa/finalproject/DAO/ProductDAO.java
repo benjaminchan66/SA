@@ -22,7 +22,7 @@ public interface ProductDAO {
 	// 產品上架
 	public void hitTheShelf(long aProductID);
 	
-	
+	public ArrayList<Product> getProductOf(long aSupplierID);
 	
 
 }
