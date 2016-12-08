@@ -24,25 +24,43 @@ import com.sa.finalproject.entity.supportingClass.PurchasedProduct;
 public class RequisitionController {
 	ApplicationContext context = new ClassPathXmlApplicationContext("spring-module.xml");
 	
+	// Indicate whether the user has selected the supplier form
+	static boolean hasSelectedSupplier = false;
+	Long selectedSupplier = null;
+	
 	@RequestMapping(value = "/insertRequisition", method = RequestMethod.GET)
 	public ModelAndView checkRequisition(){
-		// 顯示開立請購單
+		// 顯示開立請購單頁面
 		ModelAndView model = new ModelAndView("insertRequisition");
 		SupplierDAO supplierDAO = (SupplierDAO)context.getBean("supplierDAO");
 		ArrayList<Supplier> supplierList = new ArrayList<Supplier>();
 		supplierList = supplierDAO.getList();
-		model.addObject("supplierDAO", supplierList);
+		model.addObject("supplierList", supplierList);
 		
-		ProductDAO productDAO = (ProductDAO)context.getBean("productDAO");
-//		model.addObject("productList", attributeValue);
+		
+		if(this.hasSelectedSupplier && this.selectedSupplier != null) {
+			ProductDAO productDAO = (ProductDAO)context.getBean("productDAO");
+			ArrayList<Product> productList = new ArrayList<Product>();
+			productList = productDAO.getProductOf(this.selectedSupplier);
+			model.addObject("productList", productList);
+			this.selectedSupplier = null;
+			this.hasSelectedSupplier = false;
+			
+			model.addObject("submit", "submit");
+		}else {
+			model.addObject("productList", new ArrayList<Product>());
+			model.addObject("submit", null);
+		}
 		
 		return model;
 	}
 	
 	@RequestMapping(value = "/insertRequisition", method = RequestMethod.POST)
-	public ModelAndView insertRequisition(){
+	public ModelAndView insertRequisition(@ModelAttribute("selectedSupplierID")String selectedID){
 		// show all the products of a specific supplier
 		ModelAndView model = new ModelAndView("redirect:/insertRequisition");
+		this.selectedSupplier = Long.parseLong(selectedID);
+		this.hasSelectedSupplier = true;
 		
 		return model;
 	}
@@ -68,6 +86,14 @@ public class RequisitionController {
 		requisitionDAO.confirm(staffID, aRequisitionSerial, isConfirmed);
 		
 		return model;
+	}
+	
+	@RequestMapping(value = "/previewDetailRequisition", method = RequestMethod.POST)
+	public ModelAndView showCart() {
+		ModelAndView model = new ModelAndView("previewDetailRequisition");
+		// 顯示購物車內容物
+		
+		return null;
 	}
 	
 	

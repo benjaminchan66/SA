@@ -61,10 +61,10 @@
                         <div>
                             <center>
                                 <p></p>
-                                <p>員工編號: 12345</p>
-                                <p>員工名字: 陳常樂</p>
-                                <p>員工階級: 普通</p>
-                                <p>所屬部門: 採購部</p>
+                                <p>員工編號: ${staffID}</p>
+                                <p>員工名字: ${staffName}</p>
+                                <p>員工階級: ${staffLevel}</p>
+                                <p>所屬部門: ${staffDep}</p>
                             </center>
                         </div>
                     </div>

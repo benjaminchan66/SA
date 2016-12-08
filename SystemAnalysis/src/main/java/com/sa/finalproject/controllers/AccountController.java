@@ -69,4 +69,18 @@ public class AccountController {
 		return model;
 	}
 	
+	@RequestMapping(value = "/Profile", method = RequestMethod.GET)
+	public ModelAndView showProfile(){
+		// check the identity
+		ModelAndView model = new ModelAndView("Profile");
+		
+		model.addObject("staffID", "403401316");
+		model.addObject("staffName", "BEN");
+		model.addObject("staffLevel", "Vice president");
+		model.addObject("staffDep", "Information");
+		
+		
+		return model;
+	}
+	
 }

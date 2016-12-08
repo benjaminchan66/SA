@@ -75,7 +75,7 @@
                             </form>
                         </div>
                         
-                        <%if (request.getParameter("submit")!=null) {%>
+                        <%if (request.getParameter("selectedSupplierID")!=null) {%>
                             <div class="panel-body">
                                 <table width="100%" class="table table-striped table-bordered table-hover">
                                     <thead>
