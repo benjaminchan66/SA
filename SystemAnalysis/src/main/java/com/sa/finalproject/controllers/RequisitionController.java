@@ -88,6 +88,14 @@ public class RequisitionController {
 		return model;
 	}
 	
+	@RequestMapping(value = "/previewDetailRequisition", method = RequestMethod.POST)
+	public ModelAndView showCart() {
+		ModelAndView model = new ModelAndView("previewDetailRequisition");
+		// 顯示購物車內容物
+		
+		return null;
+	}
+	
 	
 	@RequestMapping(value = "/insertFakeRequisition", method = RequestMethod.GET)
 	public ModelAndView insertFakeRequisition(){
