@@ -11,9 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sa.finalproject.DAO.ProductDAO;
 import com.sa.finalproject.DAO.PurchasingRequisitionDAO;
+import com.sa.finalproject.DAO.SupplierDAO;
+import com.sa.finalproject.entity.Product;
 import com.sa.finalproject.entity.PurchaseOrder;
 import com.sa.finalproject.entity.PurchasingRequisition;
+import com.sa.finalproject.entity.Supplier;
+import com.sa.finalproject.entity.supportingClass.PurchasedProduct;
 
 @Controller
 public class RequisitionController {
@@ -21,19 +26,23 @@ public class RequisitionController {
 	
 	@RequestMapping(value = "/insertRequisition", method = RequestMethod.GET)
 	public ModelAndView checkRequisition(){
-		// 開立請購單
+		// 顯示開立請購單
 		ModelAndView model = new ModelAndView("insertRequisition");
+		SupplierDAO supplierDAO = (SupplierDAO)context.getBean("supplierDAO");
+		ArrayList<Supplier> supplierList = new ArrayList<Supplier>();
+		supplierList = supplierDAO.getList();
+		model.addObject("supplierDAO", supplierList);
+		
+		ProductDAO productDAO = (ProductDAO)context.getBean("productDAO");
+//		model.addObject("productList", attributeValue);
 		
 		return model;
 	}
 	
 	@RequestMapping(value = "/insertRequisition", method = RequestMethod.POST)
-	public ModelAndView insertRequisition(@ModelAttribute("orderList")PurchaseOrder mixedOrder, @ModelAttribute("staffID")long staffID){
-		// 開立請購單
-		ModelAndView model = new ModelAndView("redirect:/listRequisition");
-		PurchasingRequisitionDAO requisitionDAO = (PurchasingRequisitionDAO)context.getBean("purchaseRequisitionDAO");
-		String supplierCurrentLevel = requisitionDAO.insert(mixedOrder, staffID);
-		System.out.println("The supplier level is " + supplierCurrentLevel);
+	public ModelAndView insertRequisition(){
+		// show all the products of a specific supplier
+		ModelAndView model = new ModelAndView("redirect:/insertRequisition");
 		
 		return model;
 	}
@@ -59,5 +68,41 @@ public class RequisitionController {
 		requisitionDAO.confirm(staffID, aRequisitionSerial, isConfirmed);
 		
 		return model;
+	}
+	
+	
+	@RequestMapping(value = "/insertFakeRequisition", method = RequestMethod.GET)
+	public ModelAndView insertFakeRequisition(){
+		// 開立請購單動作執行
+		ModelAndView model = new ModelAndView("redirect:/listRequisition");
+		PurchasingRequisitionDAO requisitionDAO = (PurchasingRequisitionDAO)context.getBean("purchaseRequisitionDAO");
+		PurchaseOrder mixedOrder = this.getFakeOrder();
+		System.out.println("The length of mixed order is " + mixedOrder.getList().size());
+		
+		String supplierCurrentLevel = requisitionDAO.insert(mixedOrder, Long.parseLong("403401213"));
+		System.out.println("The supplier level is " + supplierCurrentLevel);
+		
+		return model;
+	}
+	
+	
+	public PurchaseOrder getFakeOrder() {
+		PurchaseOrder fakeOrder = new PurchaseOrder();
+		
+		ProductDAO productDAO = (ProductDAO) context.getBean("productDAO");
+		ArrayList<Product> productList = new ArrayList<Product>();
+		productList = productDAO.getList();
+		
+		SupplierDAO supplierDAO = (SupplierDAO)context.getBean("supplierDAO");
+		
+		for(int i = 0; i < productList.size(); i++) {
+			Product currentProduct = productList.get(i);
+			int randomAmount = (int)(Math.random() * 20 + 1);
+			Supplier currentSupplier = supplierDAO.get(currentProduct.getSupplierID());
+			PurchasedProduct purchasedProduct = new PurchasedProduct(currentProduct.getProductID(), currentProduct.getProductName(), randomAmount, currentSupplier.getSupplierID(), currentSupplier.getSupplierName());
+			fakeOrder.add(purchasedProduct);
+		}
+		
+		return fakeOrder;
 	}
 }

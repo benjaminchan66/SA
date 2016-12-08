@@ -16,4 +16,6 @@ public interface SupplierDAO {
 	public void changeSupplierLevel(long supplierID, String newLevel);
 	//列出有Remarks的廠商
 	public ArrayList<Supplier> remarklist();
+	// 修正供應商的資料
+	public void update(long supplierID, Supplier supplier);
 }

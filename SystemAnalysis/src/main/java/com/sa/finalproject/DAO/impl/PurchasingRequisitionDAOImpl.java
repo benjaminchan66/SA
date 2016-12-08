@@ -29,9 +29,9 @@ public class PurchasingRequisitionDAOImpl implements PurchasingRequisitionDAO {
 	@Override
 	public String insert(PurchaseOrder mixedOrder, long employeeID) {
 		// TODO Auto-generated method stub
-		String supplierLevel = "A";
+		String supplierLevel = "";
 		
-		// 從 mixedOrder 中區分廠商
+		// divide the supplier from the mixed order
 		ArrayList<PurchaseOrder> dividedPurchaseList = new ArrayList<PurchaseOrder>();
 		
 		for(int i = 0; i < mixedOrder.getList().size(); i++) {
@@ -51,9 +51,14 @@ public class PurchasingRequisitionDAOImpl implements PurchasingRequisitionDAO {
 			
 			if(supplierIDIsInTheList == false) {
 				// if this supplier is not in the divided list, then create a new list for this supplier
-				dividedPurchaseList.add(new PurchaseOrder(currentSupplierID));
+				PurchaseOrder newPR = new PurchaseOrder(currentSupplierID);
+				newPR.add(currentProduct);
+				dividedPurchaseList.add(newPR);
+				System.out.println("Add the supplier whose id is " + currentSupplierID);
 			}
 		}
+		
+		
 		
 		//Accessing Tables: PR, PR_confirm, Product_connect_PR, PR_supplier_grade
 		
@@ -62,11 +67,14 @@ public class PurchasingRequisitionDAOImpl implements PurchasingRequisitionDAO {
 		String sql3 = "INSERT INTO Product_connect_PR(product_id, PR_serial, price_att, quantity) VALUES(?, ?, ?, ?)";
 		String sql4 = "INSERT INTO PR_supplier_grade(PR_serial, supplier_id, grade_att) VALUES(?, ?, ?)";
 		
+		
 		try {
+			System.out.println("The length of divided order is " + dividedPurchaseList.size());
 			conn = dataSource.getConnection();
-			
 			for(int i = 0; i < dividedPurchaseList.size(); i++) {
 				PurchaseOrder currentListOrder = dividedPurchaseList.get(i);
+				System.out.println("The length of the current list is " + currentListOrder.getList().size());
+				System.out.println("The current list belongs to the supplier whose ID is " + currentListOrder.getSupplierID());
 				conn.setAutoCommit(false);
 				
 				// First SQL command should keep the generated key, Entity : PurchasingRequisition
@@ -76,13 +84,13 @@ public class PurchasingRequisitionDAOImpl implements PurchasingRequisitionDAO {
 				this.rs = smt.getGeneratedKeys();
 				long newPRSerial = 0;
 				if(rs.next()) {
-					newPRSerial = rs.getLong("PR_serial");
+					newPRSerial = rs.getLong(1);
+					System.out.println("The serial is " + newPRSerial);
 				}
 				rs.close();
 				smt.close();
 				
 				// Second SQL command, Entity : PR_confirm, if the supplier level isn't A class, it won't be sent until the manager confirms it.
-				// String sql2 = "INSERT INTO PR_confirm(PR_serial) VALUES(?)";
 				// search the level in the database
 				String sql2_1 = "SELECT * FROM Supplier WHERE supplier_id = ?";
 				smt = conn.prepareStatement(sql2_1);
@@ -98,6 +106,7 @@ public class PurchasingRequisitionDAOImpl implements PurchasingRequisitionDAO {
 				// insert the requisition into PR_confirm
 				if("A".equals(supplierLevel)) {
 					// the default value of confirming is true
+					System.out.println("The level of the supplier whose ID is " + currentListOrder.getSupplierID() + " is A");
 					sql2 = "INSERT INTO PR_confirm(PR_serial, PR_confirm, employee_id, time) VALUES(?, ?, ?, Now())";
 					this.smt = conn.prepareStatement(sql2);
 					smt.setLong(1, newPRSerial);
@@ -113,7 +122,7 @@ public class PurchasingRequisitionDAOImpl implements PurchasingRequisitionDAO {
 				}
 				
 				// Third SQL command, Entity : Product_connect_PR, create the record in Product_connect_PR for each item
-				for (int j = 0; i < currentListOrder.getList().size(); j++) {
+				for (int j = 0; j < currentListOrder.getList().size(); j++) {
 					PurchasedProduct currentProduct = currentListOrder.getList().get(j);
 					smt = conn.prepareStatement(sql3);
 					smt.setLong(1, currentProduct.getProductID());
@@ -132,6 +141,8 @@ public class PurchasingRequisitionDAOImpl implements PurchasingRequisitionDAO {
 				smt.setLong(1, newPRSerial);
 				smt.setLong(2, currentListOrder.getSupplierID());
 				smt.setString(3, supplierLevel);
+				smt.executeUpdate();
+				smt.close();
 				
 				
 				conn.commit();
@@ -264,7 +275,7 @@ public class PurchasingRequisitionDAOImpl implements PurchasingRequisitionDAO {
 				// set the value for the requisition
 				requisition.setPrSerial(rs.getLong("PR_serial"));
 				requisition.setEmployeeID(rs.getLong("employee_id"));
-				requisition.setDate(rs.getDate("date"));
+				requisition.setDate(rs.getDate("time"));
 			}
 			
 			rs.close();
