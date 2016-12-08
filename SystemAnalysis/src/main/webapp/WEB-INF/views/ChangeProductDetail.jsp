@@ -64,11 +64,11 @@
                                     <div class="modal-body">
                                             <div class="form-group">
                                                 <label>商品名稱</label>
-                                                <input class="form-control" name="productName" value="${product.name}" placeholder="輸入商品名稱" required="required">
+                                                <input class="form-control" name="productName" value="${productName}" placeholder="輸入商品名稱" required="required">
                                             </div>
                                             <div class="form-group">
                                                 <label>商品價格</label>
-                                                <input class="form-control" name="productPrice" value="${product.price}"" placeholder="輸入商品價格" required="required">
+                                                <input class="form-control" name="productPrice" value="${productPrice}"" placeholder="輸入商品價格" required="required">
                                             </div>
                                             <div class="form-group">
                                                 <label>選擇廠商</label>
@@ -80,21 +80,23 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>狀態: </label>
-                                                <%if(product.isInTheMarket == true) { %>
-	                                                <label class="radio-inline">
-	                                                    <input type="radio" name="isInTheMarket" id="optionsRadiosInline1" value="true" checked required>供貨中
-	                                                </label>
-	                                                <label class="radio-inline">
-	                                                    <input type="radio" name="isInTheMarket" id="optionsRadiosInline2" value="false">斷貨
-	                                                </label>
-                                                <%}else {%>
+										<c:if test="${isInTheMarket == true}">
+											<label class="radio-inline"> <input type="radio"
+												name="isInTheMarket" id="optionsRadiosInline1" value="true"
+												checked required>供貨中
+											</label>
+											<label class="radio-inline"> <input type="radio"
+												name="isInTheMarket" id="optionsRadiosInline2" value="false">斷貨
+											</label>
+										</c:if>
+										<c:otherwise>
                                                 	<label class="radio-inline">
 	                                                    <input type="radio" name="isInTheMarket" id="optionsRadiosInline1" value="true" required>供貨中
 	                                                </label>
 	                                                <label class="radio-inline">
 	                                                    <input type="radio" name="isInTheMarket" id="optionsRadiosInline2" value="false" checked>斷貨
 	                                                </label>
-                                                <%}%>
+                                                </c:otherwise>
                                             </div>
                                     </div>
                                     <div class="modal-footer">
