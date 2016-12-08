@@ -73,8 +73,6 @@ public class PurchasingRequisitionDAOImpl implements PurchasingRequisitionDAO {
 			conn = dataSource.getConnection();
 			for(int i = 0; i < dividedPurchaseList.size(); i++) {
 				PurchaseOrder currentListOrder = dividedPurchaseList.get(i);
-				System.out.println("The length of the current list is " + currentListOrder.getList().size());
-				System.out.println("The current list belongs to the supplier whose ID is " + currentListOrder.getSupplierID());
 				conn.setAutoCommit(false);
 				
 				// First SQL command should keep the generated key, Entity : PurchasingRequisition
@@ -106,7 +104,7 @@ public class PurchasingRequisitionDAOImpl implements PurchasingRequisitionDAO {
 				// insert the requisition into PR_confirm
 				if("A".equals(supplierLevel)) {
 					// the default value of confirming is true
-					System.out.println("The level of the supplier whose ID is " + currentListOrder.getSupplierID() + " is A");
+					
 					sql2 = "INSERT INTO PR_confirm(PR_serial, PR_confirm, employee_id, time) VALUES(?, ?, ?, Now())";
 					this.smt = conn.prepareStatement(sql2);
 					smt.setLong(1, newPRSerial);

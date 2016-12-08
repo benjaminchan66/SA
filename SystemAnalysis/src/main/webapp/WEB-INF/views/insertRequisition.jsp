@@ -62,7 +62,7 @@
                                 
                                 <div class="col-lg-7">
                                     <label class="h4" style="margin-right: 5px">廠商:</label>
-                                    <select class="form-control" name="chosenSupplierID">
+                                    <select class="form-control" name="selectedSupplierID">
                                         <c:forEach items="${supplierList}" var="supplier">
                                             <option value=${supplier.getSupplierID()}>${supplier.getSupplierName()}</option>
                                         </c:forEach>
@@ -73,7 +73,7 @@
                             <a class="btn btn-primary" href="previewDetailRequisition">明細預覽</a>
                         </div>
                         
-                        <%if (request.getParameter("submit")!=null) {%>
+                        <%if (request.getParameter("selectedSupplierID")!=null) {%>
                             <div class="panel-body">
                                 <table width="100%" class="table table-striped table-bordered table-hover">
                                     <thead>
