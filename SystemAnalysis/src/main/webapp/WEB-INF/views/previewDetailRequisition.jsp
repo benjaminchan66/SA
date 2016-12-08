@@ -76,15 +76,21 @@
                                                 <td>Apple Lightning 8pin 原廠USB傳輸線</td>
                                                 <th>Apple</th>
                                                 <td>$349</td>
-                                                <td><input type="number" name="" value="" placeholder="0" required="required"></td>
+                                                <td><input type="number" name="" value="" placeholder="0" required="required" min="0"></td>
                                                 <td>$11,517</td>
                                             </tr>
                                         
                                     </tbody>
                                 </table>
-                                <div class="col-lg-10"></div>
-                                <font>總計: $30,087</font>
-                                <button type="submit" class="btn btn-primary">送出</button>
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-offset-10">
+                                        <h5>總計: $30,087</h5>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="insertRequisition" class="btn btn-warning">返回</a>
+                                    <button type="submit" class="btn btn-primary">送出</button>
+                                </div>
                             </form>
                         </div>
                     </div>

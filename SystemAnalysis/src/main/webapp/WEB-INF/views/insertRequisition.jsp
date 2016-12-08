@@ -55,22 +55,24 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <form class="form-inline" action="insertRequisition" method="POST">
-                            
-                                <div class="col-lg-3 form-group">
-                                    <h4>請購商品</h4>
-                                </div>
-                                
-                                <div class="col-lg-7">
-                                    <label class="h4" style="margin-right: 5px">廠商:</label>
-                                    <select class="form-control" name="chosenSupplierID">
-                                        <c:forEach items="${supplierList}" var="supplier">
-                                            <option value=${supplier.getSupplierID()}>${supplier.getSupplierName()}</option>
-                                        </c:forEach>
-                                    </select>
-                                    <button type="submit" name="submit" class="btn btn-default btn-hide" id="btn-view">選擇</button>
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <h4>請購商品</h4>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label class="h5">廠商:</label>
+                                        <select class="form-control" name="chosenSupplierID">
+                                            <c:forEach items="${supplierList}" var="supplier">
+                                                <option value=${supplier.getSupplierID()}>${supplier.getSupplierName()}</option>
+                                            </c:forEach>
+                                        </select>
+                                        <button type="submit" name="submit" class="btn btn-default btn-hide" id="btn-view">選擇</button>
+                                    </div>
+                                    <div class="col-lg-2 col-lg-offset-4">
+                                        <a class="btn btn-primary" href="previewDetailRequisition">明細預覽</a>
+                                    </div>
                                 </div>
                             </form>
-                            <a class="btn btn-primary" href="previewDetailRequisition">明細預覽</a>
                         </div>
                         
                         <%if (request.getParameter("submit")!=null) {%>
