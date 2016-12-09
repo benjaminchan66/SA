@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import com.sa.finalproject.DAO.impl.SupplierDAOImpl;
 
 // tell the spring this is a controller(auto scan)
 @Controller
+@SessionAttributes("newaccount")
 public class ProductController {
 	ApplicationContext context =  new ClassPathXmlApplicationContext("spring-module.xml");
 	
