@@ -48,13 +48,24 @@ public class SupplierController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/updateSupplier", method = RequestMethod.POST)
-	public ModelAndView updateSupplier(@ModelAttribute("id")String id, @ModelAttribute("supplierName")String supplierName, @ModelAttribute("supplierPhone")String supplierPhone, @ModelAttribute("supplierAddress")String supplierAddress, @ModelAttribute("supplierLevel")String supplierLevel){
+	@RequestMapping(value = "/updateSupplier", method = RequestMethod.GET)
+	public ModelAndView updateSupplier(@ModelAttribute("id")String id){
 		// Add the supplier information
-		ModelAndView model = new ModelAndView("redirect:/SupplierList");
+		ModelAndView model = new ModelAndView("ChangeSupplierDetail");
 		SupplierDAOImpl supplierDAO = (SupplierDAOImpl)context.getBean("supplierDAO");
-		Supplier newSupplierInfo = new Supplier(Long.parseLong(id), supplierName, supplierPhone, supplierAddress, supplierLevel);
-		supplierDAO.update(Long.parseLong(id), newSupplierInfo);
+		Supplier supplier = new Supplier();
+		supplier = supplierDAO.get(Long.parseLong(id));
+		model.addObject("supplierName", supplier.getSupplierName());
+		model.addObject("supplierPhone", supplier.getPhone());
+		model.addObject("supplierAddress", supplier.getAddress());
+		
+		if(supplier.getLevel() == "A") {
+			model.addObject("isClassA", false);
+		}else {
+			model.addObject("isClassA", true);
+		}
+		
+		
 		
 		return model;
 	}

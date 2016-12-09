@@ -58,13 +58,19 @@ public class ProductController {
 	@RequestMapping(value = "/updateProduct", method = RequestMethod.GET)
 	public ModelAndView updateProduct(@ModelAttribute("id") String productID){
 		// Update the product information
-		ModelAndView model = new ModelAndView("redirect:/productList");
+		ModelAndView model = new ModelAndView("ChangeProductDetail");
 		ProductDAO productDAO = (ProductDAO)context.getBean("productDAO");
 		Product newProductInfo = productDAO.get(Long.parseLong(productID));
 //		productDAO.update(productID, newProductInfo);
-		System.out.println("ID" + newProductInfo.getProductID());
-		System.out.println("Name : " + newProductInfo.getProductName());
-		System.out.println("Supplier : " + newProductInfo.getSupplierID());
+		
+		model.addObject("productName", newProductInfo.getProductID());
+		model.addObject("productPrice", newProductInfo.getPrice());
+		model.addObject("isInTheMarket", newProductInfo.isInTheMarket());
+		
+		SupplierDAO supplierDAO = (SupplierDAO)context.getBean("supplierDAO");
+		ArrayList<Supplier> supplierList = new ArrayList<Supplier>();
+		supplierList = supplierDAO.getList();
+		model.addObject("supplierList", supplierList);
 		return model;
 	}
 	

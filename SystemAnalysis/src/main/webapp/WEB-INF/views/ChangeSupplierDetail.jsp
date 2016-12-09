@@ -64,18 +64,19 @@
                                     <div class="modal-body">
                                             <div class="form-group">
                                                 <label>廠商名稱</label>
-                                                <input class="form-control" name="supplierName" value="${supplier.name}" placeholder="輸入廠商名稱" required="required">
+                                                <input class="form-control" name="supplierName" value="${supplierName}" placeholder="輸入廠商名稱" required="required">
                                             </div>
                                             <div class="form-group">
                                                 <label>聯絡電話</label>
-                                                <input class="form-control" name="supplierPhone" value="${supplier.phone}" placeholder="輸入聯絡電話 - 0288444222" required="required">
+                                                <input class="form-control" name="supplierPhone" value="${supplierPhone}" placeholder="輸入聯絡電話 - 0288444222" required="required">
                                             </div>
                                             <div class="form-group">
                                                 <label>廠商地址</label>
-                                                <input class="form-control" name="supplierAddress" value="${supplier.address}" placeholder="輸入廠商地址" required="required">
+                                                <input class="form-control" name="supplierAddress" value="${supplierAddress}" placeholder="輸入廠商地址" required="required">
                                             </div>
                                             <div class="form-group">
-                                            	<%if(supplier.Level == "A") { %>
+                                            <c:choose>
+                                            	<c:when test="${isClassA}">
 	                                                <label>分級: </label>
 	                                                <label class="radio-inline">
 	                                                    <input type="radio" name="supplierLevel" id="optionsRadiosInline1" value="A" checked required>A
@@ -83,7 +84,8 @@
 	                                                <label class="radio-inline">
 	                                                    <input type="radio" name="supplierLevel" id="optionsRadiosInline2" value="B">B
 	                                                </label>
-	                                            <%}else {%>
+	                                            </c:when>
+	                                            <c:otherwise>
 	                                            	<label>分級: </label>
 	                                                <label class="radio-inline">
 	                                                    <input type="radio" name="supplierLevel" id="optionsRadiosInline1" value="A" required>A
@@ -91,7 +93,8 @@
 	                                                <label class="radio-inline">
 	                                                    <input type="radio" name="supplierLevel" id="optionsRadiosInline2" value="B" checked>B
 	                                                </label>
-	                                            <%}%>
+	                                            </c:otherwise>
+	                                            </c:choose>
                                             </div>
                                     </div>
                                     <div class="modal-footer">

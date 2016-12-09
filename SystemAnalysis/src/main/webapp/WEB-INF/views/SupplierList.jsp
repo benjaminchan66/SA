@@ -126,7 +126,7 @@
                                             <td>${supplier.getAddress()}</td>
                                             <td>${supplier.getLevel()}</td>
                                             <td>
-                                                <a class="btn btn-warning" href="updateProduct?id=${supplier.getSupplierID()}">修改</a>
+                                                <a class="btn btn-warning" href="updateSupplier?id=${supplier.getSupplierID()}">修改</a>
                                             </td>
                                         </tr>
 									</c:forEach>
