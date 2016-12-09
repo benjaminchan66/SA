@@ -54,13 +54,13 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <form class="form-inline" action="insertRequisition" method="POST">
+                            <form class="form-inline" action="insertRequisition" method="POST" style="margin-bottom: 0px;">
                                 <div class="row">
-                                    <div class="col-lg-2">
+                                    <div class="col-lg-3">
                                         <h4>請購商品</h4>
                                     </div>
                                     <div class="col-lg-4">
-                                        <label class="h5">廠商:</label>
+                                        <label class="h4">廠商:</label>
                                         <select class="form-control" name="chosenSupplierID">
                                             <c:forEach items="${supplierList}" var="supplier">
                                                 <option value=${supplier.getSupplierID()}>${supplier.getSupplierName()}</option>
@@ -68,13 +68,12 @@
                                         </select>
                                         <button type="submit" name="submit" class="btn btn-default btn-hide" id="btn-view">選擇</button>
                                     </div>
-                                    <div class="col-lg-2 col-lg-offset-4">
+                                    <div class="col-lg-2 col-lg-offset-3">
                                         <a class="btn btn-primary" href="previewDetailRequisition">明細預覽</a>
                                     </div>
                                 </div>
                             </form>
                         </div>
-                        
                         <%if (request.getParameter("selectedSupplierID")!=null) {%>
                             <div class="panel-body">
                                 <table width="100%" class="table table-striped table-bordered table-hover">
