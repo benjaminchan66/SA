@@ -74,7 +74,7 @@ public class SupplierController {
 	@RequestMapping(value = "/updateSupplier", method = RequestMethod.POST)
 	public ModelAndView sendSupplierInfo(@ModelAttribute("supplierID")String id, @ModelAttribute("supplierName")String name, @ModelAttribute("supplierPhone")String phone, @ModelAttribute("supplierAddress")String address, @ModelAttribute("supplierLevel")String level){
 		// Add the supplier information
-		ModelAndView model = new ModelAndView("ChangeSupplierDetail");
+		ModelAndView model = new ModelAndView("redirect:/SupplierList");
 		SupplierDAOImpl supplierDAO = (SupplierDAOImpl)context.getBean("supplierDAO");
 		Supplier newSupplierInfo = new Supplier();
 		newSupplierInfo.setSupplierName(name);

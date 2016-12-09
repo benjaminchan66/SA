@@ -78,11 +78,11 @@
 			                                        <c:choose>
 			                                        <c:when test="${supplier.getSupplierID() == supplierID}">
 			                                        	<option value=${supplier.getSupplierID()} selected="">${supplier.getSupplierName()}</option>
-			                                        	<%System.out.print("111");%>
+			                                        	
 			                                        </c:when>
 			                                        <c:otherwise>
 			                                            <option value=${supplier.getSupplierID()}>${supplier.getSupplierName()}</option>
-			                                            <%System.out.print("222");%>
+			                                            
 			                                            </c:otherwise>
                                                 </c:choose>
 			                                        </c:forEach>

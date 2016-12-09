@@ -45,6 +45,7 @@ public class RequisitionController {
 			ArrayList<Product> productList = new ArrayList<Product>();
 			productList = productDAO.getProductOf(this.selectedSupplier);
 			model.addObject("productList", productList);
+			model.addObject("selectedSupplier", this.selectedSupplier);
 			this.selectedSupplier = null;
 			this.hasSelectedSupplier = false;
 			
