@@ -20,26 +20,24 @@ import com.sa.finalproject.DAO.impl.EmployeeDAOImpl;
 import com.sa.finalproject.entity.Employee;
 
 @Controller
+@SessionAttributes("newaccount")
 public class AccountController {
+	
+	
+	@Autowired
+	private Employee account_session;
 	
 	ApplicationContext context =  new ClassPathXmlApplicationContext("spring-module.xml");
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value={"/", "/index"}, method = RequestMethod.GET)
 	public ModelAndView login(){
 		// show the page that let user scan their id card
 		ModelAndView model = new ModelAndView("index");
 		return model;
 	}
 	
-	// for test
-	@RequestMapping(value = "/Login2", method = RequestMethod.GET)
-	public ModelAndView login2(){
-		// show the page that let user scan their id card
-		ModelAndView model = new ModelAndView("login");
-		return model;
-	}
 	
-	@RequestMapping(value = "/", method = RequestMethod.POST)
+	@RequestMapping(value={"/", "/index"}, method = RequestMethod.POST)
 	public ModelAndView checkLogin(@ModelAttribute("userID") String employeeID){
 		// show the page that let user scan their id card
 		ModelAndView model = new ModelAndView("redirect:/productList");
@@ -53,8 +51,16 @@ public class AccountController {
 			Employee currentStaff = staffList.get(i);
 			if(currentStaff.getId().equals(employeeID)) {
 				System.out.println("Current staff ID is " + currentStaff.getId() + ".");
+				account_session.setId(employeeID);
+				model.addObject("newaccount", account_session);
 				model = new ModelAndView("redirect:/Dashboard");
+				
 				break;
+			}else {
+				model = new ModelAndView("index");
+//				model.addObject("message", "Login failed");
+				account_session.setId("");
+				model.addObject("newaccount", account_session);
 			}
 		}
 		return model;
@@ -70,17 +76,19 @@ public class AccountController {
 	}
 	
 	@RequestMapping(value = "/Profile", method = RequestMethod.GET)
-	public ModelAndView showProfile(){
+	public ModelAndView showProfile(@ModelAttribute("id")String profileID){
 		// check the identity
 		ModelAndView model = new ModelAndView("Profile");
+		EmployeeDAOImpl staffDAO = (EmployeeDAOImpl) context.getBean("EmployeeDAO");
+		Employee staff = staffDAO.getAEmployee(Long.parseLong(profileID));
 		
-		model.addObject("staffID", "403401316");
-		model.addObject("staffName", "BEN");
-		model.addObject("staffLevel", "Vice president");
-		model.addObject("staffDep", "Information");
+		
+		model.addObject("staffID", profileID);
+		model.addObject("staffName", staff.getName());
+		model.addObject("staffLevel", staff.getLevel());
+		model.addObject("staffDep", staff.getDep());
 		
 		
 		return model;
 	}
-	
 }
