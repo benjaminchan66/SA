@@ -62,9 +62,6 @@ public class ProductController {
 		ProductDAO productDAO = (ProductDAO)context.getBean("productDAO");
 		Product newProductInfo = productDAO.get(Long.parseLong(productID));
 //		productDAO.update(productID, newProductInfo);
-		System.out.println("ID" + newProductInfo.getProductID());
-		System.out.println("Name : " + newProductInfo.getProductName());
-		System.out.println("Supplier : " + newProductInfo.getSupplierID());
 		
 		model.addObject("productName", newProductInfo.getProductID());
 		model.addObject("productPrice", newProductInfo.getPrice());

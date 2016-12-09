@@ -80,7 +80,8 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>狀態: </label>
-										<c:if test="${isInTheMarket == true}">
+                                                <c:choose>
+										<c:when test="${isInTheMarket}">
 											<label class="radio-inline"> <input type="radio"
 												name="isInTheMarket" id="optionsRadiosInline1" value="true"
 												checked required>供貨中
@@ -88,7 +89,7 @@
 											<label class="radio-inline"> <input type="radio"
 												name="isInTheMarket" id="optionsRadiosInline2" value="false">斷貨
 											</label>
-										</c:if>
+										</c:when>
 										<c:otherwise>
                                                 	<label class="radio-inline">
 	                                                    <input type="radio" name="isInTheMarket" id="optionsRadiosInline1" value="true" required>供貨中
@@ -97,6 +98,7 @@
 	                                                    <input type="radio" name="isInTheMarket" id="optionsRadiosInline2" value="false" checked>斷貨
 	                                                </label>
                                                 </c:otherwise>
+                                                </c:choose>
                                             </div>
                                     </div>
                                     <div class="modal-footer">
