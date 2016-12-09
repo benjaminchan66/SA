@@ -60,7 +60,8 @@
                         </div>
                         <div>
                             <!-- <center> -->
-                                <form role="form" action="ProductList.html" method="POST">
+                                <form role="form" action="updateProduct" method="POST">
+                                	<input type="hidden" name="productID" value="${productID}">
                                     <div class="modal-body">
                                             <div class="form-group">
                                                 <label>商品名稱</label>
@@ -74,7 +75,16 @@
                                                 <label>選擇廠商</label>
                                                 <select class="form-control" name="productSupplier">
 			                                        <c:forEach items="${supplierList}" var="supplier">
+			                                        <c:choose>
+			                                        <c:when test="${supplier.getSupplierID() == supplierID}">
+			                                        	<option value=${supplier.getSupplierID()} selected="">${supplier.getSupplierName()}</option>
+			                                        	<%System.out.print("111");%>
+			                                        </c:when>
+			                                        <c:otherwise>
 			                                            <option value=${supplier.getSupplierID()}>${supplier.getSupplierName()}</option>
+			                                            <%System.out.print("222");%>
+			                                            </c:otherwise>
+                                                </c:choose>
 			                                        </c:forEach>
 			                                    </select>
                                             </div>
@@ -102,7 +112,7 @@
                                             </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <a href="ProductList.html" class="btn btn-warning">返回</a>
+                                        <a href="productList" class="btn btn-warning">返回</a>
                                         <button type="submit" class="btn btn-primary">Save</button>
                                     </div>
                                 </form>

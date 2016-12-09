@@ -110,6 +110,7 @@ public class ProductDAOImpl implements ProductDAO {
 	public void update(long aProductID, Product newProductInfo) {
 		// TODO Auto-generated method stub
 		String sql = "UPDATE Product SET product_name = ?, product_price = ?, inventory = ?, isInTheMarket = ?, supplier_id = ? WHERE product_id = ?";
+		String sql2 = "UPDATE SuppliedProduct SET supplier_id = ? WHERE product_id = ?";
 		try {
 			conn = dataSource.getConnection();
 			smt = conn.prepareStatement(sql);
@@ -120,6 +121,12 @@ public class ProductDAOImpl implements ProductDAO {
 			smt.setBoolean(4, newProductInfo.isInTheMarket());
 			smt.setLong(5, newProductInfo.getSupplierID());
 			
+			smt.executeUpdate();
+			smt.close();
+			
+			smt = conn.prepareStatement(sql2);
+			smt.setLong(1, newProductInfo.getSupplierID());
+			smt.setLong(2, aProductID);
 			smt.executeUpdate();
 			smt.close();
 			

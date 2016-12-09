@@ -62,10 +62,11 @@ public class ProductController {
 		ProductDAO productDAO = (ProductDAO)context.getBean("productDAO");
 		Product newProductInfo = productDAO.get(Long.parseLong(productID));
 //		productDAO.update(productID, newProductInfo);
-		
+		model.addObject("productID", productID);
 		model.addObject("productName", newProductInfo.getProductID());
 		model.addObject("productPrice", newProductInfo.getPrice());
 		model.addObject("isInTheMarket", newProductInfo.isInTheMarket());
+		model.addObject("supplierID", newProductInfo.getSupplierID());
 		
 		SupplierDAO supplierDAO = (SupplierDAO)context.getBean("supplierDAO");
 		ArrayList<Supplier> supplierList = new ArrayList<Supplier>();
@@ -74,17 +75,21 @@ public class ProductController {
 		return model;
 	}
 	
-	/*
+	
 	@RequestMapping(value = "/updateProduct", method = RequestMethod.POST)
-	public ModelAndView updateProduct(@ModelAttribute("producID") long productID, @ModelAttribute("productName") String newName, @ModelAttribute("productPrice") int newPrice, @ModelAttribute("isInTheMarket") boolean newProductStatus, @ModelAttribute("supplierID") long newSupplierID){
+	public ModelAndView updateProduct(@ModelAttribute("producID")String productID, @ModelAttribute("productName") String newName, @ModelAttribute("productPrice") String newPrice, @ModelAttribute("isInTheMarket") boolean newProductStatus, @ModelAttribute("supplierID") long newSupplierID){
 		// Update the product information
 		ModelAndView model = new ModelAndView("redirect:/productList");
 		ProductDAO productDAO = (ProductDAO)context.getBean("productDAO");
-		Product newProductInfo = new Product(newName, newPrice, newProductStatus, newSupplierID);
-		productDAO.update(productID, newProductInfo);
+		Product newProductInfo = new Product();
+		newProductInfo.setProductName(newName);
+		newProductInfo.setPrice(Integer.parseInt(newPrice));
+		newProductInfo.setInTheMarket(newProductStatus);
+		newProductInfo.setSupplierID(newSupplierID);
+		productDAO.update(Long.parseLong(productID), newProductInfo);
 		
 		return model;
-	}*/
+	}
 	
 	
 //	@RequestMapping(value = "/productIDSearch", method = RequestMethod.GET)

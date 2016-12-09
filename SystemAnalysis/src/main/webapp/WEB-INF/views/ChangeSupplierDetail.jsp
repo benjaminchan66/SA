@@ -60,7 +60,8 @@
                         </div>
                         <div>
                             <!-- <center> -->
-                                <form role="form" action="SupplierList.html" method="POST">
+                                <form role="form" action="updateSupplier" method="POST">
+                                	<input type="hidden" name="supplierID" value="${supplierID}">
                                     <div class="modal-body">
                                             <div class="form-group">
                                                 <label>廠商名稱</label>
@@ -98,7 +99,7 @@
                                             </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <a href="SupplierList.html" class="btn btn-warning">返回</a>
+                                        <a href="SupplierList" class="btn btn-warning">返回</a>
                                         <button type="submit" class="btn btn-primary">Save</button>
                                     </div>
                                 </form>

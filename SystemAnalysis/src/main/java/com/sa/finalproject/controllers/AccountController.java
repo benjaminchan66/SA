@@ -53,7 +53,9 @@ public class AccountController {
 				System.out.println("Current staff ID is " + currentStaff.getId() + ".");
 				account_session.setId(employeeID);
 				model.addObject("newaccount", account_session);
+				System.out.println("ID : " + account_session.getId());
 				model = new ModelAndView("redirect:/Dashboard");
+				
 				
 				break;
 			}else {

@@ -55,6 +55,7 @@ public class SupplierController {
 		SupplierDAOImpl supplierDAO = (SupplierDAOImpl)context.getBean("supplierDAO");
 		Supplier supplier = new Supplier();
 		supplier = supplierDAO.get(Long.parseLong(id));
+		model.addObject("supplierID", id);
 		model.addObject("supplierName", supplier.getSupplierName());
 		model.addObject("supplierPhone", supplier.getPhone());
 		model.addObject("supplierAddress", supplier.getAddress());
@@ -65,7 +66,20 @@ public class SupplierController {
 			model.addObject("isClassA", true);
 		}
 		
-		
+		return model;
+	}
+	
+	@RequestMapping(value = "/updateSupplier", method = RequestMethod.POST)
+	public ModelAndView sendSupplierInfo(@ModelAttribute("supplierID")String id, @ModelAttribute("supplierName")String name, @ModelAttribute("supplierPhone")String phone, @ModelAttribute("supplierAddress")String address, @ModelAttribute("supplierLevel")String level){
+		// Add the supplier information
+		ModelAndView model = new ModelAndView("ChangeSupplierDetail");
+		SupplierDAOImpl supplierDAO = (SupplierDAOImpl)context.getBean("supplierDAO");
+		Supplier newSupplierInfo = new Supplier();
+		newSupplierInfo.setSupplierName(name);
+		newSupplierInfo.setPhone(phone);
+		newSupplierInfo.setAddress(address);
+		newSupplierInfo.setLevel(level);
+		supplierDAO.update(Long.parseLong(id), newSupplierInfo);
 		
 		return model;
 	}
