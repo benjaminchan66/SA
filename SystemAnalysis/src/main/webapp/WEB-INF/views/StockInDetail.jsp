@@ -45,53 +45,49 @@
 		<div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">入庫單:A12345678</h1>
+                    <h1 class="page-header">入庫單: ${ww.getWwSerial()}</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-           	<div class="row">
+           <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                        	<div class="row">
-                            	<div class="col-lg-8"><h5>供應商:Apple</h5></div>
-                            	<div class="col-lg-3"><h5>入庫人員:王聲婕</h5></div>
-                            	<div><h5 class="col-lg-8">供應商編號:001</h5></div>
-                            	<div><h5 class="col-lg-3">員工編號:12345</h5></div>
-                            </div>
+                         <div class="row">
+                            <div class="col-lg-5"><h5>供應商: ${ww.getSupplierID()}</h5></div>
+                            <div class="col-lg-4"><h5>入庫人員: ${ww.getEmployeeID()}</h5></div>
+                            <div class="col-lg-3"><h5>入庫時間: ${ww.getDate()}</h5></div>
+                         </div>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables`-example">
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
-                                        <th style="width: 150px">商品編號</th>
+                                        <th>商品編號</th>
                                         <th>商品名稱</th>
                                         <th>數量</th>
-                                        <th>入庫日期</th>
-                                        <th>入庫時間</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="odd gradeA">
-                                        <td>001</td>
-                                        <td>Apple Lightning 8pin 原廠USB傳輸線</td>
-                                        <td>30</td>
-                                        <td>12月7日</td>
-                                        <td>17:50</td>
-                                    </tr>
+                                    <c:forEach items="${productList}" var="product">
+                                        <tr class="odd gradeA">
+                                            <td>${product.getProductID()}</td>
+                                            <td>${product.getProductName()}</td>
+                                            <td>${product.getInventory()}</td>
+                                        </tr>
+                                    </c:forEach>
                                 </tbody>
                             </table>
                            <div style="float:right">
-                                    <a href="StockIn"><button type="button" class="btn btn-warning">關閉</button></a>
-                                </div>
+                                <a href="StockIn"><button type="button" class="btn btn-warning">關閉</button></a>
+                            </div>
                         </div>
-
                     </div>
-              </div>
+                </div>
+            </div>
         </div>
-        <!-- /#page-wrapper -->
 
 	</div>
 
