@@ -19,17 +19,15 @@ import com.sa.finalproject.entity.BillOfPurchase;
 import com.sa.finalproject.entity.PurchasingRequisition;
 import com.sa.finalproject.entity.Remark;
 
-
-
-
 @Controller
 @SessionAttributes("newaccount")
 public class BillOfPurchaseController {
 	ApplicationContext context =  new ClassPathXmlApplicationContext("spring-module.xml");
 	
 	
-	@RequestMapping(value = "/Order", method = RequestMethod.GET) //顯示所有進貨單
+	@RequestMapping(value = "/Order", method = RequestMethod.GET)
 	public ModelAndView getBOPList(){
+		//顯示所有進貨單
 		ModelAndView model = new ModelAndView("Order");
 		BillOfPurchaseDAO billOfPurchaseDAO = (BillOfPurchaseDAO)context.getBean("BillOfPurchaseDAO");
 	    ArrayList<BillOfPurchase> billOfPurchaseList = new ArrayList<BillOfPurchase>();
@@ -38,8 +36,9 @@ public class BillOfPurchaseController {
 		
 		return model;
 	}
-	@RequestMapping(value = "/bopDetailList", method = RequestMethod.GET) //列出進貨單明細
+	@RequestMapping(value = "/bopDetailList", method = RequestMethod.GET)
 	public ModelAndView detailList(@ModelAttribute("id") String bopserial){
+		//列出單一進貨單明細
 		ModelAndView model = new ModelAndView("Testfile");
 		BillOfPurchaseDAO billofpurchase = (BillOfPurchaseDAO)context.getBean("BillOfPurchaseDAO");
 		BillOfPurchase bop = billofpurchase.get(Long.parseLong(bopserial));
@@ -47,8 +46,9 @@ public class BillOfPurchaseController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/unpaidList", method = RequestMethod.GET) //顯示到貨且未付款訂單
+	@RequestMapping(value = "/unpaidList", method = RequestMethod.GET)
 	public ModelAndView showUnpaidProductList(){
+		//顯示到貨且未付款訂單
 		ModelAndView model = new ModelAndView("ShowUpaidList");
 		BillOfPurchaseDAO billOfPurchaseDAO = (BillOfPurchaseDAO)context.getBean("BillOfPurchaseDAO");
 		List<BillOfPurchase> billOfPurchaseList = new ArrayList<BillOfPurchase>();

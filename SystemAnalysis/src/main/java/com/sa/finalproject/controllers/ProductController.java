@@ -116,30 +116,4 @@ public class ProductController {
 		
 		return model;
 	}
-	
-	
-//	@RequestMapping(value = "/productIDSearch", method = RequestMethod.GET)
-//	public ModelAndView searchID(){
-//		// get the list of products
-//		ModelAndView model = new ModelAndView("Testfile2");
-//		ProductDAO productDAO = (ProductDAO)context.getBean("productDAO");
-//		return model;
-//	}
-	
-//	@RequestMapping(value = "/productIDSearch", method = RequestMethod.POST)
-//	public ModelAndView showProduct(@ModelAttribute("producID") long productID){
-//		// 
-//		ModelAndView model = new ModelAndView("Testfile");
-//		ProductDAO productDAO = (ProductDAO)context.getBean("productDAO");
-//		Product aProduct = productDAO.get(productID);
-//		
-//		model.addObject("productCode", aProduct.getProductID());
-//		model.addObject("productName", aProduct.getProductName());
-//		model.addObject("productPrice", aProduct.getPrice());
-//		model.addObject("supplierCode", aProduct.getSupplierID());
-//		
-//		return model;
-//	}
-	
-	
 }
