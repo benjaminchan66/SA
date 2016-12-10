@@ -18,12 +18,6 @@
 <link href="resources/vendor/metisMenu/metisMenu.min.css"
 	rel="stylesheet">
 
-<!-- DataTables CSS -->
-<link href="resources/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
-
-<!-- DataTables Responsive CSS -->
-<link href="resources/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
-
 <!-- Custom CSS -->
 <link href="resources/dist/css/sb-admin-2.css" rel="stylesheet">
 
@@ -68,26 +62,27 @@
                                     <tr>
                                         <th style="width: 200px">入庫單編號</th>
                                         <th>供應商</th>
+                                        <th>入庫日期</th>
                                         <th>入庫時間</th>
                                         <th>入庫人員</th>
                                         <th style="width: 120px">詳情</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach items="${wwList}" var="ww">
-                                        <tr class="odd gradeA">
-                                            <td>${ww.getWwSerial()}</p></td>
-                                            <td>${ww.getSupplierID()}</td>
-                                            <td>${ww.getDate()}</td>
-                                            <td>${ww.getEmployeeID()}</td>
-                                            <td>
-                                                <a href="StockInDetail?id=${ww.getWwSerial()}" class="btn btn-warning">查看</a>
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
+                                    <tr class="odd gradeA">
+                                        <td>A12345678</p></td>
+                                        <td>Apple</td>
+                                        <td>12月7日</td>
+                                        <td>17:50</td>
+                                        <td>王聲婕</td>
+                                        <td>
+                                            <a href="StockInDetail"><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModalChange">查看</button></a>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                             <!-- /.table-responsive -->
+                        
                         </div>
                     </div>
            
@@ -113,22 +108,8 @@
 	<script src="resources/vendor/raphael/raphael.min.js"></script>
 	<script src="resources/vendor/morrisjs/morris.min.js"></script>
 	<script src="resources/data/morris-data.js"></script>
-    
-    <!-- DataTables JavaScript -->
-    <script src="resources/vendor/datatables/js/jquery.dataTables.min.js"></script>
-    <script src="resources/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
-    <script src="resources/vendor/datatables-responsive/dataTables.responsive.js"></script>
 
 	<!-- Custom Theme JavaScript -->
 	<script src="resources/dist/js/sb-admin-2.js"></script>
-
-    <script>
-    $(document).ready(function() {
-        $('#dataTables-search').DataTable({
-            responsive: true
-        });
-    });
-    </script>
-
 </body>
 </html>

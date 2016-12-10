@@ -51,7 +51,7 @@
 		<div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">入庫單</h1>
+                    <h1 class="page-header">進貨單</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -60,34 +60,37 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h4>所有入庫單</h4>
+                            <h4>所有進貨單</h4>
                         </div>
                         <div class="panel-body">
                             <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-search">
                                 <thead>
                                     <tr>
-                                        <th style="width: 200px">入庫單編號</th>
-                                        <th>供應商</th>
-                                        <th>入庫時間</th>
-                                        <th>入庫人員</th>
-                                        <th style="width: 120px">詳情</th>
+                                        <th>id</th>
+                                        <th>廠商</th>
+                                        <!-- <th>總金額</th> -->
+                                        <th>到貨狀況</th>
+                                        <th>付款狀況</th>
+                                        <th>動作</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <c:forEach items="${wwList}" var="ww">
+                                 <tbody>
+                                    <c:forEach items="${bopList}" var="bop">
                                         <tr class="odd gradeA">
-                                            <td>${ww.getWwSerial()}</p></td>
-                                            <td>${ww.getSupplierID()}</td>
-                                            <td>${ww.getDate()}</td>
-                                            <td>${ww.getEmployeeID()}</td>
+                                            <td>${bop.getBopSerial()}</p></td>
+                                            <td>${bop.getSupplierID()}</td>
+                                            <!-- <td>已到貨</td> -->
+                                            <td>${bop.deliveryStatus()}</td>
+                                            <td>${bop.payingStatus}</td>
                                             <td>
-                                                <a href="StockInDetail?id=${ww.getWwSerial()}" class="btn btn-warning">查看</a>
+                                                <a href="BillOfPurchaseDetail?id=${bop.getBopSerial()}" class="btn btn-warning">查看</a>
                                             </td>
                                         </tr>
                                     </c:forEach>
-                                </tbody>
+                                 </tbody>
                             </table>
                             <!-- /.table-responsive -->
+                        
                         </div>
                     </div>
            
@@ -97,7 +100,6 @@
             <!-- /.panel-heading -->
         </div>
         <!-- /#page-wrapper -->
-
 	</div>
 
 	<!-- jQuery -->
