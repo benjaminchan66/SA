@@ -126,6 +126,7 @@ public class WarehouseWarrantDAOImpl implements WarehouseWarrantDAO{
 	@Override
 	public WarehouseWarrant get(long WW_serial) {
 		String sql = "SELECT * FROM WarehouseWarrant WHERE WW_serial = ?";
+		String sql2 = "SELECT * FROM Product_connect_WW WHERE WW_serial = ?";
 		WarehouseWarrant ww = new WarehouseWarrant();
 		try {
 			conn = dataSource.getConnection();
@@ -141,6 +142,15 @@ public class WarehouseWarrantDAOImpl implements WarehouseWarrantDAO{
 			}
 			rs.close();
 			smt.close();
+			
+			smt = conn.prepareStatement(sql2);
+			smt.setLong(1, WW_serial);
+			rs = smt.executeQuery();
+			
+			PurchaseOrder order = new PurchaseOrder();
+			while(rs.next()) {
+				//
+			}
  
 		} catch (SQLException e) {
 			throw new RuntimeException(e);

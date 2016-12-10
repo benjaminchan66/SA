@@ -365,9 +365,64 @@ public class PurchasingRequisitionDAOImpl implements PurchasingRequisitionDAO {
 			
 		} catch(SQLException e) {
 			throw new RuntimeException(e);
+		}finally {
+			try {
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// do nothing
+			}
 		}
 		
 		return requisitionList;
+	}
+	
+	public Supplier getASupplierOf(long prSerial) {
+		Supplier supplier = new Supplier();
+		String sql = "SELECT * FROM PR_supplier_grade WHERE PR_serial = ?";
+		try {
+			conn = dataSource.getConnection();
+			smt = conn.prepareStatement(sql);
+			smt.setLong(1, prSerial);
+			
+			rs = smt.executeQuery();
+			
+			if(rs.next()) {
+				long supplierID = rs.getLong("supplier_id");
+				supplier.setSupplierID(supplierID);
+			}
+			
+			rs.close();
+			smt.close();
+			
+			String sql2 = "SELECT * FROM Supplier WHERE supplier_id = ?";
+			smt = conn.prepareStatement(sql2);
+			smt.setLong(1, supplier.getSupplierID());
+			rs = smt.executeQuery();
+			if(rs.next()) {
+				supplier.setSupplierName(rs.getString("supplier_name"));
+				supplier.setPhone(rs.getString("supplier_phone"));
+				supplier.setAddress(rs.getString("supplier_address"));
+				supplier.setLevel(rs.getString("supplier_level"));
+			}
+			
+			rs.close();
+			smt.close();
+			
+		} catch(SQLException e) {
+			throw new RuntimeException(e);
+		}finally {
+			try {
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// do nothing
+			}
+		}
+		
+		return supplier;
 	}
 	
 }

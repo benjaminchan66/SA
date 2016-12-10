@@ -28,7 +28,7 @@ public class BillOfPurchaseController {
 	ApplicationContext context =  new ClassPathXmlApplicationContext("spring-module.xml");
 	
 	
-	@RequestMapping(value = "/bopList", method = RequestMethod.GET) //顯示所有進貨單
+	@RequestMapping(value = "/Order", method = RequestMethod.GET) //顯示所有進貨單
 	public ModelAndView getBOPList(){
 		ModelAndView model = new ModelAndView("Order");
 		BillOfPurchaseDAO billOfPurchaseDAO = (BillOfPurchaseDAO)context.getBean("BillOfPurchaseDAO");
