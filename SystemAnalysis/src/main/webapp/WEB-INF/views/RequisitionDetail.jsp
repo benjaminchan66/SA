@@ -54,18 +54,12 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <div class="col-lg-3">
-                                <h4>廠商: Apple</h4>
+                            <div class="row">
+                                <div class="col-lg-8"><h5>廠商: Apple</h5></div>
+                                <div class="col-lg-3"><h5>廠商分級: A</h5></div>
+                                <div><h5 class="col-lg-8">開單人: 陳常樂</h5></div>
+                                <div><h5 class="col-lg-3">開單日期: 2016/10/10</h5></div>
                             </div>
-                            <div class="col-lg-3">
-                                <h4>開單人: 陳常樂</h4>
-                            </div>
-                            <div class="col-lg-3">
-                                <h4>廠商分級: A</h4>
-                                
-                            </div>
-                            <h4>日期: 2016年12月31日</h4>
-
                         </div>
                         <div class="panel-body">
                             <form action="listRequisition">
