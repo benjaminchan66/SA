@@ -71,36 +71,22 @@
                                         <th>id</th>
                                         <th>廠商</th>
                                         <th>總金額</th>
+                                        <th>確認狀態</th>
                                         <th>動作</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="odd gradeA">
-                                        <td>001</td>
-                                        <td>Apple</td>
-                                        <td>$34900</td>
-                                        <td>
-                                            <a href="listDetailRequisition"><button type="button" class="btn btn-info">查看明細</button></a>
-                                        </td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>002</td>
-                                        <td>ONPRO</td>
-                                        <td>$19000</td>
-                                        <td>
-                                            <a href="listDetailRequisition"><button type="button" class="btn btn-info">查看明細</button></a>
-                                        </td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>003</td>
-                                        <td>統亞電子科技股份有限公司</td>
-                                        <td>$4900</td>
-                                        <td>
-                                            <a href="listDetailRequisition"><button type="button" class="btn btn-info">查看明細</button></a>
-                                        </td>
-                                    </tr>
-                                    
-
+                                    <c:forEach items="${prList}" var="pr">
+                                        <tr class="odd gradeA">
+                                            <td>${pr.getPrSerial()}</td>
+                                            <td>${pr.getSupplier()}</td>
+                                            <td>${pr.getRequisitionContent().getListPrice()}</td>
+                                            <th>${pr.getConfirmStatus()}</th>
+                                            <td>
+                                                <a href="listDetailRequisition?id=${pr.getPrSerial()}" class="btn btn-info">查看明細</a>
+                                            </td>
+                                        </tr>
+                                       </c:forEach>
                                 </tbody>
                             </table>
                             <!-- /.table-responsive -->
