@@ -20,5 +20,8 @@ public interface PurchasingRequisitionDAO {
 	// 取得該訂單的廠商
 	public Supplier getASupplierOf(long prSerial);
 	
+	// 取得單一請購單的內容物
+	public PurchaseOrder getContentOf(long prSerial);
+	
 	
 }

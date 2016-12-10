@@ -126,7 +126,6 @@ public class WarehouseWarrantDAOImpl implements WarehouseWarrantDAO{
 	@Override
 	public WarehouseWarrant get(long WW_serial) {
 		String sql = "SELECT * FROM WarehouseWarrant WHERE WW_serial = ?";
-		String sql2 = "SELECT * FROM Product_connect_WW WHERE WW_serial = ?";
 		WarehouseWarrant ww = new WarehouseWarrant();
 		try {
 			conn = dataSource.getConnection();
@@ -143,14 +142,11 @@ public class WarehouseWarrantDAOImpl implements WarehouseWarrantDAO{
 			rs.close();
 			smt.close();
 			
-			smt = conn.prepareStatement(sql2);
-			smt.setLong(1, WW_serial);
-			rs = smt.executeQuery();
+			PurchaseOrder content = new PurchaseOrder();
+			content = this.getContentOf(WW_serial);
+			ww.setWwContent(content);
 			
-			PurchaseOrder order = new PurchaseOrder();
-			while(rs.next()) {
-				//
-			}
+			
  
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -164,5 +160,40 @@ public class WarehouseWarrantDAOImpl implements WarehouseWarrantDAO{
 		}
 		return ww;
 	}
+	
+	
+	// 取得單一入庫單的內容物
+		public PurchaseOrder getContentOf(long wwSerial) {
+			PurchaseOrder content = new PurchaseOrder();
+			String sql = "SELECT * FROM Product_connect_WW WHERE PR_serial = ?";
+			try {
+				conn = dataSource.getConnection();
+				smt = conn.prepareStatement(sql);
+				smt.setLong(1, wwSerial);
+				rs = smt.executeQuery();
+				
+				while(rs.next()) {
+					PurchasedProduct currentItem = new PurchasedProduct();
+					currentItem.setProductID(rs.getLong("product_id"));
+					currentItem.setProductPrice(rs.getInt("price_att"));
+					currentItem.setPurchasingAmount(rs.getInt("quantity"));
+					content.getList().add(currentItem);
+				}
+				
+				
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			} finally {
+				try {
+					if (conn != null) {
+						conn.close();
+					}
+				} catch (SQLException e) {
+					// do nothing
+				}
+			}
+			
+			return content;
+		}
 
 }
