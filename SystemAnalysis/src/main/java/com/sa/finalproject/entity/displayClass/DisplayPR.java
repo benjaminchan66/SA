@@ -6,88 +6,112 @@ import com.sa.finalproject.entity.PurchaseOrder;
 import com.sa.finalproject.entity.PurchasingRequisition;
 import com.sa.finalproject.entity.Supplier;
 
-public class DisplayPR {
-	long procurementID;
-	String procurementName;
-	PurchasingRequisition pr;
-	
-	
+public class DisplayPR extends PurchasingRequisition {
+	// ID, supplier, total amount, getConfirmStatus
+	String supplierName = "";
+	int totalAmount = 0;
+
 	public DisplayPR() {
-		this(0, "", new PurchasingRequisition());
-	}
-	
-	public DisplayPR(long procurementID, String procurementName, PurchasingRequisition pr) {
 		super();
-		this.procurementID = procurementID;
-		this.procurementName = procurementName;
-		this.pr = pr;
+		this.supplierName = "";
+		this.totalAmount = 0;
 	}
 
-	public long getProcurementID() {
-		return procurementID;
-	}
-
-	public void setProcurementID(long procurementID) {
-		this.procurementID = procurementID;
-	}
-
-	public String getProcurementName() {
-		return procurementName;
-	}
-
-	public void setProcurementName(String procurementName) {
-		this.procurementName = procurementName;
-	}
-
-	public PurchasingRequisition getPr() {
-		return pr;
-	}
-
-	public void setPr(PurchasingRequisition pr) {
-		this.pr = pr;
+	public DisplayPR(String supplierName, int totalAmount) {
+		super();
+		this.supplierName = supplierName;
+		this.totalAmount = totalAmount;
 	}
 	
+	public void setRequisition(PurchasingRequisition pr) {
+		this.setPrSerial(pr.getPrSerial());
+		this.setEmployeeID(pr.getEmployeeID());
+		this.setDate(pr.getDate());
+		this.setConfirmed(pr.isConfirmed());
+		this.setConfirmingDate(pr.getConfirmingDate());
+		this.setJudgementManagerID(pr.getJudgementManagerID());
+		this.setRequisitionContent(pr.getRequisitionContent());
+	}
+
+	// getter and setter
 	public long getPrSerial() {
-		return pr.getPrSerial();
+		return super.getPrSerial();
+	}
+
+	public void setPrSerial(long prSerial) {
+		super.setPrSerial(prSerial);
 	}
 
 	public long getEmployeeID() {
-		return pr.getEmployeeID();
+		return super.getEmployeeID();
 	}
 
-	
+	public void setEmployeeID(long employeeID) {
+		super.setEmployeeID(employeeID);
+	}
 
 	public Date getDate() {
-		return pr.getDate();
+		return super.getDate();
 	}
 
-	
+	public void setDate(Date date) {
+		super.setDate(date);
+	}
 
 	public boolean isConfirmed() {
-		return pr.isConfirmed();
+		return super.isConfirmed();
 	}
 
-	
+	public void setConfirmed(boolean isConfirmed) {
+		super.setConfirmed(isConfirmed);
+	}
 
 	public Date getConfirmingDate() {
-		return pr.getConfirmingDate();
+		return super.getConfirmingDate();
 	}
 
-	
+	public void setConfirmingDate(Date confirmingDate) {
+		super.setConfirmingDate(confirmingDate);
+	}
 
 	public long getJudgementManagerID() {
-		return pr.getJudgementManagerID();
+		return super.getJudgementManagerID();
 	}
 
-	
+	public void setJudgementManagerID(long judgementManagerID) {
+		super.setJudgementManagerID(judgementManagerID);
+	}
 
 	public PurchaseOrder getRequisitionContent() {
-		return pr.getRequisitionContent();
+		return super.getRequisitionContent();
+	}
+
+	public void setRequisitionContent(PurchaseOrder requisitionContent) {
+		super.setRequisitionContent(requisitionContent);
 	}
 
 	public Supplier getSupplier() {
-		return pr.getSupplier();
+		return super.getSupplier();
 	}
 
-	
+	public void setSupplier(Supplier supplier) {
+		super.setSupplier(supplier);
+	}
+
+	public String getSupplierName() {
+		return supplierName;
+	}
+
+	public void setSupplierName(String supplierName) {
+		this.supplierName = supplierName;
+	}
+
+	public int getTotalAmount() {
+		this.totalAmount = super.getRequisitionContent().getListPrice();
+		return totalAmount;
+	}
+
+	public void setTotalAmount(int totalAmount) {
+		this.totalAmount = totalAmount;
+	}
 }

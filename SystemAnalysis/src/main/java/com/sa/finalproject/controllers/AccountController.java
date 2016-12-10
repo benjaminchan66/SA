@@ -33,6 +33,9 @@ public class AccountController {
 	public ModelAndView login(){
 		// show the page that let user scan their id card
 		ModelAndView model = new ModelAndView("index");
+		
+		account_session.setId("");
+		
 		return model;
 	}
 	
@@ -40,7 +43,7 @@ public class AccountController {
 	@RequestMapping(value={"/", "/index"}, method = RequestMethod.POST)
 	public ModelAndView checkLogin(@ModelAttribute("userID") String employeeID){
 		// show the page that let user scan their id card
-		ModelAndView model = new ModelAndView("redirect:/productList");
+		ModelAndView model = new ModelAndView("");
 		EmployeeDAOImpl staffDAO = (EmployeeDAOImpl) context.getBean("EmployeeDAO");
 		List<Employee> staffList = staffDAO.getList();
 		
@@ -56,11 +59,9 @@ public class AccountController {
 				System.out.println("ID : " + account_session.getId());
 				model = new ModelAndView("redirect:/Dashboard");
 				
-				
 				break;
 			}else {
 				model = new ModelAndView("index");
-//				model.addObject("message", "Login failed");
 				account_session.setId("");
 				model.addObject("newaccount", account_session);
 			}
@@ -73,7 +74,6 @@ public class AccountController {
 		// check the identity
 		ModelAndView model = new ModelAndView("Dashboard");
 		model.addObject("newaccount", account_session);
-		
 		
 		return model;
 	}

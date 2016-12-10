@@ -60,7 +60,7 @@ public class RequisitionController {
 	
 	@RequestMapping(value = "/insertRequisition", method = RequestMethod.POST)
 	public ModelAndView insertRequisition(@ModelAttribute("selectedSupplierID")String selectedID){
-		// show all the products of a specific supplier
+		// show all the products of that selected supplier
 		ModelAndView model = new ModelAndView("redirect:/insertRequisition");
 		this.selectedSupplier = Long.parseLong(selectedID);
 		this.hasSelectedSupplier = true;
@@ -82,11 +82,12 @@ public class RequisitionController {
 	
 	
 	@RequestMapping(value = "/listRequisition", method = RequestMethod.POST)
-	public ModelAndView confirmRequisition(@ModelAttribute("staffID")long staffID, @ModelAttribute("requisitionSerial")long aRequisitionSerial, @ModelAttribute("isConfirmed")boolean isConfirmed){
+	public ModelAndView confirmRequisition(@ModelAttribute("prSerial")String prSerial){
 	
-		ModelAndView model = new ModelAndView("redirect:/listRequisition");
+		ModelAndView model = new ModelAndView("requisitionDetail");
 		PurchasingRequisitionDAO requisitionDAO = (PurchasingRequisitionDAO)context.getBean("purchaseRequisitionDAO");
-		requisitionDAO.confirm(staffID, aRequisitionSerial, isConfirmed);
+//		requisitionDAO.confirm(staffID, aRequisitionSerial, isConfirmed);
+		PurchasingRequisition pr = requisitionDAO.get(Long.parseLong(prSerial)); 
 		
 		return model;
 	}
@@ -96,13 +97,13 @@ public class RequisitionController {
 		ModelAndView model = new ModelAndView("previewDetailRequisition");
 		// 顯示購物車內容物
 		
-		return null;
+		return model;
 	}
 	
 	
 	@RequestMapping(value = "/insertFakeRequisition", method = RequestMethod.GET)
 	public ModelAndView insertFakeRequisition(){
-		// 開立請購單動作執行
+		// 開立請購單動作執行與測試
 		ModelAndView model = new ModelAndView("redirect:/listRequisition");
 		PurchasingRequisitionDAO requisitionDAO = (PurchasingRequisitionDAO)context.getBean("purchaseRequisitionDAO");
 		PurchaseOrder mixedOrder = this.getFakeOrder();
