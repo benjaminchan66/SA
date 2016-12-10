@@ -16,7 +16,7 @@ import com.sa.finalproject.entity.Supplier;
 import com.sa.finalproject.entity.WarehouseWarrant;
 
 @Controller
-@SessionAttributes("newaccount")
+@SessionAttributes(value = {"newaccount", "shoppingCart"})
 public class WarehouseWarrantController {
 	ApplicationContext context = new ClassPathXmlApplicationContext("spring-module.xml");
 	

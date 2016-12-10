@@ -18,9 +18,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.sa.finalproject.DAO.EmployeeDAO;
 import com.sa.finalproject.DAO.impl.EmployeeDAOImpl;
 import com.sa.finalproject.entity.Employee;
+import com.sa.finalproject.entity.PurchaseOrder;
 
 @Controller
-@SessionAttributes("newaccount")
+@SessionAttributes(value = {"newaccount", "shoppingCart"})
 public class AccountController {
 	
 	

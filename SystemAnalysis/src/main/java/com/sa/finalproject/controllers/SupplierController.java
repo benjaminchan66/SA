@@ -15,7 +15,7 @@ import com.sa.finalproject.DAO.impl.SupplierDAOImpl;
 import com.sa.finalproject.entity.Supplier;
 
 @Controller
-@SessionAttributes("newaccount")
+@SessionAttributes(value = {"newaccount", "shoppingCart"})
 public class SupplierController {
 	ApplicationContext context = new ClassPathXmlApplicationContext("spring-module.xml");
 	

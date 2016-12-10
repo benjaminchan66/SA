@@ -1,5 +1,6 @@
 package com.sa.finalproject.entity.supportingClass;
 
+import com.sa.finalproject.entity.Product;
 
 // when the order hasn't been sent, each product in order will be stored in this class
 public class PurchasedProduct {
@@ -21,6 +22,14 @@ public class PurchasedProduct {
 		this.purchasingAmount = purchasingAmount;
 		this.supplierID = supplierID;
 		this.supplierName = supplierName;
+	}
+	
+	public void setProduct(Product product, int amount) {
+		this.setProductID(product.getProductID());
+		this.setProductName(product.getProductName());
+		this.setProductPrice(product.getPrice());
+		this.setPurchasingAmount(amount);
+		this.setSupplierID(product.getSupplierID());
 	}
 	
 	public int addOne() {

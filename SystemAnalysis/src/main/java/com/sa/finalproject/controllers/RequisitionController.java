@@ -3,6 +3,7 @@ package com.sa.finalproject.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -22,8 +23,12 @@ import com.sa.finalproject.entity.Supplier;
 import com.sa.finalproject.entity.supportingClass.PurchasedProduct;
 
 @Controller
-@SessionAttributes("newaccount")
+@SessionAttributes(value = {"newaccount", "shoppingCart"})
 public class RequisitionController {
+	
+	@Autowired
+	PurchaseOrder cart_session;
+	
 	ApplicationContext context = new ClassPathXmlApplicationContext("spring-module.xml");
 	
 	// Indicate whether the user has selected the supplier form
@@ -68,6 +73,35 @@ public class RequisitionController {
 		return model;
 	}
 	
+	@RequestMapping(value = "/addProductToRequisition", method = RequestMethod.GET)
+	public ModelAndView addProductToShoppingCart(@ModelAttribute("id")String productID){
+		// add the product to the shopping cart
+		ModelAndView model = new ModelAndView("redirect:/previewDetailRequisition");
+		ProductDAO productDAO = (ProductDAO)context.getBean("productDAO");
+		Product product = productDAO.get(Long.parseLong(productID));
+		
+		PurchasedProduct purchasedItem = new PurchasedProduct();
+		purchasedItem.setProduct(product, 1);
+		
+		boolean productInTheCart = false;
+		for(int i = 0; i < cart_session.getList().size(); i++) {
+			PurchasedProduct currentProduct = cart_session.getList().get(i);
+			System.out.println("Product name" + currentProduct.getProductName());
+			if(String.valueOf(currentProduct.getProductID()).equals(productID)) {
+				currentProduct.addOne();
+				productInTheCart = true;
+				break;
+			}
+		}
+		
+		if(!productInTheCart) {
+			System.out.println("Add the product whose ID is " + purchasedItem.getProductID());
+			cart_session.add(purchasedItem);
+		}
+		
+		return model;
+	}
+	
 	@RequestMapping(value = "/listRequisition", method = RequestMethod.GET)
 	public ModelAndView listRequisition(){
 	
@@ -92,10 +126,19 @@ public class RequisitionController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/previewDetailRequisition", method = RequestMethod.POST)
+	@RequestMapping(value = "/previewDetailRequisition", method = RequestMethod.GET)
 	public ModelAndView showCart() {
 		ModelAndView model = new ModelAndView("previewDetailRequisition");
 		// 顯示購物車內容物
+		
+		return model;
+	}
+	
+	
+	@RequestMapping(value = "/previewDetailRequisition", method = RequestMethod.POST)
+	public ModelAndView insertCart() {
+		ModelAndView model = new ModelAndView("redirect:/listRequisition");
+		// 送出購物車內容
 		
 		return model;
 	}

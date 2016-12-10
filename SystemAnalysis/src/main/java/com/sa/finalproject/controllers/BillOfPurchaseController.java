@@ -20,7 +20,7 @@ import com.sa.finalproject.entity.PurchasingRequisition;
 import com.sa.finalproject.entity.Remark;
 
 @Controller
-@SessionAttributes("newaccount")
+@SessionAttributes(value = {"newaccount", "shoppingCart"})
 public class BillOfPurchaseController {
 	ApplicationContext context =  new ClassPathXmlApplicationContext("spring-module.xml");
 	

@@ -71,7 +71,7 @@
                             <a href="Order"><i class="fa fa-table fa-fw"></i> 所有進貨單</a>
                         </li>
                         <li>
-                            <a href="StockIn"><i class="fa fa-table fa-fw"></i> 所有入庫單</a>
+                            <a href="wwList"><i class="fa fa-table fa-fw"></i> 所有入庫單</a>
                         </li>
                     </ul>
                 </div>
