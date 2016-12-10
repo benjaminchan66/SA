@@ -5,101 +5,148 @@ import java.util.Date;
 import com.sa.finalproject.entity.BillOfPurchase;
 import com.sa.finalproject.entity.PurchaseOrder;
 
-public class DisplayBOP {
+public class DisplayBOP extends BillOfPurchase {
 	long procurementID;
 	String procurementName;
-	BillOfPurchase bop;
 	String supplierName;
 	
 	
 	public DisplayBOP() {
-		this(0, "", new BillOfPurchase(), "");
+		super();
+		this.procurementID = 0;
+		this.procurementName = "";
+		this.supplierName = "";
 	}
 	
 	
-	public DisplayBOP(long procurementID, String procurementName, BillOfPurchase bop, String supplierName) {
+	public DisplayBOP(long procurementID, String procurementName, String supplierName) {
 		super();
 		this.procurementID = procurementID;
 		this.procurementName = procurementName;
-		this.bop = bop;
+		this.supplierName = supplierName;
 	}
-
-
-	public long getProcurementID() {
-		return procurementID;
-	}
-
-
-	public void setProcurementID(long procurementID) {
-		this.procurementID = procurementID;
-	}
-
-
-	public String getProcurementName() {
-		return procurementName;
-	}
-
-
-	public void setProcurementName(String procurementName) {
-		this.procurementName = procurementName;
-	}
-
-
-	public BillOfPurchase getBop() {
-		return bop;
-	}
-
-
-	public void setBop(BillOfPurchase bop) {
-		this.bop = bop;
+	
+	public void setBOP(BillOfPurchase bop) {
+		
 	}
 	
 	public long getBopSerial() {
-		return bop.getBopSerial();
+		return super.getBopSerial();
+	}
+
+
+	public void setBopSerial(long bopSerial) {
+		super.setBopSerial(bopSerial);
 	}
 
 
 	public long getEmployeeID() {
-		return bop.getEmployeeID();
+		return super.getEmployeeID();
 	}
 
+
+	public void setEmployeeID(long employeeID) {
+		super.setEmployeeID(employeeID);
+	}
+
+
 	public Date getDateTime() {
-		return bop.getDateTime();
+		return super.getDateTime();
+	}
+
+
+	public void setDateTime(Date dateTime) {
+		super.setDateTime(dateTime);
 	}
 
 
 	public boolean isHasArrived() {
-		return bop.isHasArrived();
+		return super.isHasArrived();
 	}
 
+	public void setHasArrived(boolean hasArrived) {
+		super.setHasArrived(hasArrived);
+	}
+
+
 	public int getTotalAmount() {
-		return bop.getTotalAmount();
+		return super.getTotalAmount();
+	}
+
+	public void setTotalAmount(int totalAmount) {
+		super.setTotalAmount(totalAmount);
 	}
 
 	public long getAccountantId() {
-		return bop.getAccountantId();
+		return super.getAccountantId();
+	}
+
+	public void setAccountantId(long accountantId) {
+		super.setAccountantId(accountantId);
 	}
 
 	public boolean isHasPaid() {
-		return bop.isHasPaid();
+		return super.isHasPaid();
+	}
+
+	public void setHasPaid(boolean hasPaid) {
+		super.setHasPaid(hasPaid);
 	}
 
 	public boolean isPassed() {
-		return bop.isPassed();
+		return super.isPassed();
 	}
 
-	
+	public void setPassed(boolean passed) {
+		super.setHasPaid(passed);
+	}
+
+	public void setRemarks(String newRemarks) {
+		super.setRemarks(newRemarks);
+	}
 
 	public String getRemarks() {
-		return bop.getRemarks();
+		return super.getRemarks();
 	}
 
 	public PurchaseOrder getBopContent() {
-		return bop.getBopContent();
+		return super.getBopContent();
+	}
+
+	public void setBopContent(PurchaseOrder bopContent) {
+		super.setBopContent(bopContent);
 	}
 
 	public long getSupplierID() {
-		return bop.getSupplierID();
+		return super.getSupplierID();
+	}
+
+	public void setSupplierID(long supplierID) {
+		super.setSupplierID(supplierID);
+	}
+	
+	public String deliveryStatus() {
+		if(this.isHasArrived()) {
+			return "已到貨";
+		}else {
+			return "未到貨";
+		}
+	}
+	
+	public String inspectStatus() {
+		if(this.isPassed()) {
+			return "已通過";
+		}else {
+			return "未通過";
+		}
+	}
+	
+	public String payingStatus() {
+		if(this.isHasPaid()) {
+			return "";
+		}else {
+			return "";
+		}
 	}
 	
 	

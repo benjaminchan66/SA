@@ -3,6 +3,7 @@ package com.sa.finalproject.DAO;
 import java.util.ArrayList;
 import java.util.List;
 import com.sa.finalproject.entity.BillOfPurchase;
+import com.sa.finalproject.entity.PurchaseOrder;
 import com.sa.finalproject.entity.PurchasingRequisition;
 
 
@@ -16,6 +17,10 @@ public interface BillOfPurchaseDAO{
 	public ArrayList<BillOfPurchase> showUnpaidProduct(); //顯示到貨且未付款商品
 	public void paid(long aBopSerial); //付款
 	public void update(long bopserial,BillOfPurchase aBillOfPurchase);//修改資料
+	
+	// 取得單一進貨單之內容物
+	public PurchaseOrder getContentOf(long bopSerial);
+	
 
 	
 	

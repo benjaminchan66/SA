@@ -7,6 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sa.finalproject.DAO.impl.SupplierDAOImpl;
@@ -15,6 +16,7 @@ import com.sa.finalproject.entity.Supplier;
 import com.sa.finalproject.entity.WarehouseWarrant;
 
 @Controller
+@SessionAttributes("newaccount")
 public class WarehouseWarrantController {
 	ApplicationContext context = new ClassPathXmlApplicationContext("spring-module.xml");
 	

@@ -61,9 +61,16 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <label class="h4">廠商:</label>
-                                        <select class="form-control" name="chosenSupplierID">
+                                        <select class="form-control" name="selectedSupplierID">
                                             <c:forEach items="${supplierList}" var="supplier">
-                                                <option value=${supplier.getSupplierID()}>${supplier.getSupplierName()}</option>
+                                            	<c:choose>
+                                            	<c:when test="${supplier.getSupplierID() == selectedSupplier}">
+                                                	<option value=${supplier.getSupplierID()} selected="">${supplier.getSupplierName()}</option>
+                                                </c:when>
+                                                <c:otherwise>
+                                                	<option value=${supplier.getSupplierID()}>${supplier.getSupplierName()}</option>
+                                                </c:otherwise>
+                                                </c:choose>
                                             </c:forEach>
                                         </select>
                                         <button type="submit" name="submit" class="btn btn-default btn-hide" id="btn-view">選擇</button>

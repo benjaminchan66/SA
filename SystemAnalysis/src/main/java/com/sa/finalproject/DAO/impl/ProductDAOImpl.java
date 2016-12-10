@@ -120,6 +120,7 @@ public class ProductDAOImpl implements ProductDAO {
 			smt.setInt(3, newProductInfo.getInventory());
 			smt.setBoolean(4, newProductInfo.isInTheMarket());
 			smt.setLong(5, newProductInfo.getSupplierID());
+			smt.setLong(6, aProductID);
 			
 			smt.executeUpdate();
 			smt.close();

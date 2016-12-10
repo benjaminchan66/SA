@@ -72,6 +72,7 @@ public class AccountController {
 	public ModelAndView dashboard(){
 		// check the identity
 		ModelAndView model = new ModelAndView("Dashboard");
+		model.addObject("newaccount", account_session);
 		
 		
 		return model;

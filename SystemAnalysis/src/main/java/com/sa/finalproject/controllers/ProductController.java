@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 
 import com.sa.finalproject.entity.Product;
 import com.sa.finalproject.entity.Supplier;
+import com.sa.finalproject.entity.displayClass.DisplayProduct;
 import com.sa.finalproject.DAO.ProductDAO;
 import com.sa.finalproject.DAO.SupplierDAO;
 //import com.sa.finalproject.DAO.impl.ProductDAOImpl;
@@ -21,6 +23,7 @@ import com.sa.finalproject.DAO.impl.SupplierDAOImpl;
 
 // tell the spring this is a controller(auto scan)
 @Controller
+@SessionAttributes("newaccount")
 public class ProductController {
 	ApplicationContext context =  new ClassPathXmlApplicationContext("spring-module.xml");
 	
@@ -32,12 +35,31 @@ public class ProductController {
 		ModelAndView model = new ModelAndView("ProductList");
 		ProductDAO productDAO = (ProductDAO) context.getBean("productDAO");
 		ArrayList<Product> productList = new ArrayList<Product>();
-		productList = productDAO.getAvailableList();
-		model.addObject("productList", productList);
+		productList = productDAO.getList();
+		
 		
 		SupplierDAO  supplierDAO = (SupplierDAO)context.getBean("supplierDAO");
 		ArrayList<Supplier> supplierList = new ArrayList<Supplier>();
 		supplierList= supplierDAO.getList();
+		
+		
+		
+		ArrayList<DisplayProduct> displayProductList = new ArrayList<DisplayProduct>();
+		for(int i = 0; i < productList.size(); i++) {
+			Product currentItem = productList.get(i);
+			for(int j = 0; j < supplierList.size(); j++) {
+				Supplier currentSupplier = supplierList.get(j);
+				if(currentSupplier.getSupplierID() == currentItem.getSupplierID()) {
+					DisplayProduct displayProduct = new DisplayProduct();
+					displayProduct.setProduct(currentItem);
+					displayProduct.setSupplierName(currentSupplier.getSupplierName());
+					displayProductList.add(displayProduct);
+					break;
+				}
+			}
+		}
+		
+		model.addObject("productList", displayProductList);
 		model.addObject("supplierList", supplierList);
 		
 		return model;
@@ -63,7 +85,7 @@ public class ProductController {
 		Product newProductInfo = productDAO.get(Long.parseLong(productID));
 //		productDAO.update(productID, newProductInfo);
 		model.addObject("productID", productID);
-		model.addObject("productName", newProductInfo.getProductID());
+		model.addObject("productName", newProductInfo.getProductName());
 		model.addObject("productPrice", newProductInfo.getPrice());
 		model.addObject("isInTheMarket", newProductInfo.isInTheMarket());
 		model.addObject("supplierID", newProductInfo.getSupplierID());
@@ -77,15 +99,19 @@ public class ProductController {
 	
 	
 	@RequestMapping(value = "/updateProduct", method = RequestMethod.POST)
-	public ModelAndView updateProduct(@ModelAttribute("producID")String productID, @ModelAttribute("productName") String newName, @ModelAttribute("productPrice") String newPrice, @ModelAttribute("isInTheMarket") boolean newProductStatus, @ModelAttribute("supplierID") long newSupplierID){
+	public ModelAndView updateProduct(@ModelAttribute("productID")String productID, @ModelAttribute("productName") String newName, @ModelAttribute("productPrice") String newPrice, @ModelAttribute("isInTheMarket") String newProductStatus, @ModelAttribute("productSupplier") String newSupplierID){
 		// Update the product information
 		ModelAndView model = new ModelAndView("redirect:/productList");
 		ProductDAO productDAO = (ProductDAO)context.getBean("productDAO");
 		Product newProductInfo = new Product();
 		newProductInfo.setProductName(newName);
 		newProductInfo.setPrice(Integer.parseInt(newPrice));
-		newProductInfo.setInTheMarket(newProductStatus);
-		newProductInfo.setSupplierID(newSupplierID);
+		if("true".equals(newProductStatus)) {
+			newProductInfo.setInTheMarket(true);
+		}else {
+			newProductInfo.setInTheMarket(false);
+		}
+		newProductInfo.setSupplierID(Long.parseLong(newSupplierID));
 		productDAO.update(Long.parseLong(productID), newProductInfo);
 		
 		return model;

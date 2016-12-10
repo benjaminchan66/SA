@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 <html>
 <head>
@@ -90,9 +90,9 @@
                                             <td>${product.getProductID()}</td>
                                             <td><p class="hideOverflow">${product.getProductName()}</p></td>
                                             <td>${product.getPrice()}</td>
-                                            <td>${product.getSupplierID()}</td>
+                                            <td>${product.getSupplierName()}</td>
                                             <td>${product.getInventory()}</td>
-                                            <td>${product.isInTheMarket()}</td>
+                                            <td>${product.getProductStatus()}</td>
                                             <td>
                                                 <a class="btn btn-warning" href="updateProduct?id=${product.getProductID()}">修改</a>
                                             </td>

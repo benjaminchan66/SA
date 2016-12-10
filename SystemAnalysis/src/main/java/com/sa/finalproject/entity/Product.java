@@ -35,8 +35,6 @@ public class Product {
 	}
 
 
-
-
 	// getter and setter
 	public long getProductID() {
 		return productID;

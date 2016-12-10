@@ -8,12 +8,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sa.finalproject.DAO.impl.SupplierDAOImpl;
 import com.sa.finalproject.entity.Supplier;
 
 @Controller
+@SessionAttributes("newaccount")
 public class SupplierController {
 	ApplicationContext context = new ClassPathXmlApplicationContext("spring-module.xml");
 	
@@ -72,7 +74,7 @@ public class SupplierController {
 	@RequestMapping(value = "/updateSupplier", method = RequestMethod.POST)
 	public ModelAndView sendSupplierInfo(@ModelAttribute("supplierID")String id, @ModelAttribute("supplierName")String name, @ModelAttribute("supplierPhone")String phone, @ModelAttribute("supplierAddress")String address, @ModelAttribute("supplierLevel")String level){
 		// Add the supplier information
-		ModelAndView model = new ModelAndView("ChangeSupplierDetail");
+		ModelAndView model = new ModelAndView("redirect:/SupplierList");
 		SupplierDAOImpl supplierDAO = (SupplierDAOImpl)context.getBean("supplierDAO");
 		Supplier newSupplierInfo = new Supplier();
 		newSupplierInfo.setSupplierName(name);
