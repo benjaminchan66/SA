@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sa.finalproject.DAO.BillOfPurchaseDAO;
+import com.sa.finalproject.DAO.PurchasingRequisitionDAO;
 import com.sa.finalproject.DAO.RemarkDAO;
 import com.sa.finalproject.entity.BillOfPurchase;
 import com.sa.finalproject.entity.PurchasingRequisition;
@@ -41,6 +42,9 @@ public class BillOfPurchaseController {
 		//列出單一進貨單明細
 		ModelAndView model = new ModelAndView("Testfile");
 		BillOfPurchaseDAO billofpurchase = (BillOfPurchaseDAO)context.getBean("BillOfPurchaseDAO");
+		if(bopserial.length() == 0) {
+			bopserial = "0";
+		}
 		BillOfPurchase bop = billofpurchase.get(Long.parseLong(bopserial));
 		model.addObject("billofpurchasedetail", bop);
 		return model;
@@ -84,6 +88,22 @@ public class BillOfPurchaseController {
 		aBillOfPurchase.setPassed(passed);
 		aBillOfPurchase.setHasArrived(arrived);
 		update.update(Long.parseLong(bop),aBillOfPurchase);	
+		return model;
+	}
+	
+	@RequestMapping(value = "/transferBill", method = RequestMethod.GET)
+	public ModelAndView transferingBill(){
+		ModelAndView model = new ModelAndView("redirect:/Order");
+//		long[] testArr = new long[5];
+//		for(int i = 0; i <= testArr.length; i++) {
+//			testArr[i] = i + 25;
+//		}
+		BillOfPurchaseDAO bopDAO = (BillOfPurchaseDAO)context.getBean("BillOfPurchaseDAO");
+		PurchasingRequisitionDAO requisitionDAO = (PurchasingRequisitionDAO)context.getBean("purchaseRequisitionDAO");
+		PurchasingRequisition requisition = requisitionDAO.get(27);
+		bopDAO.transferIntoBOP(requisition);
+		
+		
 		return model;
 	}
 }

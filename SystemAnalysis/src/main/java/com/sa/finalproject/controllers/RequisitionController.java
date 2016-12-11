@@ -139,6 +139,8 @@ public class RequisitionController {
 	public ModelAndView insertCart() {
 		ModelAndView model = new ModelAndView("redirect:/listRequisition");
 		// 送出購物車內容
+		PurchasingRequisitionDAO requisitionDAO = (PurchasingRequisitionDAO)context.getBean("purchaseRequisitionDAO");
+//		requisitionDAO.insert(cart_session, newaccount.getId());
 		
 		return model;
 	}

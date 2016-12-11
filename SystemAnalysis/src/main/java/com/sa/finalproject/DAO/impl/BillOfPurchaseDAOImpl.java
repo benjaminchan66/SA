@@ -174,7 +174,7 @@ public class BillOfPurchaseDAOImpl implements BillOfPurchaseDAO {
 					// the product name hasn't been set into the object.
 					PurchasedProduct aProduct = new PurchasedProduct();
 					aProduct.setProductID(rs.getLong("product_id"));
-					aProduct.setProductPrice(rs.getInt("price"));
+					aProduct.setProductPrice(rs.getInt("price_att"));
 					aProduct.setPurchasingAmount(rs.getInt("quantity"));
 					currentBill.getBopContent().add(aProduct);
 				}
