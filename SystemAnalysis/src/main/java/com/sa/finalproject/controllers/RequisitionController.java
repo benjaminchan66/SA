@@ -23,6 +23,7 @@ import com.sa.finalproject.entity.Product;
 import com.sa.finalproject.entity.PurchaseOrder;
 import com.sa.finalproject.entity.PurchasingRequisition;
 import com.sa.finalproject.entity.Supplier;
+import com.sa.finalproject.entity.displayClass.DisplayPR;
 import com.sa.finalproject.entity.supportingClass.PurchasedProduct;
 
 @Controller
@@ -112,19 +113,43 @@ public class RequisitionController {
 		PurchasingRequisitionDAO requisitionDAO = (PurchasingRequisitionDAO)context.getBean("purchaseRequisitionDAO");
 		ArrayList<PurchasingRequisition> requisitionList = new ArrayList<PurchasingRequisition>();
 		requisitionList = requisitionDAO.getList();
-//		model.addObject("requisitionList", requisitionList);
+		
+		
+		ArrayList<DisplayPR> displayList = new ArrayList<DisplayPR>();
+		for(int i = 0; i < requisitionList.size(); i++) {
+			PurchasingRequisition currentRequisition = requisitionList.get(i);
+			DisplayPR displayPR = new DisplayPR();
+			displayPR.setRequisition(currentRequisition);
+			
+			Supplier supplier = new Supplier();
+			supplier = requisitionDAO.getASupplierOf(currentRequisition.getPrSerial());
+			displayPR.setSupplier(supplier);
+			
+			displayList.add(displayPR);
+		}
+		
+		System.out.println("The length of requisition list : " + requisitionList.size());
+		System.out.println("The length of display list : " + displayList.size());
+		
+		model.addObject("prList", displayList);
 		
 		return model;
 	}
 	
 	
-	@RequestMapping(value = "/listRequisition", method = RequestMethod.POST)
-	public ModelAndView confirmRequisition(@ModelAttribute("prSerial")String prSerial){
+	@RequestMapping(value = "/listDetailRequisition", method = RequestMethod.GET)
+	public ModelAndView confirmRequisition(@ModelAttribute("id")String prSerial){
 	
-		ModelAndView model = new ModelAndView("requisitionDetail");
+		ModelAndView model = new ModelAndView("RequisitionDetail");
 		PurchasingRequisitionDAO requisitionDAO = (PurchasingRequisitionDAO)context.getBean("purchaseRequisitionDAO");
 //		requisitionDAO.confirm(staffID, aRequisitionSerial, isConfirmed);
 		PurchasingRequisition pr = requisitionDAO.get(Long.parseLong(prSerial)); 
+		PurchaseOrder content = new PurchaseOrder();
+		content = pr.getRequisitionContent();
+		
+		for(int i = 0; i < content.getList().size(); i++) {
+			System.out.println("Content " + (i+1) + " : " + content.getList().get(i).getProductID());
+		}
 		
 		return model;
 	}

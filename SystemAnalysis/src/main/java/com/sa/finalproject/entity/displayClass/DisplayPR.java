@@ -8,18 +8,16 @@ import com.sa.finalproject.entity.Supplier;
 
 public class DisplayPR extends PurchasingRequisition {
 	// ID, supplier, total amount, getConfirmStatus
-	String supplierName = "";
+	
 	int totalAmount = 0;
 
 	public DisplayPR() {
 		super();
-		this.supplierName = "";
 		this.totalAmount = 0;
 	}
 
-	public DisplayPR(String supplierName, int totalAmount) {
+	public DisplayPR(int totalAmount) {
 		super();
-		this.supplierName = supplierName;
 		this.totalAmount = totalAmount;
 	}
 	
@@ -99,11 +97,19 @@ public class DisplayPR extends PurchasingRequisition {
 	}
 
 	public String getSupplierName() {
-		return supplierName;
+		return super.getSupplier().getSupplierName();
 	}
 
-	public void setSupplierName(String supplierName) {
-		this.supplierName = supplierName;
+	public void setSupplierName(Supplier supplier) {
+		super.setSupplier(supplier);
+	}
+	
+	public String getConfirmStatus() {
+		if(this.isConfirmed()) {
+			return "已確認";
+		}else {
+			return "為確認";
+		}
 	}
 
 	public int getTotalAmount() {

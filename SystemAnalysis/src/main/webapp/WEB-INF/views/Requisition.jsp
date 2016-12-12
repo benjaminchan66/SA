@@ -79,8 +79,8 @@
                                     <c:forEach items="${prList}" var="pr">
                                         <tr class="odd gradeA">
                                             <td>${pr.getPrSerial()}</td>
-                                            <td>${pr.getSupplier()}</td>
-                                            <td>${pr.getRequisitionContent().getListPrice()}</td>
+                                            <td>${pr.getSupplierName()}</td>
+                                            <td>${pr.getTotalAmount()}</td>
                                             <th>${pr.getConfirmStatus()}</th>
                                             <td>
                                                 <a href="listDetailRequisition?id=${pr.getPrSerial()}" class="btn btn-info">查看明細</a>
