@@ -70,21 +70,21 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
+                                        <c:forEach items="${cartList}" var="cartItem">
                                             <tr>
-                                                <td>014</td>
-                                                <td>Apple Lightning 8pin 原廠USB傳輸線</td>
-                                                <th>Apple</th>
-                                                <td>$349</td>
-                                                <td>10</td>
-                                                <td>$3490</td>
+                                                <td>${cartItem.id}</td>
+                                                <td>${cartItem.name}</td>
+                                                <th>${cartItem.supplierName}</th>
+                                                <td>$ ${cartItem.price}</td>
+                                                <td>${cartItem.ininventory}</td>
+                                                <td>$ ${cartItem.amount}</td>
                                             </tr>
-                                        
+                                        </c:forEach>
                                     </tbody>
                                 </table>
                                 <div class="row">
                                     <div class="col-lg-2 col-md-offset-10">
-                                        <h5>總計: $30,087</h5>
+                                        <h5>總計: $ ${cartItem.sum}</h5>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
