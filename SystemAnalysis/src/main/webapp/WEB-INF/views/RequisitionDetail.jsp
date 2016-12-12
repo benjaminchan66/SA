@@ -55,10 +55,10 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <div class="row">
-                                <div class="col-lg-8"><h5>廠商: Apple</h5></div>
-                                <div class="col-lg-3"><h5>廠商分級: A</h5></div>
-                                <div><h5 class="col-lg-8">開單人: 陳常樂</h5></div>
-                                <div><h5 class="col-lg-3">開單日期: 2016/10/10</h5></div>
+                                <div class="col-lg-8"><h5>廠商: ${prSupplier}</h5></div>
+                                <div class="col-lg-3"><h5>廠商分級: ${prGrade}</h5></div>
+                                <div><h5 class="col-lg-8">開單人: ${prEmployeeId}</h5></div>
+                                <div><h5 class="col-lg-3">開單日期: ${prDate}</h5></div>
                             </div>
                         </div>
                         <div class="panel-body">
@@ -74,33 +74,21 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>014</td>
-                                            <td>Apple Lightning 8pin 原廠USB傳輸線</td>
-                                            <td>$349</td>
-                                            <td>35</td>
-                                            <td>$11,517</td>
-                                        </tr>
-                                        <tr>
-                                            <td>023</td>
-                                            <td>Apple TV 64G</td>
-                                            <td>$6790</td>
-                                            <td>21</td>
-                                            <td>$13,580</td>
-                                        </tr>
-                                        <tr>
-                                            <td>044</td>
-                                            <td>Apple iPhone 5 原廠耳機 帶線控麥克風耳機 盒裝</td>
-                                            <td>$499</td>
-                                            <td>10</td>
-                                            <td>$4,990</td>
-                                        </tr>
+                                        <c:forEach items="${prList}" var="pr">
+                                            <tr>
+                                                <td>${prId}</td>
+                                                <td>${prProductName}</td>
+                                                <td>$ ${prPrice}</td>
+                                                <td>${prInventory}</td>
+                                                <td>$ ${prAmount}</td>
+                                            </tr>
+                                        </c:forEach>
                                     </tbody>
                                 </table>
                                 <div class="col-lg-10">
                                     <a href="listRequisition"><button type="button" class="btn btn-warning">請購單確認</button></a>
                                 </div>
-                                <h4>總計: $30,087</h4>
+                                <h4>總計: $ ${prAmount}</h4>
                             </form>
                         </div>
                     </div>
