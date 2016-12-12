@@ -75,94 +75,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="odd gradeA">
-                                        <td>009</td>
-                                        <td>ONPRO</td>
-                                        <td>逾期送貨</td>
-                                        <td>
-                                            <button type="button" class="btn btn-info">Detail</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>012</td>
-                                        <td>ADATA</td>
-                                        <td>逾期送貨</td>
-                                        <td>
-                                            <button type="button" class="btn btn-info">Detail</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>024</td>
-                                        <td>ONPRO</td>
-                                        <td>退貨</td>
-                                        <td>
-                                            <button type="button" class="btn btn-info">Detail</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>0030</td>
-                                        <td>FLIR</td>
-                                        <td>退貨</td>
-                                        <td>
-                                            <button type="button" class="btn btn-info">Detail</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>038</td>
-                                        <td>Twelve South</td>
-                                        <td>逾期送貨</td>
-                                        <td>
-                                            <button type="button" class="btn btn-info">Detail</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>041</td>
-                                        <td>ONPRO</td>
-                                        <td>逾期送貨</td>
-                                        <td>
-                                            <button type="button" class="btn btn-info">Detail</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>046</td>
-                                        <td>統亞電子科技股份有限公司</td>
-                                        <td>逾期送貨</td>
-                                        <td>
-                                            <button type="button" class="btn btn-info">Detail</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>048</td>
-                                        <td>Twelve South</td>
-                                        <td>逾期送貨</td>
-                                        <td>
-                                            <button type="button" class="btn btn-info">Detail</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>062</td>
-                                        <td>統亞電子科技股份有限公司</td>
-                                        <td>退貨</td>
-                                        <td>
-                                            <button type="button" class="btn btn-info">Detail</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>073</td>
-                                        <td>FLIR</td>
-                                        <td>退貨</td>
-                                        <td>
-                                            <button type="button" class="btn btn-info">Detail</button>
-                                        </td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>090</td>
-                                        <td>Twelve South</td>
-                                        <td>逾期送貨</td>
-                                        <td>
-                                            <button type="button" class="btn btn-info">Detail</button>
-                                        </td>
-                                    </tr>
+                                    <c:forEach items="${bopWithRemarkList}" var="bopRemark">
+                                        <tr class="odd gradeA">
+                                            <td>${bopRemark.getId}</td>
+                                            <td>${bopRemark.supplierName}</td>
+                                            <td>${bopRemark.remark}</td>
+                                            <td>
+                                                <a type="button" href="BillOfPurchaseDetail?id=${bopRemark.getId}" class="btn btn-info">Detail</a>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
                                 </tbody>
                             </table>
                             <!-- /.table-responsive -->

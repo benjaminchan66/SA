@@ -89,6 +89,7 @@
                                             <th>id</th>
                                             <th>名稱</th>
                                             <th>價格</th>
+                                            <th>數量</th>
                                             <th>動作</th>
                                         </tr>
                                     </thead>
@@ -98,7 +99,10 @@
                                                 <td>${product.getProductID()}</td>
                                                 <td>${product.getProductName()}</td>
                                                 <td>${product.getPrice()}</td>
-                                                <td><a class="btn btn-default" href="addProductToRequisition?id=${product.getProductID()}">訂購</a></td>
+                                                <form action="addProductToRequisition?id=${product.getProductID()}" method="POST">
+                                                    <td><input type="number" name="" value="" placeholder="0" required="required" min="0"></td>
+                                                    <td><button type="submit" class="btn btn-default">訂購</button></td>
+                                                </form>
                                             </tr>
                                         </c:forEach>
                                     </tbody>
