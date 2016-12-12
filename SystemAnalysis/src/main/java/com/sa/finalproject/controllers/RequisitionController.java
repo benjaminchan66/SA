@@ -77,22 +77,24 @@ public class RequisitionController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/addProductToRequisition", method = RequestMethod.GET)
-	public ModelAndView addProductToShoppingCart(@ModelAttribute("id")String productID){
+	@RequestMapping(value = "/addProductToRequisition", method = RequestMethod.POST)
+	public ModelAndView addProductToShoppingCart(@ModelAttribute("id")String productID, @ModelAttribute("amount")String amount){
 		// add the product to the shopping cart
 		ModelAndView model = new ModelAndView("redirect:/previewDetailRequisition");
 		ProductDAO productDAO = (ProductDAO)context.getBean("productDAO");
 		Product product = productDAO.get(Long.parseLong(productID));
 		
 		PurchasedProduct purchasedItem = new PurchasedProduct();
-		purchasedItem.setProduct(product, 1);
+		purchasedItem.setProduct(product, Integer.parseInt(amount));
 		
 		boolean productInTheCart = false;
 		for(int i = 0; i < cart_session.getList().size(); i++) {
 			PurchasedProduct currentProduct = cart_session.getList().get(i);
 			System.out.println("Product name" + currentProduct.getProductName());
 			if(String.valueOf(currentProduct.getProductID()).equals(productID)) {
-				currentProduct.addOne();
+//				currentProduct.addOne();
+				int originalAmount = currentProduct.getPurchasingAmount();
+				currentProduct.setPurchasingAmount(originalAmount + Integer.parseInt(amount));
 				productInTheCart = true;
 				break;
 			}
@@ -159,6 +161,8 @@ public class RequisitionController {
 		ModelAndView model = new ModelAndView("previewDetailRequisition");
 		// 顯示購物車內容物
 		
+		model.addObject("cartList", cart_session.getList());
+		model.addObject("listPrice", cart_session.getListPrice());
 		return model;
 	}
 	

@@ -19,6 +19,7 @@ import com.sa.finalproject.DAO.RemarkDAO;
 import com.sa.finalproject.entity.BillOfPurchase;
 import com.sa.finalproject.entity.PurchasingRequisition;
 import com.sa.finalproject.entity.Remark;
+import com.sa.finalproject.entity.Supplier;
 
 @Controller
 @SessionAttributes(value = {"newaccount", "shoppingCart"})
@@ -45,6 +46,10 @@ public class BillOfPurchaseController {
 		if(bopserial.length() == 0) {
 			bopserial = "0";
 		}
+		PurchasingRequisitionDAO purchasingRequisitionDAO = (PurchasingRequisitionDAO) context.getBean("purchaseRequisitionDAO");
+		  Supplier supplier = new Supplier();
+		  supplier = purchasingRequisitionDAO.getASupplierOf(Long.parseLong(bopserial));
+		  
 		BillOfPurchase bop = billofpurchase.get(Long.parseLong(bopserial));
 		model.addObject("billofpurchasedetail", bop);
 		return model;

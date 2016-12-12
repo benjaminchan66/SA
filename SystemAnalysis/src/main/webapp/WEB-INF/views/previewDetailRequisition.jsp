@@ -72,19 +72,19 @@
                                     <tbody>
                                         <c:forEach items="${cartList}" var="cartItem">
                                             <tr>
-                                                <td>${cartItem.id}</td>
-                                                <td>${cartItem.name}</td>
-                                                <th>${cartItem.supplierName}</th>
-                                                <td>$ ${cartItem.price}</td>
-                                                <td>${cartItem.ininventory}</td>
-                                                <td>$ ${cartItem.amount}</td>
+                                                <td>${cartItem.getProductID()}</td>
+                                                <td>${cartItem.getProductName()}</td>
+                                                <th>${cartItem.getSupplierName()}</th>
+                                                <td>${cartItem.getProductPrice()}</td>
+                                                <td>${cartItem.getPurchasingAmount()}</td>
+                                                <td>${cartItem.getTotalPrice()}</td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>
                                 </table>
                                 <div class="row">
                                     <div class="col-lg-2 col-md-offset-10">
-                                        <h5>總計: $ ${cartItem.sum}</h5>
+                                        <h5>總計: ${listPrice}</h5>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
