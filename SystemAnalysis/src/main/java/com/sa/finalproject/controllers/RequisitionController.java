@@ -115,6 +115,14 @@ public class RequisitionController {
 	
 		ModelAndView model = new ModelAndView("previewDetailRequisition");
 		
+		for(int i = 0; i < cart_session.getList().size(); i++) {
+			PurchasedProduct currentProduct = cart_session.getList().get(i);
+			if(String.valueOf(currentProduct.getProductID()).equals(id)) {
+				// drop the product
+				System.out.println("The product has been deleted : " + cart_session.drop(i));
+			}
+		}
+		
 		
 		return model;
 	}
