@@ -11,8 +11,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sa.finalproject.DAO.BillOfPurchaseDAO;
+import com.sa.finalproject.DAO.PurchasingRequisitionDAO;
 import com.sa.finalproject.DAO.impl.SupplierDAOImpl;
+import com.sa.finalproject.entity.BillOfPurchase;
 import com.sa.finalproject.entity.Supplier;
+import com.sa.finalproject.entity.displayClass.DisplayBOP;
 
 @Controller
 @SessionAttributes(value = {"newaccount", "shoppingCart"})
@@ -87,11 +91,32 @@ public class SupplierController {
 	}
 	
 	
-	@RequestMapping(value = "/remarkedSupplierList", method = RequestMethod.GET)
+	@RequestMapping(value = "/supplierRecord", method = RequestMethod.GET)
 	public ModelAndView listRemarkedSupplier(){
-		// 開立請購單
+		// 顯示有備註的進貨單（廠商紀錄）
 		ModelAndView model = new ModelAndView("SupplierListDetails");
-		SupplierDAOImpl supplierDAO = (SupplierDAOImpl)context.getBean("supplierDAO");
+		BillOfPurchaseDAO bopDAO = (BillOfPurchaseDAO)context.getBean("BillOfPurchaseDAO");
+		ArrayList<BillOfPurchase> bopList = new ArrayList<BillOfPurchase>(); 
+		bopList = bopDAO.getRemarkedList();
+		
+		
+		ArrayList<DisplayBOP> displayBOPList = new ArrayList<DisplayBOP>();
+		PurchasingRequisitionDAO prDAO = (PurchasingRequisitionDAO)context.getBean("purchaseRequisitionDAO");
+		for(int i = 0; i < bopList.size(); i++) {
+			DisplayBOP displayBOP = new DisplayBOP();
+			BillOfPurchase currentBOP = bopList.get(i);
+			
+			displayBOP.setBOP(currentBOP);
+			Supplier supplier = new Supplier();
+			supplier = prDAO.getASupplierOf(currentBOP.getBopSerial());
+			
+			displayBOP.setSupplier(supplier);
+			
+			displayBOPList.add(displayBOP);
+			
+		}
+		
+		model.addObject("bopWithRemarkList", displayBOPList);
 		
 		
 		return model;

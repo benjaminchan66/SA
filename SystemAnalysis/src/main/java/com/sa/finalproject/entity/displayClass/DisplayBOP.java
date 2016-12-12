@@ -4,30 +4,43 @@ import java.util.Date;
 
 import com.sa.finalproject.entity.BillOfPurchase;
 import com.sa.finalproject.entity.PurchaseOrder;
+import com.sa.finalproject.entity.Supplier;
 
 public class DisplayBOP extends BillOfPurchase {
 	long procurementID;
 	String procurementName;
-	String supplierName;
+	Supplier supplier = new Supplier();
 	
 	
 	public DisplayBOP() {
 		super();
 		this.procurementID = 0;
 		this.procurementName = "";
-		this.supplierName = "";
+		this.supplier = new Supplier();
 	}
 	
 	
-	public DisplayBOP(long procurementID, String procurementName, String supplierName) {
+	public DisplayBOP(long procurementID, String procurementName) {
 		super();
 		this.procurementID = procurementID;
 		this.procurementName = procurementName;
-		this.supplierName = supplierName;
+		this.supplier = new Supplier();
 	}
 	
 	public void setBOP(BillOfPurchase bop) {
-		
+		this.setBopSerial(bop.getBopSerial());
+		this.setEmployeeID(bop.getEmployeeID());
+		this.setDateTime(bop.getDateTime());
+		this.setHasArrived(bop.isHasArrived());
+		this.setTotalAmount(bop.getTotalAmount());
+		this.setHasPaid(bop.isHasPaid());
+		this.setPassed(bop.isPassed());
+		this.setRemarks(bop.getRemarks());
+		this.setBopContent(bop.getBopContent());
+	}
+	
+	public void setSupplier(Supplier supllier) {
+		this.supplier = supplier;
 	}
 	
 	public long getBopSerial() {
@@ -123,6 +136,10 @@ public class DisplayBOP extends BillOfPurchase {
 
 	public void setSupplierID(long supplierID) {
 		super.setSupplierID(supplierID);
+	}
+	
+	public String getSupplierName() {
+		return this.supplier.getSupplierName();
 	}
 	
 	public String deliveryStatus() {

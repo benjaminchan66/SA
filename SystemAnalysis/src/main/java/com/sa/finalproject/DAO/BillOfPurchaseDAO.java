@@ -21,6 +21,9 @@ public interface BillOfPurchaseDAO{
 	// 取得單一進貨單之內容物
 	public PurchaseOrder getContentOf(long bopSerial);
 	
+	// 取得有備註的進貨單
+	public ArrayList<BillOfPurchase> getRemarkedList();
+	
 
 	
 	

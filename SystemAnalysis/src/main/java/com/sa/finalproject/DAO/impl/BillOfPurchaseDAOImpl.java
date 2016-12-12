@@ -312,7 +312,7 @@ public class BillOfPurchaseDAOImpl implements BillOfPurchaseDAO {
 	// 取得單一進貨單之內容物
 	public PurchaseOrder getContentOf(long bopSerial) {
 		PurchaseOrder content = new PurchaseOrder();
-		String sql = "SELECT * FROM Product_connect_BOP WHERE PR_serial = ?";
+		String sql = "SELECT * FROM Product_connect_BOP WHERE BOP_serial = ?";
 		try {
 			conn = dataSource.getConnection();
 			smt = conn.prepareStatement(sql);
@@ -340,6 +340,47 @@ public class BillOfPurchaseDAOImpl implements BillOfPurchaseDAO {
 		}
 
 		return content;
+	}
+	
+	public ArrayList<BillOfPurchase> getRemarkedList() {
+		ArrayList<BillOfPurchase> bopList = new ArrayList<BillOfPurchase>();
+		
+		
+		try {
+			String sql = "SELECT * FROM BillOfPurchase WHERE remark IS NOT NULL";
+			
+			conn = dataSource.getConnection();
+			smt = conn.prepareStatement(sql);
+			
+			rs = smt.executeQuery();
+			
+			ArrayList<Long> serialList = new ArrayList<Long>();
+			while(rs.next()) {
+				serialList.add(rs.getLong("BOP_serial"));
+			}
+			
+			rs.close();
+			smt.close();
+			
+			for(int i = 0; i < serialList.size(); i++) {
+				long bopserial = serialList.get(i);
+				BillOfPurchase bop = this.get(bopserial);
+				bopList.add(bop);
+			}
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// do nothing
+			}
+		}
+		
+		return bopList;
 	}
 
 }

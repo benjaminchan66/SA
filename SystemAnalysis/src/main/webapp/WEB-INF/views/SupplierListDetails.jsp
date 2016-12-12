@@ -77,11 +77,11 @@
                                 <tbody>
                                     <c:forEach items="${bopWithRemarkList}" var="bopRemark">
                                         <tr class="odd gradeA">
-                                            <td>${bopRemark.getId}</td>
-                                            <td>${bopRemark.supplierName}</td>
-                                            <td>${bopRemark.remark}</td>
+                                            <td>${bopRemark.getBopSerial()}</td>
+                                            <td>${bopRemark.getSupplierName()}</td>
+                                            <td>${bopRemark.getRemarks()}</td>
                                             <td>
-                                                <a type="button" href="BillOfPurchaseDetail?id=${bopRemark.getId}" class="btn btn-info">Detail</a>
+                                                <a type="button" href="BillOfPurchaseDetail?id=${bopRemark.getBopSerial()}" class="btn btn-info">Detail</a>
                                             </td>
                                         </tr>
                                     </c:forEach>
