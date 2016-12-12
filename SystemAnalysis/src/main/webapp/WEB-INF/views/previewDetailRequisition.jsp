@@ -76,8 +76,8 @@
                                                 <td>Apple Lightning 8pin 原廠USB傳輸線</td>
                                                 <th>Apple</th>
                                                 <td>$349</td>
-                                                <td><input type="number" name="" value="" placeholder="0" required="required" min="0"></td>
-                                                <td>$11,517</td>
+                                                <td>10</td>
+                                                <td>$3490</td>
                                             </tr>
                                         
                                     </tbody>
