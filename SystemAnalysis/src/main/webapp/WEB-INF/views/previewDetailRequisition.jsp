@@ -67,6 +67,7 @@
                                             <th>價格</th>
                                             <th>數量</th>
                                             <th>金額</th>
+                                            <th>動作</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -78,6 +79,7 @@
                                                 <td>$ ${cartItem.price}</td>
                                                 <td>${cartItem.ininventory}</td>
                                                 <td>$ ${cartItem.amount}</td>
+                                                <a type="button" href="url" class="btn btn-danger">
                                             </tr>
                                         </c:forEach>
                                     </tbody>
