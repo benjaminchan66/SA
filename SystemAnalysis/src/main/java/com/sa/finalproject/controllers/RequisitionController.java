@@ -108,6 +108,19 @@ public class RequisitionController {
 		return model;
 	}
 	
+	
+	// 從購物車中刪掉商品
+	@RequestMapping(value = "/dropProductFromCart", method = RequestMethod.GET)
+	public ModelAndView dropProduct(@ModelAttribute("id")String id){
+	
+		ModelAndView model = new ModelAndView("previewDetailRequisition");
+		
+		
+		return model;
+	}
+	
+	
+	
 	@RequestMapping(value = "/listRequisition", method = RequestMethod.GET)
 	public ModelAndView listRequisition(){
 	
