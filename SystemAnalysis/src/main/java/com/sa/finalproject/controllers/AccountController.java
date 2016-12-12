@@ -35,6 +35,9 @@ public class AccountController {
 		// show the page that let user scan their id card
 		ModelAndView model = new ModelAndView("index");
 		
+//		if(account_session != null) {
+//			account_session.setId("");
+//		}
 		account_session.setId("");
 		
 		return model;
@@ -57,6 +60,7 @@ public class AccountController {
 				System.out.println("Current staff ID is " + currentStaff.getId() + ".");
 				account_session.setId(employeeID);
 				model.addObject("newaccount", account_session);
+				model.addObject("accountID", account_session.getId());
 				System.out.println("ID : " + account_session.getId());
 				model = new ModelAndView("redirect:/Dashboard");
 				
@@ -75,6 +79,7 @@ public class AccountController {
 		// check the identity
 		ModelAndView model = new ModelAndView("Dashboard");
 		model.addObject("newaccount", account_session);
+		model.addObject("accountID", account_session.getId());
 		
 		return model;
 	}

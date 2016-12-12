@@ -3,6 +3,8 @@ package com.sa.finalproject.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.sa.finalproject.DAO.ProductDAO;
 import com.sa.finalproject.DAO.PurchasingRequisitionDAO;
 import com.sa.finalproject.DAO.SupplierDAO;
+import com.sa.finalproject.entity.Employee;
 import com.sa.finalproject.entity.Product;
 import com.sa.finalproject.entity.PurchaseOrder;
 import com.sa.finalproject.entity.PurchasingRequisition;
@@ -136,11 +139,19 @@ public class RequisitionController {
 	
 	
 	@RequestMapping(value = "/previewDetailRequisition", method = RequestMethod.POST)
-	public ModelAndView insertCart() {
+	public ModelAndView insertCart(HttpSession session) {
 		ModelAndView model = new ModelAndView("redirect:/listRequisition");
 		// 送出購物車內容
+		String accountID = "0";
+		if(session.getAttribute("newaccount") != null) {
+			Employee staff = (Employee)session.getAttribute("newaccount");
+			accountID = staff.getId();
+			System.out.println("Staff ID : " + staff.getId() + ".");
+		}else {
+			System.out.println("Session is null");
+		}
 		PurchasingRequisitionDAO requisitionDAO = (PurchasingRequisitionDAO)context.getBean("purchaseRequisitionDAO");
-//		requisitionDAO.insert(cart_session, newaccount.getId());
+		requisitionDAO.insert(cart_session, Long.parseLong(accountID));
 		
 		return model;
 	}
@@ -159,7 +170,6 @@ public class RequisitionController {
 		
 		return model;
 	}
-	
 	
 	public PurchaseOrder getFakeOrder() {
 		PurchaseOrder fakeOrder = new PurchaseOrder();

@@ -77,9 +77,9 @@
                                     <c:forEach items="${wwList}" var="ww">
                                         <tr class="odd gradeA">
                                             <td>${ww.getWwSerial()}</p></td>
-                                            <td>${ww.getSupplierID()}</td>
+                                            <td>${ww.getSupplierName()}</td>
                                             <td>${ww.getDate()}</td>
-                                            <td>${ww.getEmployeeID()}</td>
+                                            <td>${ww.getEmployeeName()}</td>
                                             <td>
                                                 <a href="StockInDetail?id=${ww.getWwSerial()}" class="btn btn-warning">查看</a>
                                             </td>
