@@ -98,7 +98,7 @@
                                                 <td>${product.getProductID()}</td>
                                                 <td>${product.getProductName()}</td>
                                                 <td>${product.getPrice()}</td>
-                                                <td><a class="btn btn-default" href="insertRequisition?id=${product.getProductID()}">訂購</a></td>
+                                                <td><a class="btn btn-default" href="addProductToRequisition?id=${product.getProductID()}">訂購</a></td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>

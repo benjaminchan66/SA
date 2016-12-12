@@ -110,7 +110,7 @@
 		                                                <label class="radio-inline">
 		                                                    <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="False" checked>未付款
 		                                                </label>
-		                                            <c:otherwise>
+		                                            </c:otherwise>
 		                                        </c:choose>
                                                 <button type="submit" class="btn btn-info">修改</button>
                                             </span>

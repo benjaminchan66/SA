@@ -58,7 +58,8 @@ public class WarehouseWarrantDAOImpl implements WarehouseWarrantDAO{
 			smt.close();
 			
 			//second SQL command
-			String sql2_1 = "UPDATE Product SET inventory = ? WHERE product_id = ?";
+			String sql2_1 = "SELECT * FROM Product WHERE product_id = ?";
+			String sql2_2 = "UPDATE Product SET inventory = ? WHERE product_id = ?";
 			PurchaseOrder bopContent = bop.getBopContent();
 			for(int i = 0; i < bopContent.getList().size(); i++) {
 				PurchasedProduct currentItem = bopContent.getList().get(i);
@@ -69,9 +70,22 @@ public class WarehouseWarrantDAOImpl implements WarehouseWarrantDAO{
 				smt.executeUpdate();
 				smt.close();
 				
-				// update the inventory of specific product
+				
 				smt = conn.prepareStatement(sql2_1);
-				smt.setInt(1, currentItem.getPurchasingAmount());
+				smt.setLong(1, currentItem.getProductID());
+				rs = smt.executeQuery();
+				
+				int originalInventory = 0;
+				if(rs.next()) {
+					originalInventory = rs.getInt("inventory");
+				}
+				rs.close();
+				smt.close();
+				
+				
+				// update the inventory of specific product
+				smt = conn.prepareStatement(sql2_2);
+				smt.setInt(1, currentItem.getPurchasingAmount() + originalInventory);
 				smt.setLong(2, currentItem.getProductID());
 				smt.executeUpdate();
 				smt.close();

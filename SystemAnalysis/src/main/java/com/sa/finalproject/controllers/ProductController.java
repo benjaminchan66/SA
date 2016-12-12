@@ -23,7 +23,7 @@ import com.sa.finalproject.DAO.impl.SupplierDAOImpl;
 
 // tell the spring this is a controller(auto scan)
 @Controller
-@SessionAttributes("newaccount")
+@SessionAttributes(value = {"newaccount", "shoppingCart"})
 public class ProductController {
 	ApplicationContext context =  new ClassPathXmlApplicationContext("spring-module.xml");
 	

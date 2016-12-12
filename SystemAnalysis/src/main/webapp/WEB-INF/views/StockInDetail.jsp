@@ -45,7 +45,7 @@
 		<div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">入庫單: ${ww.getWwSerial()}</h1>
+                    <h1 class="page-header">入庫單: ${wwSerial}</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -55,9 +55,9 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                          <div class="row">
-                            <div class="col-lg-5"><h5>供應商: ${ww.getSupplierID()}</h5></div>
-                            <div class="col-lg-4"><h5>入庫人員: ${ww.getEmployeeID()}</h5></div>
-                            <div class="col-lg-3"><h5>入庫時間: ${ww.getDate()}</h5></div>
+                            <div class="col-lg-5"><h5>供應商: ${wwSupplierName}</h5></div>
+                            <div class="col-lg-4"><h5>入庫人員: ${wwEmployeeName()}</h5></div>
+                            <div class="col-lg-3"><h5>入庫時間: ${wwDate()}</h5></div>
                          </div>
                         </div>
                         <!-- /.panel-heading -->
@@ -75,7 +75,7 @@
                                         <tr class="odd gradeA">
                                             <td>${product.getProductID()}</td>
                                             <td>${product.getProductName()}</td>
-                                            <td>${product.getInventory()}</td>
+                                            <td>${product.getPurchasingAmount()}</td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>

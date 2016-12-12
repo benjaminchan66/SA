@@ -143,9 +143,9 @@ public class DisplayBOP extends BillOfPurchase {
 	
 	public String payingStatus() {
 		if(this.isHasPaid()) {
-			return "";
+			return "已付款";
 		}else {
-			return "";
+			return "未付款";
 		}
 	}
 	
