@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.sa.finalproject.DAO.ProductDAO;
 import com.sa.finalproject.DAO.PurchasingRequisitionDAO;
 import com.sa.finalproject.DAO.SupplierDAO;
+import com.sa.finalproject.DAO.impl.EmployeeDAOImpl;
 import com.sa.finalproject.entity.Employee;
 import com.sa.finalproject.entity.Product;
 import com.sa.finalproject.entity.PurchaseOrder;
@@ -164,15 +165,30 @@ public class RequisitionController {
 	public ModelAndView confirmRequisition(@ModelAttribute("id")String prSerial){
 	
 		ModelAndView model = new ModelAndView("RequisitionDetail");
+		
+		if(prSerial.length() == 0) {
+			prSerial = "0";
+		}
+		
+		
 		PurchasingRequisitionDAO requisitionDAO = (PurchasingRequisitionDAO)context.getBean("purchaseRequisitionDAO");
 //		requisitionDAO.confirm(staffID, aRequisitionSerial, isConfirmed);
+		EmployeeDAOImpl staffDAO = (EmployeeDAOImpl)context.getBean("EmployeeDAO");
 		PurchasingRequisition pr = requisitionDAO.get(Long.parseLong(prSerial)); 
 		PurchaseOrder content = new PurchaseOrder();
 		content = pr.getRequisitionContent();
 		
-		for(int i = 0; i < content.getList().size(); i++) {
-			System.out.println("Content " + (i+1) + " : " + content.getList().get(i).getProductID());
-		}
+		Employee staff = new Employee();
+		staff = staffDAO.getAEmployee(pr.getEmployeeID());
+		
+		Supplier supplier = new Supplier();
+		supplier = requisitionDAO.getASupplierOf(Long.parseLong(prSerial));
+		model.addObject("prSupplier", supplier.getSupplierName());
+		model.addObject("prSupplierGrade", supplier.getLevel());
+		model.addObject("prEmployeeId", staff.getName());
+		model.addObject("prDate", pr.getDate());
+		model.addObject("prContent", content.getList());
+		model.addObject("prListAmount", content.getListPrice());
 		
 		return model;
 	}

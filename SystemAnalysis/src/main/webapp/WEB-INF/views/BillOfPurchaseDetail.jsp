@@ -45,7 +45,7 @@
 		<div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">進貨單: ${bop.getBopSerial()}</h1>
+                    <h1 class="page-header">進貨單: ${bopSerial}</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -55,10 +55,10 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <div class="row">
-                                <div class="col-lg-8"><h5>廠商: ${bop.getSupplierID()}</h5></div>
-                                <div class="col-lg-3"><h5>總金額: ${bop.getTotalAmount()}</h5></div>
-                                <div class="col-lg-8"><h5>開單人: ${bop.getEmployeeID()}</h5></div>
-                                <div class="col-lg-3"><h5>開單日期: ${bop.getDateTime()}</h5></div>
+                                <div class="col-lg-8"><h5>廠商: ${bopSupplier}</h5></div>
+                                <div class="col-lg-3"><h5>總金額: ${bopTotalAmount}</h5></div>
+                                <div class="col-lg-8"><h5>開單人: ${bopEmployee}</h5></div>
+                                <div class="col-lg-3"><h5>開單日期: ${bopTime}</h5></div>
                             </div>
                         </div>
                         <!-- /.panel-heading -->
@@ -78,9 +78,9 @@
 	                                    <tr class="odd gradeA">
 	                                        <td>${product.getProductID()}</td>
 	                                        <td><font class="hideOverflow">${product.getProductName()}</font></td>
-	                                        <td>$${product.getPrice()}</td>
-	                                        <td>$${product.getInventory()}</td>
-	                                        <td>$${product.amount}</td>
+	                                        <td>$${product.getTotalPrice()}</td>
+	                                        <td>${product.getPurchasingAmount()}</td>
+	                                        <td>$${product.getTotalPrice()}</td>
 	                                    </tr>
                                     </c:forEach>
                                 </tbody>
@@ -91,7 +91,7 @@
                                         <div class="col-lg-8">
                                             <span class="pull-left">
                                                 <label>備註: </label>
-                                                <input class="form-control" value="${bop.getRemarks()}" placeholder="輸入備註" style="width: 260px">
+                                                <input class="form-control" value="${bopRemark}" placeholder="輸入備註" style="width: 260px">
                                                 <label>付款狀態: </label>
 
                                                 <c:choose>

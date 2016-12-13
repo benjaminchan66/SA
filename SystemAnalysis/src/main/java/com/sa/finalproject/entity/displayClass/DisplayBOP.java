@@ -9,14 +9,16 @@ import com.sa.finalproject.entity.Supplier;
 public class DisplayBOP extends BillOfPurchase {
 	long procurementID;
 	String procurementName;
-	Supplier supplier = new Supplier();
+	long supplierID = 0;
+	String supplierName = "";
 	
 	
 	public DisplayBOP() {
 		super();
 		this.procurementID = 0;
 		this.procurementName = "";
-		this.supplier = new Supplier();
+		supplierID = 0;
+		supplierName = "";
 	}
 	
 	
@@ -24,7 +26,8 @@ public class DisplayBOP extends BillOfPurchase {
 		super();
 		this.procurementID = procurementID;
 		this.procurementName = procurementName;
-		this.supplier = new Supplier();
+		supplierID = 0;
+		supplierName = "";
 	}
 	
 	public void setBOP(BillOfPurchase bop) {
@@ -39,8 +42,9 @@ public class DisplayBOP extends BillOfPurchase {
 		this.setBopContent(bop.getBopContent());
 	}
 	
-	public void setSupplier(Supplier supllier) {
-		this.supplier = supplier;
+	public void setSupplier(Supplier supplier) {
+		this.setSupplierID(supplier.getSupplierID());
+		this.setSupplierName(supplier.getSupplierName());
 	}
 	
 	public long getBopSerial() {
@@ -131,15 +135,19 @@ public class DisplayBOP extends BillOfPurchase {
 	}
 
 	public long getSupplierID() {
-		return super.getSupplierID();
+		return this.supplierID;
 	}
 
 	public void setSupplierID(long supplierID) {
-		super.setSupplierID(supplierID);
+		this.supplierID = supplierID;
+	}
+	
+	public void setSupplierName(String name) {
+		this.supplierName = name;
 	}
 	
 	public String getSupplierName() {
-		return this.supplier.getSupplierName();
+		return this.supplierName;
 	}
 	
 	public String deliveryStatus() {

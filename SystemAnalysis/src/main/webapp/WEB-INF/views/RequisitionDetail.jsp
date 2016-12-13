@@ -56,7 +56,7 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-lg-8"><h5>廠商: ${prSupplier}</h5></div>
-                                <div class="col-lg-3"><h5>廠商分級: ${prGrade}</h5></div>
+                                <div class="col-lg-3"><h5>廠商分級: ${prSupplierGrade}</h5></div>
                                 <div><h5 class="col-lg-8">開單人: ${prEmployeeId}</h5></div>
                                 <div><h5 class="col-lg-3">開單日期: ${prDate}</h5></div>
                             </div>
@@ -74,13 +74,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${prList}" var="pr">
+                                        <c:forEach items="${prContent}" var="item">
                                             <tr>
-                                                <td>${prId}</td>
-                                                <td>${prProductName}</td>
-                                                <td>$ ${prPrice}</td>
-                                                <td>${prInventory}</td>
-                                                <td>$ ${prAmount}</td>
+                                                <td>${item.getProductID()}</td>
+                                                <td>${item.getProductName()}</td>
+                                                <td>$ ${item.getProductPrice()}</td>
+                                                <td>${item.getPurchasingAmount()}</td>
+                                                <td>$ ${item.getTotalPrice()}</td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>
@@ -88,7 +88,7 @@
                                 <div class="col-lg-10">
                                     <a type="button" href="listRequisition" class="btn btn-warning">請購單確認</a>
                                 </div>
-                                <h4>總計: $ ${prAmount}</h4>
+                                <h4>總計: $ ${prListAmount}</h4>
                             </form>
                         </div>
                     </div>

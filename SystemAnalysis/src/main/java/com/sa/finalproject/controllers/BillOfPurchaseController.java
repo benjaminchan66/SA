@@ -15,11 +15,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.sa.finalproject.DAO.BillOfPurchaseDAO;
 import com.sa.finalproject.DAO.PurchasingRequisitionDAO;
-import com.sa.finalproject.DAO.RemarkDAO;
+import com.sa.finalproject.DAO.impl.EmployeeDAOImpl;
 import com.sa.finalproject.entity.BillOfPurchase;
+import com.sa.finalproject.entity.Employee;
+import com.sa.finalproject.entity.PurchaseOrder;
 import com.sa.finalproject.entity.PurchasingRequisition;
-import com.sa.finalproject.entity.Remark;
 import com.sa.finalproject.entity.Supplier;
+import com.sa.finalproject.entity.displayClass.DisplayBOP;
 
 @Controller
 @SessionAttributes(value = {"newaccount", "shoppingCart"})
@@ -30,28 +32,67 @@ public class BillOfPurchaseController {
 	@RequestMapping(value = "/Order", method = RequestMethod.GET)
 	public ModelAndView getBOPList(){
 		//顯示所有進貨單
-		ModelAndView model = new ModelAndView("Order");
+		ModelAndView model = new ModelAndView("BillOfPurchase");
 		BillOfPurchaseDAO billOfPurchaseDAO = (BillOfPurchaseDAO)context.getBean("BillOfPurchaseDAO");
 	    ArrayList<BillOfPurchase> billOfPurchaseList = new ArrayList<BillOfPurchase>();
 		billOfPurchaseList = billOfPurchaseDAO.getList();
-		model.addObject("billofpurchaselist", billOfPurchaseList);
+		
+		PurchasingRequisitionDAO prDAO = (PurchasingRequisitionDAO)context.getBean("purchaseRequisitionDAO");
+		ArrayList<DisplayBOP> displayBOPList = new ArrayList<DisplayBOP>();
+		for(int i = 0; i < billOfPurchaseList.size(); i++) {
+			DisplayBOP displayBOP = new DisplayBOP();
+			BillOfPurchase currentBOP = billOfPurchaseList.get(i);
+			Supplier supplier = new Supplier();
+			supplier = prDAO.getASupplierOf(currentBOP.getBopSerial());
+			displayBOP.setBOP(currentBOP);
+			displayBOP.setSupplier(supplier);
+			displayBOPList.add(displayBOP);
+		}
+		
+		
+		model.addObject("bopList", displayBOPList);
 		
 		return model;
 	}
 	@RequestMapping(value = "/bopDetailList", method = RequestMethod.GET)
 	public ModelAndView detailList(@ModelAttribute("id") String bopserial){
 		//列出單一進貨單明細
-		ModelAndView model = new ModelAndView("Testfile");
-		BillOfPurchaseDAO billofpurchase = (BillOfPurchaseDAO)context.getBean("BillOfPurchaseDAO");
+		ModelAndView model = new ModelAndView("BillOfPurchaseDetail");
+		BillOfPurchaseDAO billOfPurchaseDAO = (BillOfPurchaseDAO)context.getBean("BillOfPurchaseDAO");
+		PurchasingRequisitionDAO prDAO = (PurchasingRequisitionDAO)context.getBean("purchaseRequisitionDAO");
+		EmployeeDAOImpl staffDAO = (EmployeeDAOImpl)context.getBean("EmployeeDAO");
+		
 		if(bopserial.length() == 0) {
 			bopserial = "0";
 		}
-		PurchasingRequisitionDAO purchasingRequisitionDAO = (PurchasingRequisitionDAO) context.getBean("purchaseRequisitionDAO");
-		  Supplier supplier = new Supplier();
-		  supplier = purchasingRequisitionDAO.getASupplierOf(Long.parseLong(bopserial));
-		  
-		BillOfPurchase bop = billofpurchase.get(Long.parseLong(bopserial));
-		model.addObject("billofpurchasedetail", bop);
+		
+		PurchaseOrder content = new PurchaseOrder();
+		content = billOfPurchaseDAO.getContentOf(Long.parseLong(bopserial));
+		BillOfPurchase bop = billOfPurchaseDAO.get(Long.parseLong(bopserial));
+		
+		Supplier supplier = new Supplier();
+		supplier = prDAO.getASupplierOf(Long.parseLong(bopserial));
+		
+		Employee staff = new Employee();
+		staff = staffDAO.getAEmployee(bop.getEmployeeID());
+		
+		if(bop.getRemarks() != null) {
+			model.addObject("bopRemark", bop.getRemarks());
+		}else {
+			model.addObject("bopRemark", "");
+		}
+		model.addObject("bopSerial", bop.getBopSerial());
+		model.addObject("productList", content.getList());
+		model.addObject("isHasPaid", bop.isHasPaid());
+		model.addObject("bopSupplier", supplier.getSupplierName());
+		model.addObject("bopTotalAmount", content.getListPrice());
+		model.addObject("bopEmployee", staff.getName());
+		model.addObject("bopTime", bop.getDateTime());
+		
+		
+		
+		
+		
 		return model;
 	}
 	

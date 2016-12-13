@@ -21,7 +21,7 @@ public class BillOfPurchase {
 	private String remarks;
 	
 	// bill of purchase content
-	private PurchaseOrder bopContent = null;
+	private PurchaseOrder bopContent = new PurchaseOrder();
 	
 	public BillOfPurchase() {
 	}

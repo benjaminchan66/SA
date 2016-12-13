@@ -78,12 +78,12 @@
                                     <c:forEach items="${bopList}" var="bop">
                                         <tr class="odd gradeA">
                                             <td>${bop.getBopSerial()}</p></td>
-                                            <td>${bop.getSupplierID()}</td>
+                                            <td>${bop.getSupplierName()}</td>
                                             <!-- <td>已到貨</td> -->
                                             <td>${bop.deliveryStatus()}</td>
-                                            <td>${bop.payingStatus}</td>
+                                            <td>${bop.payingStatus()}</td>
                                             <td>
-                                                <a href="BillOfPurchaseDetail?id=${bop.getBopSerial()}" class="btn btn-warning">查看</a>
+                                                <a href="bopDetailList?id=${bop.getBopSerial()}" class="btn btn-warning">查看</a>
                                             </td>
                                         </tr>
                                     </c:forEach>

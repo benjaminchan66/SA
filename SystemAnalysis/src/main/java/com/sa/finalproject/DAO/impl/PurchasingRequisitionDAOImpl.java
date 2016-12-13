@@ -393,6 +393,8 @@ public class PurchasingRequisitionDAOImpl implements PurchasingRequisitionDAO {
 			if (rs.next()) {
 				long supplierID = rs.getLong("supplier_id");
 				supplier.setSupplierID(supplierID);
+				String supplierLevel = rs.getString("grade_att");
+				supplier.setLevel(supplierLevel);
 			}
 
 			rs.close();
