@@ -57,7 +57,7 @@
                             <h4>請購單明細</h4>
                         </div>
                         <div class="panel-body">
-                            <form action="previewDetailRequisition">
+                            <form action="previewDetailRequisition" method="POST">
                                 <table width="100%" class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>

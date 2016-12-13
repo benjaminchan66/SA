@@ -100,7 +100,7 @@
                                                 <td>${product.getProductName()}</td>
                                                 <td>${product.getPrice()}</td>
                                                 <form action="addProductToRequisition?id=${product.getProductID()}" method="POST">
-                                                    <td><input type="number" name="amount" value="" placeholder="0" required="required" min="0"></td>
+                                                    <td><input type="number" name="amount" value="" placeholder="0" required="required" min="1"></td>
                                                     <td><button type="submit" class="btn btn-default">訂購</button></td>
                                                 </form>
                                             </tr>
