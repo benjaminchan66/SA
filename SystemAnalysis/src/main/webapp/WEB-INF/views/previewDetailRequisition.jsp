@@ -79,7 +79,7 @@
                                                 <td>${cartItem.getProductPrice()}</td>
                                                 <td>${cartItem.getPurchasingAmount()}</td>
                                                 <td>${cartItem.getTotalPrice()}</td>
-                                                <a type="button" href="dropProductFromCart?id=${cartItem.getProductID()}" class="btn btn-danger">刪除</a>
+                                                <td><a type="button" href="dropProductFromCart?id=${cartItem.getProductID()}" class="btn btn-danger">刪除</a></td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>
