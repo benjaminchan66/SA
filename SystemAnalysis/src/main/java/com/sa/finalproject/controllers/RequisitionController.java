@@ -85,8 +85,15 @@ public class RequisitionController {
 		ProductDAO productDAO = (ProductDAO)context.getBean("productDAO");
 		Product product = productDAO.get(Long.parseLong(productID));
 		
+		// get supplier information
+		SupplierDAO supplierDAO = (SupplierDAO)context.getBean("supplierDAO");
+		Supplier supplier = new Supplier();
+		supplier = supplierDAO.get(product.getSupplierID());
+		
 		PurchasedProduct purchasedItem = new PurchasedProduct();
 		purchasedItem.setProduct(product, Integer.parseInt(amount));
+		purchasedItem.setSupplierID(supplier.getSupplierID());
+		purchasedItem.setSupplierName(supplier.getSupplierName());
 		
 		boolean productInTheCart = false;
 		for(int i = 0; i < cart_session.getList().size(); i++) {
@@ -114,7 +121,7 @@ public class RequisitionController {
 	@RequestMapping(value = "/dropProductFromCart", method = RequestMethod.GET)
 	public ModelAndView dropProduct(@ModelAttribute("id")String id){
 	
-		ModelAndView model = new ModelAndView("previewDetailRequisition");
+		ModelAndView model = new ModelAndView("redirect:/previewDetailRequisition");
 		
 		for(int i = 0; i < cart_session.getList().size(); i++) {
 			PurchasedProduct currentProduct = cart_session.getList().get(i);
@@ -163,7 +170,7 @@ public class RequisitionController {
 	
 	@RequestMapping(value = "/listDetailRequisition", method = RequestMethod.GET)
 	public ModelAndView confirmRequisition(@ModelAttribute("id")String prSerial){
-	
+		// 列出單一請購單的詳細資料
 		ModelAndView model = new ModelAndView("RequisitionDetail");
 		
 		if(prSerial.length() == 0) {
@@ -172,11 +179,17 @@ public class RequisitionController {
 		
 		
 		PurchasingRequisitionDAO requisitionDAO = (PurchasingRequisitionDAO)context.getBean("purchaseRequisitionDAO");
-//		requisitionDAO.confirm(staffID, aRequisitionSerial, isConfirmed);
 		EmployeeDAOImpl staffDAO = (EmployeeDAOImpl)context.getBean("EmployeeDAO");
 		PurchasingRequisition pr = requisitionDAO.get(Long.parseLong(prSerial)); 
 		PurchaseOrder content = new PurchaseOrder();
 		content = pr.getRequisitionContent();
+		
+		ProductDAO productDAO = (ProductDAO)context.getBean("productDAO");
+		for(int i = 0; i < content.count(); i++) {
+			PurchasedProduct currentItem = content.getList().get(i);
+			String productName = productDAO.get(currentItem.getProductID()).getProductName();
+			currentItem.setProductName(productName);
+		}
 		
 		Employee staff = new Employee();
 		staff = staffDAO.getAEmployee(pr.getEmployeeID());
@@ -218,6 +231,7 @@ public class RequisitionController {
 		}
 		PurchasingRequisitionDAO requisitionDAO = (PurchasingRequisitionDAO)context.getBean("purchaseRequisitionDAO");
 		requisitionDAO.insert(cart_session, Long.parseLong(accountID));
+		cart_session.cleanTheList();
 		
 		return model;
 	}

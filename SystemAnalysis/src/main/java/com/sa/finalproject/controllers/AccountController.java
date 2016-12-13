@@ -11,6 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -75,11 +77,14 @@ public class AccountController {
 	}
 	
 	@RequestMapping(value = "/Dashboard", method = RequestMethod.GET)
-	public ModelAndView dashboard(){
+	public ModelAndView dashboard(HttpSession session){
 		// check the identity
 		ModelAndView model = new ModelAndView("Dashboard");
 		model.addObject("newaccount", account_session);
 		model.addObject("accountID", account_session.getId());
+		
+		
+		
 		
 		return model;
 	}
@@ -87,6 +92,11 @@ public class AccountController {
 	@RequestMapping(value = "/Profile", method = RequestMethod.GET)
 	public ModelAndView showProfile(@ModelAttribute("id")String profileID){
 		// check the identity
+		if(profileID.length() == 0) {
+			profileID = "0";
+		}
+		
+		
 		ModelAndView model = new ModelAndView("Profile");
 		EmployeeDAOImpl staffDAO = (EmployeeDAOImpl) context.getBean("EmployeeDAO");
 		Employee staff = staffDAO.getAEmployee(Long.parseLong(profileID));

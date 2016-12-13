@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.sa.finalproject.DAO.BillOfPurchaseDAO;
 import com.sa.finalproject.DAO.PurchasingRequisitionDAO;
 import com.sa.finalproject.DAO.impl.EmployeeDAOImpl;
+import com.sa.finalproject.DAO.impl.SupplierDAOImpl;
 import com.sa.finalproject.entity.BillOfPurchase;
 import com.sa.finalproject.entity.Employee;
 import com.sa.finalproject.entity.PurchaseOrder;
@@ -38,14 +39,22 @@ public class BillOfPurchaseController {
 		billOfPurchaseList = billOfPurchaseDAO.getList();
 		
 		PurchasingRequisitionDAO prDAO = (PurchasingRequisitionDAO)context.getBean("purchaseRequisitionDAO");
+		SupplierDAOImpl supplierDAO = (SupplierDAOImpl)context.getBean("supplierDAO");
 		ArrayList<DisplayBOP> displayBOPList = new ArrayList<DisplayBOP>();
 		for(int i = 0; i < billOfPurchaseList.size(); i++) {
 			DisplayBOP displayBOP = new DisplayBOP();
 			BillOfPurchase currentBOP = billOfPurchaseList.get(i);
 			Supplier supplier = new Supplier();
+			
 			supplier = prDAO.getASupplierOf(currentBOP.getBopSerial());
+			
 			displayBOP.setBOP(currentBOP);
 			displayBOP.setSupplier(supplier);
+			displayBOP.setSupplierName(supplier.getSupplierName());
+			System.out.println("Supplier name : " + supplier.getSupplierName());
+			
+			
+			
 			displayBOPList.add(displayBOP);
 		}
 		
