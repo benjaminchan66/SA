@@ -74,6 +74,8 @@ public class ProductController {
 		long newProductCode = productDAO.insert(preparedProduct);
 		System.out.println("The ID of the product is : " + newProductCode + ".");
 		
+		System.out.println("The product's name is : " + name + ".");
+		
 		return model;
 	}
 	
