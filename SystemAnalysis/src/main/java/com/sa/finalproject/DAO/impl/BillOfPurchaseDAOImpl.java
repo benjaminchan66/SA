@@ -101,13 +101,14 @@ public class BillOfPurchaseDAOImpl implements BillOfPurchaseDAO {
 	}
 
 	public void transferIntoBOP(PurchasingRequisition aPurchaseingRequisition) {
-		String sql = "INSERT INTO BillOfPurchase (BOP_serial, employee_id, time, has_arrived, total_amount, accountant_id, has_paid, passed) VALUES(?,null,now(),false,?, null, false,false)";
+		String sql = "INSERT INTO BillOfPurchase (BOP_serial, employee_id, time, has_arrived, total_amount, accountant_id, has_paid, passed) VALUES(?,?,now(),false,?, null, false,false)";
 		String sql2 = "INSERT INTO Product_connect_BOP(product_id, BOP_serial, price_att, quantity) VALUES(?, ?, ?, ?)";
 		try {
 			conn = dataSource.getConnection();
 			smt = conn.prepareStatement(sql);
 			smt.setLong(1, aPurchaseingRequisition.getPrSerial());
-			smt.setInt(2, aPurchaseingRequisition.getRequisitionContent().getListPrice());
+			smt.setLong(2, aPurchaseingRequisition.getEmployeeID());
+			smt.setInt(3, aPurchaseingRequisition.getRequisitionContent().getListPrice());
 			smt.executeUpdate();
 			smt.close();
 
@@ -176,7 +177,7 @@ public class BillOfPurchaseDAOImpl implements BillOfPurchaseDAO {
 					aProduct.setProductID(rs.getLong("product_id"));
 					aProduct.setProductPrice(rs.getInt("price_att"));
 					aProduct.setPurchasingAmount(rs.getInt("quantity"));
-					currentBill.getBopContent().add(aProduct);
+					currentBill.getBopContent().getList().add(aProduct);
 				}
 				rs.close();
 				smt.close();
@@ -325,6 +326,27 @@ public class BillOfPurchaseDAOImpl implements BillOfPurchaseDAO {
 				currentItem.setProductPrice(rs.getInt("price_att"));
 				currentItem.setPurchasingAmount(rs.getInt("quantity"));
 				content.getList().add(currentItem);
+			}
+			
+			rs.close();
+			smt.close();
+			
+			String sql2 = "SELECT * FROM Product WHERE product_id = ?";
+			
+			for(int i = 0; i < content.getList().size(); i++) {
+				PurchasedProduct currentItem = content.getList().get(i);
+				smt = conn.prepareStatement(sql2);
+				smt.setLong(1, currentItem.getProductID());
+				rs = smt.executeQuery();
+				
+				String productName = "";
+				if(rs.next()) {
+					productName = rs.getString("product_name");
+				}
+				
+				currentItem.setProductName(productName);
+				
+				
 			}
 
 		} catch (SQLException e) {
