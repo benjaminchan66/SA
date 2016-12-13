@@ -86,12 +86,12 @@
                                 </tbody>
                             </table>
                             <div class="modal-footer">
-                                <form class="form-inline" action="" method="POST">
+                                <form class="form-inline" action="updateBOP?id=${bopSerial}" method="POST">
                                     <div class="row">
                                         <div class="col-lg-8">
                                             <span class="pull-left">
                                                 <label>備註: </label>
-                                                <input class="form-control" value="${bopRemark}" placeholder="輸入備註" style="width: 260px">
+                                                <input class="form-control" name="bopRemark" value="${bopRemark}" placeholder="輸入備註" style="width: 260px">
                                                 <label>付款狀態: </label>
 
                                                 <c:choose>
@@ -120,7 +120,7 @@
                                         </div> -->
                                         <div class="col-lg-3 col-lg-offset-1">
                                             <a href="StockIn" class="btn btn-success">入庫</a>
-                                            <a href="BillOfPurchase" class="btn btn-warning">關閉</a>
+                                            <a href="Order" class="btn btn-warning">關閉</a>
                                         </div>
                                     </div>
                                 </form>

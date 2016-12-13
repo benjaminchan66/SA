@@ -2,6 +2,8 @@ package com.sa.finalproject.controllers;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,7 @@ import com.sa.finalproject.DAO.PurchasingRequisitionDAO;
 import com.sa.finalproject.DAO.impl.SupplierDAOImpl;
 import com.sa.finalproject.DAO.impl.WarehouseWarrantDAOImpl;
 import com.sa.finalproject.entity.Employee;
+import com.sa.finalproject.entity.PurchasingRequisition;
 import com.sa.finalproject.entity.Supplier;
 import com.sa.finalproject.entity.WarehouseWarrant;
 import com.sa.finalproject.entity.displayClass.DisplayWW;
@@ -33,6 +36,32 @@ public class WarehouseWarrantController {
 		ArrayList<WarehouseWarrant> wwList = new ArrayList<WarehouseWarrant>();
 		wwList = wwDAO.getList();
 		model.addObject("wwList", wwList);
+		
+		return model;
+	}
+	
+
+	
+	@RequestMapping(value = "/StockIn", method = RequestMethod.GET)
+	public ModelAndView insertWW(@ModelAttribute("id")String serial, HttpSession session){
+		// 列出所有入庫單
+		if(serial.length() == 0) {
+			serial = "0";
+		}
+		
+		ModelAndView model = new ModelAndView("redirect:/wwList");
+		PurchasingRequisitionDAO prDAO = (PurchasingRequisitionDAO)context.getBean("purchaseRequisitionDAO");
+		PurchasingRequisition pr = new PurchasingRequisition();
+		
+		WarehouseWarrantDAOImpl wwDAO = (WarehouseWarrantDAOImpl)context.getBean("warehouseWarrantDAO");
+		long employeeID = 0;
+		if(session.getAttribute("newaccount") != null) {
+			Employee staff = new Employee();
+			staff = (Employee)(session.getAttribute("newaccount"));
+			employeeID = Long.parseLong(staff.getId());
+		}
+		
+		wwDAO.insert(pr, employeeID);
 		
 		return model;
 	}

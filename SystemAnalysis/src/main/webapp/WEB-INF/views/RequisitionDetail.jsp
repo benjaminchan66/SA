@@ -86,7 +86,7 @@
                                     </tbody>
                                 </table>
                                 <div class="col-lg-10">
-                                    <a type="button" href="listRequisition" class="btn btn-warning">請購單確認</a>
+                                    <a type="button" href="confirmRequisition?id=${prSerial}" class="btn btn-warning">請購單確認</a>
                                 </div>
                                 <h4>總計: $ ${prListAmount}</h4>
                             </form>

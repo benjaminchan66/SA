@@ -51,7 +51,7 @@ public class BillOfPurchaseController {
 			displayBOP.setBOP(currentBOP);
 			displayBOP.setSupplier(supplier);
 			displayBOP.setSupplierName(supplier.getSupplierName());
-			System.out.println("Supplier name : " + supplier.getSupplierName());
+			displayBOP.setHasPaid(currentBOP.isHasPaid());
 			
 			
 			
@@ -124,12 +124,23 @@ public class BillOfPurchaseController {
 //		transferIntoBOP.transferIntoBOP(aPurchaseingRequisition);
 //		return model;
 //	}
-    @RequestMapping(value = "/billofpurchaseupdate", method = RequestMethod.GET) //更新資料
-	public ModelAndView updateBillOfPurchasePage(@ModelAttribute("id") String serial){
-		ModelAndView model = new ModelAndView("Testfile2");
-		BillOfPurchaseDAO update = (BillOfPurchaseDAO)context.getBean("BillOfPurchaseDAO");
-		BillOfPurchase bop = update.get(Long.parseLong(serial));
-		model.addObject("update",bop);
+    @RequestMapping(value = "/updateBOP", method = RequestMethod.POST) 
+	public ModelAndView updateBillOfPurchasePage(@ModelAttribute("id") String serial, @ModelAttribute("bopRemark")String remark, @ModelAttribute("optionsRadiosInline")String hasPaid){
+    	//更新BOP資料
+		ModelAndView model = new ModelAndView("redirect:/Order");
+		BillOfPurchaseDAO bopDAO = (BillOfPurchaseDAO)context.getBean("BillOfPurchaseDAO");
+		BillOfPurchase bop = bopDAO.get(Long.parseLong(serial));
+		
+		bop.setRemarks(remark);
+		if("true".equals(hasPaid)) {
+			bop.setHasPaid(true);
+		}else {
+			bop.setHasPaid(false);
+		}
+		
+		
+		bopDAO.update(Long.parseLong(serial), bop);
+		
 		return model;
 	}
 	

@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 import com.sa.finalproject.DAO.WarehouseWarrantDAO;
 import com.sa.finalproject.entity.BillOfPurchase;
 import com.sa.finalproject.entity.PurchaseOrder;
+import com.sa.finalproject.entity.PurchasingRequisition;
 import com.sa.finalproject.entity.Supplier;
 import com.sa.finalproject.entity.WarehouseWarrant;
 import com.sa.finalproject.entity.supportingClass.PurchasedProduct;
@@ -29,7 +30,7 @@ public class WarehouseWarrantDAOImpl implements WarehouseWarrantDAO{
 	}
 	
 	@Override
-	public void insert(BillOfPurchase bop, long employeeID) {
+	public void insert(PurchasingRequisition pr, long employeeID) {
 		
 		String sql = "INSERT INTO WarehouseWarrant(WW_serial, employee_id, time, supplier_id) VALUES(?, ?, Now(), ?)";
 		String sql2 = "INSERT INTO Product_connectWW(product_id, WW_serial, quantity) VALUES(?, ?, ?)";
@@ -39,7 +40,7 @@ public class WarehouseWarrantDAOImpl implements WarehouseWarrantDAO{
 			// SQL_1
 			String sql_1 = "SELECT * FROM PR_supplier_grade WHERE PR_serial = ?";
 			smt = conn.prepareStatement(sql_1);
-			smt.setLong(1, bop.getBopSerial());
+			smt.setLong(1, pr.getPrSerial());
 			rs = smt.executeQuery();
 			long supplierID = 0;
 			if(rs.next()) {
@@ -50,7 +51,7 @@ public class WarehouseWarrantDAOImpl implements WarehouseWarrantDAO{
 			
 			// SQL
 			smt = conn.prepareStatement(sql);
-			smt.setLong(1, bop.getBopSerial());
+			smt.setLong(1, pr.getPrSerial());
 			smt.setLong(2, employeeID);
 			smt.setLong(3, supplierID);
 			smt.executeUpdate();
@@ -60,12 +61,12 @@ public class WarehouseWarrantDAOImpl implements WarehouseWarrantDAO{
 			//second SQL command
 			String sql2_1 = "SELECT * FROM Product WHERE product_id = ?";
 			String sql2_2 = "UPDATE Product SET inventory = ? WHERE product_id = ?";
-			PurchaseOrder bopContent = bop.getBopContent();
+			PurchaseOrder bopContent = pr.getRequisitionContent();
 			for(int i = 0; i < bopContent.getList().size(); i++) {
 				PurchasedProduct currentItem = bopContent.getList().get(i);
 				smt = conn.prepareStatement(sql2);
 				smt.setLong(1, currentItem.getProductID());
-				smt.setLong(2, bop.getBopSerial());
+				smt.setLong(2, pr.getPrSerial());
 				smt.setInt(3, currentItem.getPurchasingAmount());
 				smt.executeUpdate();
 				smt.close();

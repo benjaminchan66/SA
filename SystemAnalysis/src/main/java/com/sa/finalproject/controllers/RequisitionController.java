@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sa.finalproject.DAO.BillOfPurchaseDAO;
 import com.sa.finalproject.DAO.ProductDAO;
 import com.sa.finalproject.DAO.PurchasingRequisitionDAO;
 import com.sa.finalproject.DAO.SupplierDAO;
@@ -169,7 +170,7 @@ public class RequisitionController {
 	
 	
 	@RequestMapping(value = "/listDetailRequisition", method = RequestMethod.GET)
-	public ModelAndView confirmRequisition(@ModelAttribute("id")String prSerial){
+	public ModelAndView listDetailRequisition(@ModelAttribute("id")String prSerial){
 		// 列出單一請購單的詳細資料
 		ModelAndView model = new ModelAndView("RequisitionDetail");
 		
@@ -202,6 +203,7 @@ public class RequisitionController {
 		model.addObject("prDate", pr.getDate());
 		model.addObject("prContent", content.getList());
 		model.addObject("prListAmount", content.getListPrice());
+		model.addObject("prSerial", prSerial);
 		
 		return model;
 	}
@@ -232,6 +234,24 @@ public class RequisitionController {
 		PurchasingRequisitionDAO requisitionDAO = (PurchasingRequisitionDAO)context.getBean("purchaseRequisitionDAO");
 		requisitionDAO.insert(cart_session, Long.parseLong(accountID));
 		cart_session.cleanTheList();
+		
+		return model;
+	}
+	
+	
+	@RequestMapping(value = "/confirmRequisition", method = RequestMethod.GET)
+	public ModelAndView confirmRequisition(@ModelAttribute("id")String serial){
+		// 確認請購單
+		if(serial.length() == 0) {
+			serial = "0";
+		}
+		ModelAndView model = new ModelAndView("redirect:/Order");
+		BillOfPurchaseDAO bopDAO = (BillOfPurchaseDAO)context.getBean("BillOfPurchaseDAO");
+		PurchasingRequisitionDAO requisitionDAO = (PurchasingRequisitionDAO)context.getBean("purchaseRequisitionDAO");
+		PurchasingRequisition pr = requisitionDAO.get(Long.parseLong(serial));
+		
+		
+		bopDAO.transferIntoBOP(pr);
 		
 		return model;
 	}

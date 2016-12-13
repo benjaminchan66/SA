@@ -66,10 +66,10 @@ public class SupplierController {
 		model.addObject("supplierPhone", supplier.getPhone());
 		model.addObject("supplierAddress", supplier.getAddress());
 		
-		if(supplier.getLevel() == "A") {
-			model.addObject("isClassA", false);
-		}else {
+		if("A".equals(supplier.getLevel())) {
 			model.addObject("isClassA", true);
+		}else {
+			model.addObject("isClassA", false);
 		}
 		
 		return model;

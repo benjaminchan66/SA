@@ -284,7 +284,7 @@ public class BillOfPurchaseDAOImpl implements BillOfPurchaseDAO {
 	}
 
 	public void update(long serial, BillOfPurchase aBillOfPurchase) { // 更新資料
-		String sql = "UPDATE BillOfPurchase SET has_arrived=?,passed=? ,has_paid= ? ,remark=?" + "WHERE BOP_serial = ?";
+		String sql = "UPDATE BillOfPurchase SET has_arrived=?,passed=? ,has_paid= ? ,remark=? WHERE BOP_serial = ?";
 
 		try {
 			conn = dataSource.getConnection();
