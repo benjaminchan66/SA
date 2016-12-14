@@ -119,7 +119,7 @@
                                             
                                         </div> -->
                                         <div class="col-lg-3 col-lg-offset-1">
-                                            <a href="StockIn" class="btn btn-success">入庫</a>
+                                            <a href="StockIn?id=${bopSerial}" class="btn btn-success">入庫</a>
                                             <a href="Order" class="btn btn-warning">關閉</a>
                                         </div>
                                     </div>

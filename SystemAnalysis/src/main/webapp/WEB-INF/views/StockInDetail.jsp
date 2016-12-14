@@ -56,8 +56,8 @@
                         <div class="panel-heading">
                          <div class="row">
                             <div class="col-lg-5"><h5>供應商: ${wwSupplierName}</h5></div>
-                            <div class="col-lg-4"><h5>入庫人員: ${wwEmployeeName()}</h5></div>
-                            <div class="col-lg-3"><h5>入庫時間: ${wwDate()}</h5></div>
+                            <div class="col-lg-4"><h5>入庫人員: ${wwEmployeeName}</h5></div>
+                            <div class="col-lg-3"><h5>入庫時間: ${wwDate}</h5></div>
                          </div>
                         </div>
                         <!-- /.panel-heading -->
@@ -81,7 +81,7 @@
                                 </tbody>
                             </table>
                            <div style="float:right">
-                                <a href="StockIn"><button type="button" class="btn btn-warning">關閉</button></a>
+                                <a href="wwList"><button type="button" class="btn btn-warning">關閉</button></a>
                             </div>
                         </div>
                     </div>

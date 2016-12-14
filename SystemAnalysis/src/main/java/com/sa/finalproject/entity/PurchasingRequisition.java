@@ -16,7 +16,7 @@ public class PurchasingRequisition {
 	// 非A級廠商需要確認，此為確認時間
 	private Date confirmingDate = null;
 	private long judgementManagerID = 0 ;
-	private PurchaseOrder requisitionContent = null;
+	private PurchaseOrder requisitionContent = new PurchaseOrder();
 	
 	
 	// initialize

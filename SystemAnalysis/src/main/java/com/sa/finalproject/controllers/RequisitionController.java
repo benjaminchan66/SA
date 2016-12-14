@@ -54,7 +54,7 @@ public class RequisitionController {
 		if(this.hasSelectedSupplier && this.selectedSupplier != null) {
 			ProductDAO productDAO = (ProductDAO)context.getBean("productDAO");
 			ArrayList<Product> productList = new ArrayList<Product>();
-			productList = productDAO.getProductOf(this.selectedSupplier);
+			productList = productDAO.getAvailableProductOf(this.selectedSupplier);
 			model.addObject("productList", productList);
 			model.addObject("selectedSupplier", this.selectedSupplier);
 			this.selectedSupplier = null;

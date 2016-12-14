@@ -81,6 +81,10 @@ public class DisplayWW extends WarehouseWarrant {
 		return this.wwSupplier.getSupplierName();
 	}
 	
+	public void setEmployeeName(String name) {
+		this.employee.setName(name);
+	}
+	
 	public String getEmployeeName() {
 		return this.employee.getName();
 	}

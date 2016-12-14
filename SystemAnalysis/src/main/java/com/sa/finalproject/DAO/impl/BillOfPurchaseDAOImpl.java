@@ -78,12 +78,13 @@ public class BillOfPurchaseDAOImpl implements BillOfPurchaseDAO {
 	}
 
 	public void examineGoods(long bopSerial, boolean passed) { // 驗貨
-		String sql = "UPDATE BillOfPurchase SET passed=?" + "WHERE  BOP_ serial= ? ";
+		String sql = "UPDATE BillOfPurchase SET passed=?, has_arrived = ? WHERE  BOP_serial= ? ";
 		try {
 			conn = dataSource.getConnection();
 			smt = conn.prepareStatement(sql);
 			smt.setBoolean(1, passed);
-			smt.setLong(2, bopSerial);
+			smt.setBoolean(2, true);
+			smt.setLong(3, bopSerial);
 			smt.executeUpdate();
 			smt.close();
 

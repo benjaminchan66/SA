@@ -24,5 +24,8 @@ public interface ProductDAO {
 	
 	public ArrayList<Product> getProductOf(long aSupplierID);
 	
+	// 取得單一進貨商的供應中商品
+	public ArrayList<Product> getAvailableProductOf(long aSupplierID);
+	
 
 }
