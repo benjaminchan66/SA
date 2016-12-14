@@ -114,19 +114,27 @@ public class ProductController {
 	
 	
 	@RequestMapping(value = "/updateProduct", method = RequestMethod.POST)
-	public ModelAndView updateProduct(@ModelAttribute("productID")String productID, @ModelAttribute("productName") String newName, @ModelAttribute("productPrice") String newPrice, @ModelAttribute("isInTheMarket") String newProductStatus, @ModelAttribute("productSupplier") String newSupplierID){
+	public ModelAndView updateProduct(@ModelAttribute("productID")String productID, HttpServletRequest request) throws UnsupportedEncodingException{
 		// Update the product information
+		
+		request.setCharacterEncoding("utf-8");
+		String name = request.getParameter("productName");
+		String price = request.getParameter("productPrice");
+		String productStatus = request.getParameter("isInTheMarket");
+		String supplierID = request.getParameter("productSupplier");
+		
+		
 		ModelAndView model = new ModelAndView("redirect:/productList");
 		ProductDAO productDAO = (ProductDAO)context.getBean("productDAO");
 		Product newProductInfo = new Product();
-		newProductInfo.setProductName(newName);
-		newProductInfo.setPrice(Integer.parseInt(newPrice));
-		if("true".equals(newProductStatus)) {
+		newProductInfo.setProductName(name);
+		newProductInfo.setPrice(Integer.parseInt(price));
+		if("true".equals(productStatus)) {
 			newProductInfo.setInTheMarket(true);
 		}else {
 			newProductInfo.setInTheMarket(false);
 		}
-		newProductInfo.setSupplierID(Long.parseLong(newSupplierID));
+		newProductInfo.setSupplierID(Long.parseLong(supplierID));
 		productDAO.update(Long.parseLong(productID), newProductInfo);
 		
 		return model;

@@ -1,6 +1,9 @@
 package com.sa.finalproject.controllers;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -38,15 +41,22 @@ public class SupplierController {
 	
 	
 	@RequestMapping(value = "/newSupplier", method = RequestMethod.POST)
-	public ModelAndView addSupplier(@ModelAttribute("supplierName")String supplierName, @ModelAttribute("supplierPhone")String supplierPhone, @ModelAttribute("supplierAddress")String supplierAddress){
+	public ModelAndView addSupplier(HttpServletRequest request) throws UnsupportedEncodingException {
+		
+		
+		request.setCharacterEncoding("utf-8");
+		String name = request.getParameter("supplierName");
+		String phone = request.getParameter("supplierPhone");
+		String address = request.getParameter("supplierAddress");
+		
 		// Add the supplier information
 		ModelAndView model = new ModelAndView("redirect:/SupplierList");
 		SupplierDAOImpl supplierDAO = (SupplierDAOImpl)context.getBean("supplierDAO");
 		Supplier newSupplier = new Supplier();
 		
-		newSupplier.setSupplierName(supplierName);
-		newSupplier.setPhone(supplierPhone);
-		newSupplier.setAddress(supplierAddress);
+		newSupplier.setSupplierName(name);
+		newSupplier.setPhone(phone);
+		newSupplier.setAddress(address);
 		System.out.println(newSupplier.getSupplierName());
 		supplierDAO.insert(newSupplier);
 		
@@ -76,7 +86,16 @@ public class SupplierController {
 	}
 	
 	@RequestMapping(value = "/updateSupplier", method = RequestMethod.POST)
-	public ModelAndView sendSupplierInfo(@ModelAttribute("supplierID")String id, @ModelAttribute("supplierName")String name, @ModelAttribute("supplierPhone")String phone, @ModelAttribute("supplierAddress")String address, @ModelAttribute("supplierLevel")String level){
+	public ModelAndView sendSupplierInfo(@ModelAttribute("supplierID")String id, HttpServletRequest request) throws UnsupportedEncodingException{
+		
+		request.setCharacterEncoding("utf-8");
+		String name = request.getParameter("supplierName");
+		String phone = request.getParameter("supplierPhone");
+		String address = request.getParameter("supplierAddress");
+		String level = request.getParameter("supplierLevel");
+		
+		
+		
 		// Add the supplier information
 		ModelAndView model = new ModelAndView("redirect:/SupplierList");
 		SupplierDAOImpl supplierDAO = (SupplierDAOImpl)context.getBean("supplierDAO");
