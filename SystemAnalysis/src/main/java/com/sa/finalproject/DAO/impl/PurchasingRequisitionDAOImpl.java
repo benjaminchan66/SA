@@ -99,6 +99,8 @@ public class PurchasingRequisitionDAOImpl implements PurchasingRequisitionDAO {
 
 				if (rs1.next()) {
 					supplierLevel = rs1.getString("supplier_level");
+					System.out.println("Supplier name : " + rs1.getString("supplier_name"));
+					System.out.println("Supplier level : " + supplierLevel);
 				}
 				rs1.close();
 				smt.close();

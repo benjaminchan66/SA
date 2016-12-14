@@ -108,7 +108,7 @@ public class DisplayPR extends PurchasingRequisition {
 		if(this.isConfirmed()) {
 			return "已確認";
 		}else {
-			return "為確認";
+			return "未確認";
 		}
 	}
 
