@@ -7,7 +7,7 @@ import com.sa.finalproject.entity.PurchaseOrder;
 
 public interface PurchasingRequisitionDAO {
 	
-	public String insert(PurchaseOrder mixedOrder, long employeeID);
+	public ArrayList<Long> insert(PurchaseOrder mixedOrder, long employeeID);
 	public void confirm(long managerID, long aRequisitionSerial, boolean isConfirmed);
 	// 顯示所有請購單
 	public ArrayList<PurchasingRequisition> getList();
@@ -22,6 +22,8 @@ public interface PurchasingRequisitionDAO {
 	
 	// 取得單一請購單的內容物
 	public PurchaseOrder getContentOf(long prSerial);
+	
+	public void confirm(long prSerial, Long managerID);
 	
 	
 }

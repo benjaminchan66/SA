@@ -26,8 +26,9 @@ public class PurchasingRequisitionDAOImpl implements PurchasingRequisitionDAO {
 	}
 
 	@Override
-	public String insert(PurchaseOrder mixedOrder, long employeeID) {
+	public ArrayList<Long> insert(PurchaseOrder mixedOrder, long employeeID) {
 		// TODO Auto-generated method stub
+		ArrayList<Long> aLevelList = new ArrayList<Long>();
 		String supplierLevel = "";
 
 		// divide the supplier from the mixed order
@@ -116,6 +117,8 @@ public class PurchasingRequisitionDAOImpl implements PurchasingRequisitionDAO {
 					smt.setLong(3, employeeID);
 					smt.executeUpdate();
 					smt.close();
+
+					aLevelList.add(newPRSerial);
 				} else {
 					smt = conn.prepareStatement(sql2);
 					smt.setLong(1, newPRSerial);
@@ -173,7 +176,7 @@ public class PurchasingRequisitionDAOImpl implements PurchasingRequisitionDAO {
 			}
 		}
 
-		return supplierLevel;
+		return aLevelList;
 
 	}
 
@@ -324,11 +327,11 @@ public class PurchasingRequisitionDAOImpl implements PurchasingRequisitionDAO {
 			requisition.setSupplier(requisitionSupplier);
 			rs.close();
 			smt.close();
-			
+
 			PurchaseOrder content = new PurchaseOrder();
 			content = this.getContentOf(aRequisitionSerial);
 			requisition.setRequisitionContent(content);
-			
+
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
@@ -430,8 +433,7 @@ public class PurchasingRequisitionDAOImpl implements PurchasingRequisitionDAO {
 
 		return supplier;
 	}
-	
-	
+
 	// 取得單一請購單的內容物
 	public PurchaseOrder getContentOf(long prSerial) {
 		PurchaseOrder content = new PurchaseOrder();
@@ -441,15 +443,41 @@ public class PurchasingRequisitionDAOImpl implements PurchasingRequisitionDAO {
 			smt = conn.prepareStatement(sql);
 			smt.setLong(1, prSerial);
 			rs = smt.executeQuery();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				PurchasedProduct currentItem = new PurchasedProduct();
 				currentItem.setProductID(rs.getLong("product_id"));
 				currentItem.setProductPrice(rs.getInt("price_att"));
 				currentItem.setPurchasingAmount(rs.getInt("quantity"));
 				content.getList().add(currentItem);
 			}
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// do nothing
+			}
+		}
+
+		return content;
+	}
+
+	public void confirm(long prSerial, Long managerID) {
+		String sql = "UPDATE PR_confirm SET PR_confirm = ?, employee_id = ?, time = Now() WHERE PR_serial = ?";
+		try {
+			conn = dataSource.getConnection();
+			smt = conn.prepareStatement(sql);
+			smt.setBoolean(1, true);
+			smt.setLong(2, managerID);
+			smt.setLong(3, prSerial);
 			
+			smt.executeUpdate();
+			smt.close();
 			
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -462,8 +490,6 @@ public class PurchasingRequisitionDAOImpl implements PurchasingRequisitionDAO {
 				// do nothing
 			}
 		}
-		
-		return content;
 	}
 
 }

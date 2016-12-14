@@ -232,7 +232,18 @@ public class RequisitionController {
 			System.out.println("Session is null");
 		}
 		PurchasingRequisitionDAO requisitionDAO = (PurchasingRequisitionDAO)context.getBean("purchaseRequisitionDAO");
-		requisitionDAO.insert(cart_session, Long.parseLong(accountID));
+		
+		ArrayList<Long> aLevelList = new ArrayList<Long>();
+		aLevelList = requisitionDAO.insert(cart_session, Long.parseLong(accountID));
+		
+		BillOfPurchaseDAO bopDAO = (BillOfPurchaseDAO)context.getBean("BillOfPurchaseDAO");
+		for(int i = 0; i < aLevelList.size(); i++) {
+			PurchasingRequisition currentPR = new PurchasingRequisition();
+			long currentSerial = aLevelList.get(i);
+			currentPR = requisitionDAO.get(currentSerial);
+			bopDAO.transferIntoBOP(currentPR);
+		}
+		
 		cart_session.cleanTheList();
 		
 		return model;
@@ -240,7 +251,13 @@ public class RequisitionController {
 	
 	
 	@RequestMapping(value = "/confirmRequisition", method = RequestMethod.GET)
-	public ModelAndView confirmRequisition(@ModelAttribute("id")String serial){
+	public ModelAndView confirmRequisition(@ModelAttribute("id")String serial, HttpSession session){
+		long managerID = 0;
+		if(session.getAttribute("newaccount") != null) {
+			Employee staff = (Employee)session.getAttribute("newaccount");
+			managerID = Long.parseLong(staff.getId());
+		}
+		
 		// 確認請購單
 		if(serial.length() == 0) {
 			serial = "0";
@@ -250,8 +267,9 @@ public class RequisitionController {
 		PurchasingRequisitionDAO requisitionDAO = (PurchasingRequisitionDAO)context.getBean("purchaseRequisitionDAO");
 		PurchasingRequisition pr = requisitionDAO.get(Long.parseLong(serial));
 		
-		
 		bopDAO.transferIntoBOP(pr);
+		
+		requisitionDAO.confirm(Long.parseLong(serial), managerID);
 		
 		return model;
 	}
@@ -265,8 +283,19 @@ public class RequisitionController {
 		PurchaseOrder mixedOrder = this.getFakeOrder();
 		System.out.println("The length of mixed order is " + mixedOrder.getList().size());
 		
-		String supplierCurrentLevel = requisitionDAO.insert(mixedOrder, Long.parseLong("403401213"));
-		System.out.println("The supplier level is " + supplierCurrentLevel);
+		ArrayList<Long> aLevelList = new ArrayList<Long>();
+		aLevelList = requisitionDAO.insert(mixedOrder, Long.parseLong("403401213"));
+		
+		BillOfPurchaseDAO bopDAO = (BillOfPurchaseDAO)context.getBean("BillOfPurchaseDAO");
+		for(int i = 0; i < aLevelList.size(); i++) {
+			PurchasingRequisition currentPR = new PurchasingRequisition();
+			long currentSerial = aLevelList.get(i);
+			currentPR = requisitionDAO.get(currentSerial);
+			bopDAO.transferIntoBOP(currentPR);
+		}
+		
+		
+//		System.out.println("The supplier level is " + supplierCurrentLevel);
 		
 		return model;
 	}
