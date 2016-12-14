@@ -1,7 +1,10 @@
 package com.sa.finalproject.controllers;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -125,7 +128,12 @@ public class BillOfPurchaseController {
 //		return model;
 //	}
     @RequestMapping(value = "/updateBOP", method = RequestMethod.POST) 
-	public ModelAndView updateBillOfPurchasePage(@ModelAttribute("id") String serial, @ModelAttribute("bopRemark")String remark, @ModelAttribute("optionsRadiosInline")String hasPaid){
+	public ModelAndView updateBillOfPurchasePage(@ModelAttribute("id") String serial, HttpServletRequest request) throws UnsupportedEncodingException{
+    	
+    	request.setCharacterEncoding("utf-8");
+		String remark = request.getParameter("bopRemark");
+		String hasPaid = request.getParameter("optionsRadiosInline");
+    	
     	//更新BOP資料
 		ModelAndView model = new ModelAndView("redirect:/Order");
 		BillOfPurchaseDAO bopDAO = (BillOfPurchaseDAO)context.getBean("BillOfPurchaseDAO");
