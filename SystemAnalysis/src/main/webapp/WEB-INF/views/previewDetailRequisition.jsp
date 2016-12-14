@@ -75,10 +75,10 @@
                                             <tr>
                                                 <td>${cartItem.getProductID()}</td>
                                                 <td>${cartItem.getProductName()}</td>
-                                                <th>${cartItem.getSupplierName()}</th>
-                                                <td>${cartItem.getProductPrice()}</td>
+                                                <td>${cartItem.getSupplierName()}</td>
+                                                <td>$ ${cartItem.getProductPrice()}</td>
                                                 <td>${cartItem.getPurchasingAmount()}</td>
-                                                <td>${cartItem.getTotalPrice()}</td>
+                                                <td>$ ${cartItem.getTotalPrice()}</td>
                                                 <td><a type="button" href="dropProductFromCart?id=${cartItem.getProductID()}" class="btn btn-danger">刪除</a></td>
                                             </tr>
                                         </c:forEach>
@@ -86,7 +86,7 @@
                                 </table>
                                 <div class="row">
                                     <div class="col-lg-2 col-md-offset-10">
-                                        <h5>總計: ${listPrice}</h5>
+                                        <h5>總計: $ ${listPrice}</h5>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
