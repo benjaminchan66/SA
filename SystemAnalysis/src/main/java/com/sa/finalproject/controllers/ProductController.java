@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 
 import com.sa.finalproject.entity.Product;
 import com.sa.finalproject.entity.Supplier;
@@ -66,11 +70,20 @@ public class ProductController {
 	}
 	
 	// To add the product into the database, after inserting the product back to product list
-	@RequestMapping(value = "/newProduct", method = RequestMethod.GET)
-	public ModelAndView insertProduct(@ModelAttribute("productName") String name, @ModelAttribute("productPrice") String price, @ModelAttribute("productSupplier") long supCode){
+	@RequestMapping(value = "/newProduct", method = RequestMethod.POST)
+	public ModelAndView insertProduct(HttpServletRequest request) throws UnsupportedEncodingException{
+		//@ModelAttribute("productName") String name, @ModelAttribute("productPrice") String price, @ModelAttribute("productSupplier") long supCode, 
+		request.setCharacterEncoding("utf-8");
+		String name = request.getParameter("productName");
+		String price = request.getParameter("productPrice");
+		String supCode = request.getParameter("productSupplier");
+		
+		
+		
+		
 		ModelAndView model = new ModelAndView("redirect:/productList");
 		ProductDAO productDAO = (ProductDAO)context.getBean("productDAO");
-		Product preparedProduct = new Product(name, Integer.parseInt(price), supCode);
+		Product preparedProduct = new Product(name, Integer.parseInt(price), Long.parseLong(supCode));
 		long newProductCode = productDAO.insert(preparedProduct);
 		System.out.println("The ID of the product is : " + newProductCode + ".");
 		

@@ -117,7 +117,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h4 class="modal-title" id="myModalLabel">新增商品</h4>
                         </div>
-                        <form role="form" action="newProduct" method="GET">
+                        <form role="form" action="newProduct" method="POST">
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>商品名稱</label>

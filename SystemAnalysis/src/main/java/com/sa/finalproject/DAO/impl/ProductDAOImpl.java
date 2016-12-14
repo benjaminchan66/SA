@@ -324,7 +324,7 @@ public class ProductDAOImpl implements ProductDAO {
 
 		return productList;
 	}
-	
+
 	public ArrayList<Product> getAvailableProductOf(long aSupplierID) {
 		ArrayList<Product> productList = new ArrayList<Product>();
 		String sql = "SELECT * FROM Product WHERE supplier_id = ? AND isInTheMarket = true";
