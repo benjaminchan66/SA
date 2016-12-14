@@ -62,6 +62,7 @@
                                     <div class="col-lg-4">
                                         <label class="h4">廠商:</label>
                                         <select class="form-control" name="selectedSupplierID">
+                                        	<option selected disabled> ----選擇廠商---- </option>
                                             <c:forEach items="${supplierList}" var="supplier">
                                             	<c:choose>
                                             	<c:when test="${supplier.getSupplierID() == selectedSupplier}">
