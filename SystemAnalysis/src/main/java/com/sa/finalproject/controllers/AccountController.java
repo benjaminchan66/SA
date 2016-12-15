@@ -123,7 +123,15 @@ private Employee account_session;
 	@RequestMapping(value = "/403", method = RequestMethod.GET)
 	public ModelAndView errorPage() {
 		ModelAndView model = new ModelAndView("403");
-		System.out.println("failed");
+		System.out.println("403 failed");
+		
+		return model;
+	}
+	
+	@RequestMapping(value = "/404", method = RequestMethod.GET)
+	public ModelAndView errorPage2() {
+		ModelAndView model = new ModelAndView("404");
+		System.out.println("404 failed");
 		
 		return model;
 	}

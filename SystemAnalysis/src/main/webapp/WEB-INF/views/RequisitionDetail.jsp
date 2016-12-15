@@ -85,11 +85,21 @@
                                         </c:forEach>
                                     </tbody>
                                 </table>
-                                <div class="col-lg-10">
-                                    <a type="button" href="confirmRequisition?id=${prSerial}" class="btn btn-warning">請購單確認</a>
+                                <div class="col-lg-12">
+                                	<span class="pull-right"><h4>總計: $ ${prListAmount}</h4></span>
                                 </div>
-                                <h4>總計: $ ${prListAmount}</h4>
+                                
                             </form>
+                            <div class="col-lg-3 col-lg-offset-9">
+                            	<span class="pull-right">
+                            		<c:if test="\${confirm}"> <!-- 判斷是否已確認，未確認才顯示 -->
+	                            		<c:if test="\${staffLevel == 'Manager' || staffLevel == 'all'}">
+		                            		<a type="button" href="confirmRequisition?id=${prSerial}" class="btn btn-info">請購單確認</a>
+		                            	</c:if>
+		                            </c:if>
+	                            	<a href="listRequisition" class="btn btn-warning">關閉</a>
+                            	</span>
+                            </div>
                         </div>
                     </div>
 

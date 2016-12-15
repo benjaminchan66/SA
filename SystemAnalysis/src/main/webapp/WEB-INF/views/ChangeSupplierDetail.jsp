@@ -76,26 +76,28 @@
                                                 <input class="form-control" name="supplierAddress" value="${supplierAddress}" placeholder="輸入廠商地址" required="required">
                                             </div>
                                             <div class="form-group">
-                                            <c:choose>
-                                            	<c:when test="${isClassA}">
-	                                                <label>分級: </label>
-	                                                <label class="radio-inline">
-	                                                    <input type="radio" name="supplierLevel" id="optionsRadiosInline1" value="A" checked required>A
-	                                                </label>
-	                                                <label class="radio-inline">
-	                                                    <input type="radio" name="supplierLevel" id="optionsRadiosInline2" value="B">B
-	                                                </label>
-	                                            </c:when>
-	                                            <c:otherwise>
-	                                            	<label>分級: </label>
-	                                                <label class="radio-inline">
-	                                                    <input type="radio" name="supplierLevel" id="optionsRadiosInline1" value="A" required>A
-	                                                </label>
-	                                                <label class="radio-inline">
-	                                                    <input type="radio" name="supplierLevel" id="optionsRadiosInline2" value="B" checked>B
-	                                                </label>
-	                                            </c:otherwise>
-	                                            </c:choose>
+                                            <c:if test="\${staffLevel == 'Manager' || staffLevel == 'all'}">
+                                                <c:choose>
+                                                	<c:when test="${isClassA}">
+    	                                                <label>分級: </label>
+    	                                                <label class="radio-inline">
+    	                                                    <input type="radio" name="supplierLevel" id="optionsRadiosInline1" value="A" checked required>A
+    	                                                </label>
+    	                                                <label class="radio-inline">
+    	                                                    <input type="radio" name="supplierLevel" id="optionsRadiosInline2" value="B">B
+    	                                                </label>
+    	                                            </c:when>
+    	                                            <c:otherwise>
+    	                                            	<label>分級: </label>
+    	                                                <label class="radio-inline">
+    	                                                    <input type="radio" name="supplierLevel" id="optionsRadiosInline1" value="A" required>A
+    	                                                </label>
+    	                                                <label class="radio-inline">
+    	                                                    <input type="radio" name="supplierLevel" id="optionsRadiosInline2" value="B" checked>B
+    	                                                </label>
+    	                                            </c:otherwise>
+                                                </c:choose>
+                                            </c:if>
                                             </div>
                                     </div>
                                     <div class="modal-footer">

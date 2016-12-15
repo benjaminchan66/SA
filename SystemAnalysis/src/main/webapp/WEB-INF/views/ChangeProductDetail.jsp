@@ -63,53 +63,52 @@
                                 <form role="form" action="updateProduct" method="POST">
                                 	<input type="hidden" name="productID" value="${productID}">
                                     <div class="modal-body">
-                                            <div class="form-group">
-                                                <label>商品名稱</label>
-                                                <input class="form-control" name="productName" value="${productName}" placeholder="輸入商品名稱" required="required">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>商品價格</label>
-                                                <input class="form-control" name="productPrice" value="${productPrice}"" placeholder="輸入商品價格" required="required">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>選擇廠商</label>
-                                                <select class="form-control" name="productSupplier">
-			                                        <c:forEach items="${supplierList}" var="supplier">
+                                        <div class="form-group">
+                                            <label>商品名稱</label>
+                                            <input class="form-control" name="productName" value="${productName}" placeholder="輸入商品名稱" required="required">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>商品價格</label>
+                                            <input class="form-control" name="productPrice" value="${productPrice}"" placeholder="輸入商品價格" required="required">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>選擇廠商</label>
+                                            <select class="form-control" name="productSupplier">
+		                                        <c:forEach items="${supplierList}" var="supplier">
 			                                        <c:choose>
-			                                        <c:when test="${supplier.getSupplierID() == supplierID}">
-			                                        	<option value=${supplier.getSupplierID()} selected="">${supplier.getSupplierName()}</option>
-			                                        	
-			                                        </c:when>
-			                                        <c:otherwise>
-			                                            <option value=${supplier.getSupplierID()}>${supplier.getSupplierName()}</option>
-			                                            
+                                                        <c:when test="${supplier.getSupplierID() == supplierID}">
+			                                        	    <option value=${supplier.getSupplierID()} selected="">${supplier.getSupplierName()}</option>
+			                                        	</c:when>
+                                                        <c:otherwise>
+                                                            <option value=${supplier.getSupplierID()}>${supplier.getSupplierName()}</option>
 			                                            </c:otherwise>
-                                                </c:choose>
-			                                        </c:forEach>
-			                                    </select>
-                                            </div>
-                                            <div class="form-group">
+                                                    </c:choose>
+		                                        </c:forEach>
+		                                    </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <c:if test="\${staffLevel == 'Purchase' || staffLevel == 'Manager' || staffLevel == 'all'}">
                                                 <label>狀態: </label>
                                                 <c:choose>
-										<c:when test="${isInTheMarket}">
-											<label class="radio-inline"> <input type="radio"
-												name="isInTheMarket" id="optionsRadiosInline1" value="true"
-												checked required>供貨中
-											</label>
-											<label class="radio-inline"> <input type="radio"
-												name="isInTheMarket" id="optionsRadiosInline2" value="false">斷貨
-											</label>
-										</c:when>
-										<c:otherwise>
-                                                	<label class="radio-inline">
-	                                                    <input type="radio" name="isInTheMarket" id="optionsRadiosInline1" value="true" required>供貨中
-	                                                </label>
-	                                                <label class="radio-inline">
-	                                                    <input type="radio" name="isInTheMarket" id="optionsRadiosInline2" value="false" checked>斷貨
-	                                                </label>
-                                                </c:otherwise>
+                                                    <c:when test="${isInTheMarket}">
+                                                        <label class="radio-inline">
+                                                            <input type="radio"name="isInTheMarket" id="optionsRadiosInline1" value="true" checked required>供貨中
+                                                        </label>
+                                                        <label class="radio-inline">
+                                                            <input type="radio" name="isInTheMarket" id="optionsRadiosInline2" value="false">斷貨
+                                                        </label>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <label class="radio-inline">
+                                                            <input type="radio" name="isInTheMarket" id="optionsRadiosInline1" value="true" required>供貨中
+                                                        </label>
+                                                        <label class="radio-inline">
+                                                            <input type="radio" name="isInTheMarket" id="optionsRadiosInline2" value="false" checked>斷貨
+                                                        </label>
+                                                    </c:otherwise>
                                                 </c:choose>
-                                            </div>
+                                            </c:if>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <a href="productList" class="btn btn-warning">返回</a>

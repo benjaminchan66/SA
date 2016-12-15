@@ -90,36 +90,45 @@
                                     <div class="row">
                                         <div class="col-lg-8">
                                             <span class="pull-left">
-                                                <label>備註: </label>
-                                                <input class="form-control" name="bopRemark" value="${bopRemark}" placeholder="輸入備註" style="width: 260px">
-                                                <label>付款狀態: </label>
-
-                                                <c:choose>
-                                                	<c:when test="${isHasPaid}">
-		                                                <label class="radio-inline">
-		                                                    <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="true" checked>已付款
-		                                                </label>
-		                                                <label class="radio-inline">
-		                                                    <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="False">未付款
-		                                                </label>
-		                                            </c:when>
-		                                            <c:otherwise>
-		                                            	<label class="radio-inline">
-		                                                    <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="true">已付款
-		                                                </label>
-		                                                <label class="radio-inline">
-		                                                    <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="False" checked>未付款
-		                                                </label>
-		                                            </c:otherwise>
-		                                        </c:choose>
-                                                <button type="submit" class="btn btn-info">修改</button>
+                                                <c:if test="\${staffLevel == 'warehouseKeeper' || staffLevel == 'all'}">
+                                                	<label>備註: </label>
+                                                	<input class="form-control" name="bopRemark" value="${bopRemark}" placeholder="輸入備註" style="width: 260px">
+                                                </c:if>
+                                                <c:if test="\${staffLevel == 'Accounting' || staffLevel == 'all'}">
+                                                	<label>付款狀態: </label>
+                                                        <c:choose>
+                                                        	<c:when test="${isHasPaid}">
+        		                                                <label class="radio-inline">
+        		                                                    <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="true" checked>已付款
+        		                                                </label>
+        		                                                <label class="radio-inline">
+        		                                                    <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="False">未付款
+        		                                                </label>
+        		                                            </c:when>
+        		                                            <c:otherwise>
+        		                                            	<label class="radio-inline">
+        		                                                    <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="true">已付款
+        		                                                </label>
+        		                                                <label class="radio-inline">
+        		                                                    <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="False" checked>未付款
+        		                                                </label>
+        		                                            </c:otherwise>
+        		                                        </c:choose>
+                                                    </c:if>
+                                                <c:if test="\${staffLevel == 'Accounting' || staffLevel == 'warehouseKeeper' || staffLevel == 'all'}">
+                                                	<button type="submit" class="btn btn-info">修改</button>
+                                                </c:if>
                                             </span>
                                         </div>
                                         <!-- <div class="col-lg-3">
                                             
                                         </div> -->
                                         <div class="col-lg-3 col-lg-offset-1">
-                                            <a href="StockIn?id=${bopSerial}" class="btn btn-success">入庫</a>
+                                        	<c:if test="\${StockIn}"> <!-- 判斷是否入庫，未入庫才顯示 -->
+                                        		<c:if test="\${staffLevel == 'warehouseKeeper' || staffLevel == 'all'}">
+                                            		<a href="StockIn?id=${bopSerial}" class="btn btn-success">入庫</a>
+                                            	</c:if>
+                                            </c:if>
                                             <a href="Order" class="btn btn-warning">關閉</a>
                                         </div>
                                     </div>

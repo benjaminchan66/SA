@@ -67,7 +67,9 @@
                                     <h4>所有商品</h4>
                                 </div>
                                 <div class="col-lg-2 col-lg-offset-6">
-                                    <button class="btn btn-default" data-toggle="modal" data-target="#myModal">新增商品</button>
+                                	<c:if test="\${staffLevel == 'Purchase' || staffLevel == 'all'}">
+                                    	<button class="btn btn-default" data-toggle="modal" data-target="#myModal">新增商品</button>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>
