@@ -58,8 +58,9 @@
 							        </c:if> --%>
                                 </center>
                             </div>
-                            <form action="" method="post">
-                                <input id="password" type="hidden" name="userID" value="">
+                            <form action="j_spring_security_check" method="post">
+                                <input id="user" type="hidden" name="j_username" value="">
+                                <input id="password" type="hidden" name="j_password" value="">
                                 <button type="submit" name="Button1" id="Button1" style="display:none"></button> 
                             </form>
                         </fieldset>
@@ -94,6 +95,7 @@
                 var code = (e.keyCode ? e.keyCode : e.which);
                 console.log("code:"+code);
                 if(code==13){// Enter key hit
+                	document.getElementById("user").value = barcode;
                     document.getElementById("password").value = barcode;
                     $("#Button1").click();
                 }

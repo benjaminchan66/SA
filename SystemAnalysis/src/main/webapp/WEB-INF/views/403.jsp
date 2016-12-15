@@ -50,7 +50,6 @@
                         <fieldset>
                             <div class="form-group">
                                 <center>
-                                    <!-- <input type="text" name=""> -->
                                     <h1>403</h1>
                                     <br>
                                     <img src="resources/img/warning.png">
