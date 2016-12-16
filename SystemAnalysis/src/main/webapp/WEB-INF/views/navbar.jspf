@@ -17,15 +17,15 @@
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i>${newaccount.getId()}<i class="fa fa-caret-down"></i>
+                        <i class="fa fa-user fa-fw"></i>${pageContext.request.userPrincipal.name}<i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="Profile?id=${newaccount.getId()}"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        <li><a href="Profile?id=${pageContext.request.userPrincipal.name}"><i class="fa fa-user fa-fw"></i> User Profile</a>
                         </li>
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="<c:url value="/j_spring_security_logout" />"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="<c:url value="j_spring_security_logout" />"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -71,7 +71,7 @@
                             <a href="Order"><i class="fa fa-table fa-fw"></i> 所有進貨單</a>
                         </li>
                         <li>
-                            <a href="wwList"><i class="fa fa-table fa-fw"></i> 所有入庫單 <i>${staffLevel}</i></a>
+                            <a href="wwList"><i class="fa fa-table fa-fw"></i> 所有入庫單</a>
                         </li>
                     </ul>
                 </div>

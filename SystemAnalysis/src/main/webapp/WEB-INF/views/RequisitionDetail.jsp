@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
 <meta charset="utf-8">
@@ -92,11 +93,11 @@
                             </form>
                             <div class="col-lg-3 col-lg-offset-9">
                             	<span class="pull-right">
-                            		<c:if test="\${confirm}"> <!-- 判斷是否已確認，未確認才顯示 -->
-	                            		<c:if test="\${staffLevel == 'Manager' || staffLevel == 'all'}">
-		                            		<a type="button" href="confirmRequisition?id=${prSerial}" class="btn btn-info">請購單確認</a>
-		                            	</c:if>
-		                            </c:if>
+                            		
+                                    <sec:authorize access ="hasRole('ROLE_USER_god') or hasRole('ROLE_USER_director')">
+		                            	<a type="button" href="confirmRequisition?id=${prSerial}" class="btn btn-info">請購單確認</a>
+                                    </sec:authorize>
+                                    
 	                            	<a href="listRequisition" class="btn btn-warning">關閉</a>
                             	</span>
                             </div>
