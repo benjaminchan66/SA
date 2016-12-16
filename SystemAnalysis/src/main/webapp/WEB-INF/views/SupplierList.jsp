@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
 <meta charset="utf-8">
@@ -114,7 +115,9 @@
                                         <th style="width: 67px">聯絡電話</th>
                                         <th>廠商地址</th>
                                         <th style="width: 38px">分級</th>
-                                        <th style="width: 104px">動作</th>
+                                        <sec:authorize access ="hasRole('ROLE_USER_god') or hasRole('ROLE_USER_procurement') or hasRole('ROLE_USER_director')">
+                                        	<th style="width: 104px">動作</th>
+                                        </sec:authorize>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -125,9 +128,11 @@
                                             <td>${supplier.getPhone()}</td>
                                             <td>${supplier.getAddress()}</td>
                                             <td>${supplier.getLevel()}</td>
-                                            <td>
-                                                <a class="btn btn-warning" href="updateSupplier?id=${supplier.getSupplierID()}">修改</a>
-                                            </td>
+                                            <sec:authorize access ="hasRole('ROLE_USER_god') or hasRole('ROLE_USER_procurement') or hasRole('ROLE_USER_director')">
+	                                            <td>
+	                                                <a class="btn btn-warning" href="updateSupplier?id=${supplier.getSupplierID()}">修改</a>
+	                                            </td>
+	                                        </sec:authorize>
                                         </tr>
 									</c:forEach>
                                 </tbody>

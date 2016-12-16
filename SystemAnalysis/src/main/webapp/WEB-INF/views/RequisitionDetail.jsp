@@ -91,12 +91,12 @@
                                 </div>
                                 
                             </form>
-                            <div class="col-lg-3 col-lg-offset-9">
-                            	<span class="pull-right">                 		
+                            <div class="col-lg-4 col-lg-offset-8">
+                            	<span class="pull-right">
                                     <sec:authorize access ="hasRole('ROLE_USER_god') or hasRole('ROLE_USER_director')">
 		                            	<a type="button" href="confirmRequisition?id=${prSerial}" class="btn btn-info">請購單確認</a>
+		                            	<a href="cancelRequisition?id=${prSerial}" class="btn btn-danger">退回請購單</a>
                                     </sec:authorize>
-                                    <a href="cancelRequisition?id=${prSerial}" class="btn btn-danger">退回請購單</a>
 	                            	<a href="listRequisition" class="btn btn-warning">關閉</a>
                             	</span>
                             </div>
