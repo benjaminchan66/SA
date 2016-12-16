@@ -104,6 +104,13 @@ public class BillOfPurchaseController {
 		System.out.println("BOP has arrived : " + bop.isHasArrived());
 		model.addObject("hasArrived", !(bop.isHasArrived()));
 		
+		System.out.println("The BOP has arrived : " + bop.isHasArrived());
+		if(!bop.isHasArrived()) {
+			model.addObject("hasArrived", true);
+		}else {
+			model.addObject("hasArrived", false);
+		}
+		
 		return model;
 	}
 	

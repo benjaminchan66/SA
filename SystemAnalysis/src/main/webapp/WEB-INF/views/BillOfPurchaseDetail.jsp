@@ -125,14 +125,12 @@
                                             
                                         </div> -->
                                         <div class="col-lg-3 col-lg-offset-1">
-                                        
-                                        <c:choose>
-                                        	<c:when test="${hasArrived}"> <!-- 判斷是否入庫，未入庫才顯示 -->
+                                        	<c:if test="${hasArrived == 'true'}">
                                         		<sec:authorize access ="hasRole('ROLE_USER_god') or hasRole('ROLE_USER_inspector')">
                                             		<a href="StockIn?id=${bopSerial}" class="btn btn-success">入庫</a>
                                             	</sec:authorize>
-                                            </c:when>
-                                        </c:choose>
+                                            </c:if>
+                                        
                                             <a href="Order" class="btn btn-warning">關閉</a>
                                         </div>
                                     </div>

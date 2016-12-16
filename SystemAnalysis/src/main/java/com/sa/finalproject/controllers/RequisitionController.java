@@ -205,6 +205,12 @@ public class RequisitionController {
 		model.addObject("prListAmount", content.getListPrice());
 		model.addObject("prSerial", prSerial);
 		
+		if(!pr.hasJudged()) {
+			model.addObject("isConfirmed", true);
+		}else {
+			model.addObject("isConfirmed", false);
+		}
+				
 		return model;
 	}
 	
