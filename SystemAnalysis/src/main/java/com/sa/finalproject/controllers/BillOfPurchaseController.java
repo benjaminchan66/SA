@@ -100,10 +100,9 @@ public class BillOfPurchaseController {
 		model.addObject("bopTotalAmount", content.getListPrice());
 		model.addObject("bopEmployee", staff.getName());
 		model.addObject("bopTime", bop.getDateTime());
-		
-		
-		
-		
+		System.out.println("BOP serial : " + bop.getBopSerial());
+		System.out.println("BOP has arrived : " + bop.isHasArrived());
+		model.addObject("hasArrived", !(bop.isHasArrived()));
 		
 		return model;
 	}

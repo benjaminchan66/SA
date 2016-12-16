@@ -124,11 +124,14 @@
                                             
                                         </div> -->
                                         <div class="col-lg-3 col-lg-offset-1">
-                                        	<c:if test="\${StockIn}"> <!-- 判斷是否入庫，未入庫才顯示 -->
-                                        		<c:if test="\${staffLevel == 'warehouseKeeper' || staffLevel == 'all'}">
+                                        
+                                        <c:choose>
+                                        	<c:when test="${hasArrived}"> <!-- 判斷是否入庫，未入庫才顯示 -->
+                                        		<%-- <c:if test="\${staffLevel == 'warehouseKeeper' || staffLevel == 'all'}"> --%>
                                             		<a href="StockIn?id=${bopSerial}" class="btn btn-success">入庫</a>
-                                            	</c:if>
-                                            </c:if>
+                                            	<%-- </c:if> --%>
+                                            </c:when>
+                                        </c:choose>
                                             <a href="Order" class="btn btn-warning">關閉</a>
                                         </div>
                                     </div>

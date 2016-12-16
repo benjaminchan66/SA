@@ -289,6 +289,11 @@ public class PurchasingRequisitionDAOImpl implements PurchasingRequisitionDAO {
 			this.rs = smt.executeQuery();
 			if (rs.next()) {
 				requisition.setConfirmed(rs.getBoolean("PR_confirm"));
+				String confirmStatus = "";
+				confirmStatus = rs.getString("PR_confirm");
+				System.out.println("'" + confirmStatus + "'");
+				requisition.setConfirmStr(confirmStatus);
+				System.out.println("Confirm : " + requisition.getConfirmStr());
 				requisition.setJudgementManagerID(rs.getLong("employee_id"));
 				requisition.setConfirmingDate(rs.getDate("time"));
 			}

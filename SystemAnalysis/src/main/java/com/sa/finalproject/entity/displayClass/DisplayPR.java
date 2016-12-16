@@ -8,8 +8,10 @@ import com.sa.finalproject.entity.Supplier;
 
 public class DisplayPR extends PurchasingRequisition {
 	// ID, supplier, total amount, getConfirmStatus
-	
+
 	int totalAmount = 0;
+
+	int confirmInt = -1;
 
 	public DisplayPR() {
 		super();
@@ -20,7 +22,7 @@ public class DisplayPR extends PurchasingRequisition {
 		super();
 		this.totalAmount = totalAmount;
 	}
-	
+
 	public void setRequisition(PurchasingRequisition pr) {
 		this.setPrSerial(pr.getPrSerial());
 		this.setEmployeeID(pr.getEmployeeID());
@@ -29,6 +31,17 @@ public class DisplayPR extends PurchasingRequisition {
 		this.setConfirmingDate(pr.getConfirmingDate());
 		this.setJudgementManagerID(pr.getJudgementManagerID());
 		this.setRequisitionContent(pr.getRequisitionContent());
+		this.setConfirmStr(pr.getConfirmStr());
+
+		if (pr.getConfirmStr() == null) {
+			this.confirmInt = 0;
+		} else {
+			if (pr.getConfirmStr().equals("1")) {
+				this.confirmInt = 1;
+			} else {
+				this.confirmInt = 2;
+			}
+		}
 	}
 
 	// getter and setter
@@ -103,13 +116,32 @@ public class DisplayPR extends PurchasingRequisition {
 	public void setSupplierName(Supplier supplier) {
 		super.setSupplier(supplier);
 	}
-	
+
+	public String getConfirmStr() {
+		return super.getConfirmStr();
+	}
+
+	public void setConfirmStr(String confirmStr) {
+		super.setConfirmStr(confirmStr);
+	}
+
 	public String getConfirmStatus() {
-		if(this.isConfirmed()) {
-			return "已確認";
-		}else {
-			return "未確認";
+		String str = "";
+		switch (this.confirmInt) {
+		case 0:
+			str = "未確認";
+			break;
+		case 1:
+			str = "已確認";
+			break;
+		case 2:
+			str = "已退回";
+			break;
+		default:
+			str = "error";
 		}
+
+		return str;
 	}
 
 	public int getTotalAmount() {

@@ -59,7 +59,7 @@
                                     <i class="fa fa-shopping-cart fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">${product.count}</div>
+                                    <div class="huge">${productCount}</div>
                                     <div>總商品</div>
                                 </div>
                             </div>
@@ -81,7 +81,7 @@
                                     <i class="fa fa-building fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">${supplier.count}</div>
+                                    <div class="huge">${supplierCount}</div>
                                     <div>總廠商</div>
                                 </div>
                             </div>
@@ -103,7 +103,7 @@
                                     <i class="fa fa-table fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">${pr.count}</div>
+                                    <div class="huge">${prCount}</div>
                                     <div>請購數</div>
                                 </div>
                             </div>
@@ -125,7 +125,7 @@
                                     <i class="fa fa-inbox fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">${ww.count}</div>
+                                    <div class="huge">${wwCount}</div>
                                     <div>入庫數</div>
                                 </div>
                             </div>

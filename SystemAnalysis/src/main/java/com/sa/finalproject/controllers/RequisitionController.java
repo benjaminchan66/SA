@@ -274,6 +274,28 @@ public class RequisitionController {
 		return model;
 	}
 	
+	@RequestMapping(value = "/cancelRequisition", method = RequestMethod.GET)
+	public ModelAndView cancelRequisition(HttpSession session, @ModelAttribute("id")String serial) {
+		// 退回請購單
+		ModelAndView model = new ModelAndView("redirect:/listRequisition");
+		
+		long managerID = 0;
+		if(session.getAttribute("newaccount") != null) {
+			Employee staff = new Employee();
+			staff = (Employee)session.getAttribute("newaccount");
+			managerID = Long.parseLong(staff.getId());
+		}
+		
+		if(serial.length() == 0) {
+			serial = "0";
+		}
+		
+		PurchasingRequisitionDAO requisitionDAO = (PurchasingRequisitionDAO)context.getBean("purchaseRequisitionDAO");
+		requisitionDAO.confirm(managerID, Long.parseLong(serial), false);
+		
+		return model;
+	}
+	
 	
 	@RequestMapping(value = "/insertFakeRequisition", method = RequestMethod.GET)
 	public ModelAndView insertFakeRequisition(){

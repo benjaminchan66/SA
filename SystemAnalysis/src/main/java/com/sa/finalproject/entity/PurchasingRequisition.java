@@ -18,6 +18,8 @@ public class PurchasingRequisition {
 	private long judgementManagerID = 0 ;
 	private PurchaseOrder requisitionContent = new PurchaseOrder();
 	
+	private String confirmStr = "";
+	
 	
 	// initialize
 	public PurchasingRequisition() {
@@ -106,6 +108,18 @@ public class PurchasingRequisition {
 
 	public void setSupplier(Supplier supplier) {
 		this.supplier = supplier;
+	}
+
+
+
+	public String getConfirmStr() {
+		return confirmStr;
+	}
+
+
+
+	public void setConfirmStr(String confirmStr) {
+		this.confirmStr = confirmStr;
 	}
 	
 }

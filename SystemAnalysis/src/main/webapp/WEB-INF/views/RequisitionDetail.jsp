@@ -97,6 +97,7 @@
 		                            		<a type="button" href="confirmRequisition?id=${prSerial}" class="btn btn-info">請購單確認</a>
 		                            	</c:if>
 		                            </c:if>
+		                            <a href="cancelRequisition?id=${prSerial}" class="btn btn-danger">退回請購單</a>
 	                            	<a href="listRequisition" class="btn btn-warning">關閉</a>
                             	</span>
                             </div>

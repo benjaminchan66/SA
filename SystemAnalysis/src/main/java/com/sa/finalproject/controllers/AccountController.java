@@ -18,6 +18,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.sa.finalproject.DAO.EmployeeDAO;
 import com.sa.finalproject.DAO.impl.EmployeeDAOImpl;
+import com.sa.finalproject.DAO.impl.ProductDAOImpl;
+import com.sa.finalproject.DAO.impl.PurchasingRequisitionDAOImpl;
+import com.sa.finalproject.DAO.impl.SupplierDAOImpl;
+import com.sa.finalproject.DAO.impl.WarehouseWarrantDAOImpl;
 import com.sa.finalproject.entity.Employee;
 
 import org.springframework.stereotype.Controller;
@@ -96,8 +100,28 @@ private Employee account_session;
 			System.out.println("ID : " + principal);
 			EmployeeDAOImpl staffDAO = (EmployeeDAOImpl) context.getBean("EmployeeDAO");
 	        Employee staff = staffDAO.getAEmployee(Long.parseLong(principal.getName()));
+	        
+	        
+	        ProductDAOImpl productDAO = (ProductDAOImpl)context.getBean("productDAO");
+	        int productCount = productDAO.getAvailableList().size();
+	        
+	        SupplierDAOImpl supplierDAO = (SupplierDAOImpl)context.getBean("supplierDAO");
+	        int supplierCount = supplierDAO.getList().size();
+	        
+	        PurchasingRequisitionDAOImpl prDAO = (PurchasingRequisitionDAOImpl)context.getBean("purchaseRequisitionDAO");
+	        int prCount = prDAO.getList().size();
+	        
+	        WarehouseWarrantDAOImpl wwDAO = (WarehouseWarrantDAOImpl)context.getBean("warehouseWarrantDAO");
+	        int wwCount = wwDAO.getList().size();
+	        
 	        model.addObject("staffLevel", staff.getLevel());
 			model.addObject("newaccount", account_session);
+			
+			// dashboard item
+			model.addObject("productCount", productCount);
+			model.addObject("supplierCount", supplierCount);
+			model.addObject("prCount", prCount);
+			model.addObject("wwCount", wwCount);
 		}
 		
 		return model;
@@ -105,6 +129,11 @@ private Employee account_session;
 	
 	@RequestMapping(value = "/Profile", method = RequestMethod.GET)
 	public ModelAndView showProfile(@ModelAttribute("id")String profileID){
+		if(profileID.length() == 0) {
+			profileID = "0";
+		}
+		
+		
 		// check the identity
 		ModelAndView model = new ModelAndView("Profile");
 		EmployeeDAOImpl staffDAO = (EmployeeDAOImpl) context.getBean("EmployeeDAO");
