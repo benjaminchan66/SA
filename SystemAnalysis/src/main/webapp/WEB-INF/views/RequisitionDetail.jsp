@@ -91,13 +91,17 @@
                                 </div>
                                 
                             </form>
-                            <div class="col-lg-4 col-lg-offset-8">
+                            <div class="col-lg-12">
+                            	<span class="pull-left">
+                            		<c:when test="${hasArrived}"> <!-- 判斷是否入庫，未入庫才顯示 -->
+	                                    <sec:authorize access ="hasRole('ROLE_USER_god') or hasRole('ROLE_USER_director')">
+			                            	<a type="button" href="confirmRequisition?id=${prSerial}" class="btn btn-info">請購單確認</a>
+			                            	<a href="cancelRequisition?id=${prSerial}" class="btn btn-danger">退回請購單</a>
+	                                    </sec:authorize>
+	                                </c:when>
+                            	</span>
                             	<span class="pull-right">
-                                    <sec:authorize access ="hasRole('ROLE_USER_god') or hasRole('ROLE_USER_director')">
-		                            	<a type="button" href="confirmRequisition?id=${prSerial}" class="btn btn-info">請購單確認</a>
-		                            	<a href="cancelRequisition?id=${prSerial}" class="btn btn-danger">退回請購單</a>
-                                    </sec:authorize>
-	                            	<a href="listRequisition" class="btn btn-warning">關閉</a>
+                            		<a href="listRequisition" class="btn btn-warning">關閉</a>
                             	</span>
                             </div>
                         </div>
