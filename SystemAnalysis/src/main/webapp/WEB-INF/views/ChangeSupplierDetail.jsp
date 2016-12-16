@@ -76,7 +76,7 @@
                                                 <input class="form-control" name="supplierAddress" value="${supplierAddress}" placeholder="輸入廠商地址" required="required">
                                             </div>
                                             <div class="form-group">
-                                            <c:if test="\${staffLevel == 'Manager' || staffLevel == 'all'}">
+                                           	<sec:authorize access ="hasRole('ROLE_USER_god') or hasRole('ROLE_USER_procurement') or hasRole('ROLE_USER_director')">
                                                 <c:choose>
                                                 	<c:when test="${isClassA}">
     	                                                <label>分級: </label>
@@ -97,7 +97,7 @@
     	                                                </label>
     	                                            </c:otherwise>
                                                 </c:choose>
-                                            </c:if>
+                                            </sec:authorize>
                                             </div>
                                     </div>
                                     <div class="modal-footer">

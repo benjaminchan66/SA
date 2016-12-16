@@ -88,6 +88,7 @@
 		                                    </select>
                                         </div>
                                         <div class="form-group">
+                                        	<sec:authorize access ="hasRole('ROLE_USER_god') or hasRole('ROLE_USER_procurement') or hasRole('ROLE_USER_director')">
                                                 <label>狀態: </label>
                                                 <c:choose>
                                                     <c:when test="${isInTheMarket}">
@@ -107,6 +108,7 @@
                                                         </label>
                                                     </c:otherwise>
                                                 </c:choose>
+                                            </sec:authorize>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
