@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
 <meta charset="utf-8">
@@ -90,11 +91,11 @@
                                     <div class="row">
                                         <div class="col-lg-8">
                                             <span class="pull-left">
-                                                <c:if test="\${staffLevel == 'warehouseKeeper' || staffLevel == 'all'}">
+                                                <sec:authorize access ="hasRole('ROLE_USER_god') or hasRole('ROLE_USER_inspector')">
                                                 	<label>備註: </label>
                                                 	<input class="form-control" name="bopRemark" value="${bopRemark}" placeholder="輸入備註" style="width: 260px">
-                                                </c:if>
-                                                <c:if test="\${staffLevel == 'Accounting' || staffLevel == 'all'}">
+                                                </sec:authorize>
+                                                <sec:authorize access ="hasRole('ROLE_USER_god') or hasRole('ROLE_USER_accountant')">
                                                 	<label>付款狀態: </label>
                                                         <c:choose>
                                                         	<c:when test="${isHasPaid}">
@@ -114,10 +115,10 @@
         		                                                </label>
         		                                            </c:otherwise>
         		                                        </c:choose>
-                                                    </c:if>
-                                                <c:if test="\${staffLevel == 'Accounting' || staffLevel == 'warehouseKeeper' || staffLevel == 'all'}">
+                                                    </sec:authorize>
+                                                <sec:authorize access ="hasRole('ROLE_USER_god') or hasRole('ROLE_USER_inspector') or hasRole('ROLE_USER_accountant')">
                                                 	<button type="submit" class="btn btn-info">修改</button>
-                                                </c:if>
+                                                </sec:authorize>
                                             </span>
                                         </div>
                                         <!-- <div class="col-lg-3">
@@ -127,9 +128,9 @@
                                         
                                         <c:choose>
                                         	<c:when test="${hasArrived}"> <!-- 判斷是否入庫，未入庫才顯示 -->
-                                        		<%-- <c:if test="\${staffLevel == 'warehouseKeeper' || staffLevel == 'all'}"> --%>
+                                        		<sec:authorize access ="hasRole('ROLE_USER_god') or hasRole('ROLE_USER_inspector')">
                                             		<a href="StockIn?id=${bopSerial}" class="btn btn-success">入庫</a>
-                                            	<%-- </c:if> --%>
+                                            	</sec:authorize>
                                             </c:when>
                                         </c:choose>
                                             <a href="Order" class="btn btn-warning">關閉</a>

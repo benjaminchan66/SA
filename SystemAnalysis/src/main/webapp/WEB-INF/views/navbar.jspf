@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 	<!-- Navigation -->
         <nav class="navbar navbar-default navbar-fixed-top " role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
@@ -58,9 +59,11 @@
                         <li>
                             <a href="#"><i class="fa fa-table fa-fw"></i> 請購單<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="insertRequisition">開立請購單</a>
-                                </li>
+                            	<sec:authorize access ="hasRole('ROLE_USER_god') or hasRole('ROLE_USER_procurement')">
+	                                <li>
+	                                    <a href="insertRequisition">開立請購單</a>
+	                                </li>
+	                            </sec:authorize>
                                 <li>
                                     <a href=listRequisition>所有請購單</a>
                                 </li>

@@ -14,6 +14,8 @@
 	<http use-expressions="true" auto-config="true">
 	<access-denied-handler error-page="/403" />
 		<intercept-url pattern="/insertRequisition" access="hasRole('ROLE_USER_procurement') or hasRole('ROLE_USER_director') or hasRole('ROLE_USER_god')"/>
+		<intercept-url pattern="/updateProduct" access="hasRole('ROLE_USER_procurement') or hasRole('ROLE_USER_director') or hasRole('ROLE_USER_god')"/>
+		<intercept-url pattern="/updateSupplier" access="hasRole('ROLE_USER_procurement') or hasRole('ROLE_USER_director') or hasRole('ROLE_USER_god')"/>
 		<intercept-url pattern="/**" access="permitAll"/>
         <form-login login-processing-url="/j_spring_security_check"
          login-page="/index" default-target-url="/Dashboard"
@@ -24,7 +26,7 @@
 	<authentication-manager>
 	  <authentication-provider>
 	    <user-service>
-		<user name="403401316" password="403401316" authorities="ROLE_USER_god" /> <!-- 陳常樂 -->
+		<user name="403401316" password="403401316" authorities="ROLE_USER_low" /> <!-- 陳常樂 -->
 		<user name="403401275" password="403401275" authorities="ROLE_USER_director" /> <!-- 張瑋翎 主管-->
 		<user name="402401022" password="402401022" authorities="ROLE_USER_inspector" /> <!-- 林柏聿  驗貨-->
 		<user name="401431022" password="401431022" authorities="ROLE_USER_procurement" /> <!-- 學姐 請購人員-->

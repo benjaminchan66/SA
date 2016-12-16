@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <html>
 <head>
@@ -67,9 +68,9 @@
                                     <h4>所有商品</h4>
                                 </div>
                                 <div class="col-lg-2 col-lg-offset-6">
-                                	<c:if test="\${staffLevel == 'Purchase' || staffLevel == 'all'}">
+                                	<sec:authorize access ="hasRole('ROLE_USER_god') or hasRole('ROLE_USER_procurement') or hasRole('ROLE_USER_director')">
                                     	<button class="btn btn-default" data-toggle="modal" data-target="#myModal">新增商品</button>
-                                    </c:if>
+                                    </sec:authorize>
                                 </div>
                             </div>
                         </div>
@@ -84,7 +85,9 @@
                                         <th>廠商</th>
                                         <th>庫存</th>
                                         <th>狀態</th>
-                                        <th>動作</th>
+                                        <sec:authorize access ="hasRole('ROLE_USER_god') or hasRole('ROLE_USER_procurement') or hasRole('ROLE_USER_director')">
+                                        	<th>動作</th>
+                                        </sec:authorize>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -96,9 +99,11 @@
                                             <td>${product.getSupplierName()}</td>
                                             <td>${product.getInventory()}</td>
                                             <td>${product.getProductStatus()}</td>
-                                            <td>
-                                                <a class="btn btn-warning" href="updateProduct?id=${product.getProductID()}">修改</a>
-                                            </td>
+                                            <sec:authorize access ="hasRole('ROLE_USER_god') or hasRole('ROLE_USER_procurement') or hasRole('ROLE_USER_director')">
+                                            	<td>
+                                                	<a class="btn btn-warning" href="updateProduct?id=${product.getProductID()}">修改</a>
+                                            	</td>
+                                            </sec:authorize>                                            	
                                         </tr>
                                     </c:forEach>
                                 </tbody>
