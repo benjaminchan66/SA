@@ -109,14 +109,18 @@ public class PurchasingRequisition {
 	public void setSupplier(Supplier supplier) {
 		this.supplier = supplier;
 	}
-
-
-
+	
+	public boolean hasJudged() {
+		if(this.getConfirmStr() == null) {
+			return false;
+		}else {
+			return true;
+		}
+	}
+	
 	public String getConfirmStr() {
 		return confirmStr;
 	}
-
-
 
 	public void setConfirmStr(String confirmStr) {
 		this.confirmStr = confirmStr;

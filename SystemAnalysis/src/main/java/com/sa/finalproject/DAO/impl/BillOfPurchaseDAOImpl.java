@@ -1,22 +1,21 @@
 package com.sa.finalproject.DAO.impl;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
+
 
 import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 
 import com.sa.finalproject.DAO.BillOfPurchaseDAO;
 import com.sa.finalproject.entity.BillOfPurchase;
 import com.sa.finalproject.entity.PurchaseOrder;
 import com.sa.finalproject.entity.PurchasingRequisition;
-import com.sa.finalproject.entity.Remark;
+
 import com.sa.finalproject.entity.supportingClass.PurchasedProduct;
 
 public class BillOfPurchaseDAOImpl implements BillOfPurchaseDAO {
@@ -58,7 +57,7 @@ public class BillOfPurchaseDAOImpl implements BillOfPurchaseDAO {
 			smt.close();
 
 			PurchaseOrder content = new PurchaseOrder();
-			
+
 			content = this.getContentOf(bopserial);
 
 			bop.setBopContent(content);
@@ -328,26 +327,25 @@ public class BillOfPurchaseDAOImpl implements BillOfPurchaseDAO {
 				currentItem.setPurchasingAmount(rs.getInt("quantity"));
 				content.getList().add(currentItem);
 			}
-			
+
 			rs.close();
 			smt.close();
-			
+
 			String sql2 = "SELECT * FROM Product WHERE product_id = ?";
-			
-			for(int i = 0; i < content.getList().size(); i++) {
+
+			for (int i = 0; i < content.getList().size(); i++) {
 				PurchasedProduct currentItem = content.getList().get(i);
 				smt = conn.prepareStatement(sql2);
 				smt.setLong(1, currentItem.getProductID());
 				rs = smt.executeQuery();
-				
+
 				String productName = "";
-				if(rs.next()) {
+				if (rs.next()) {
 					productName = rs.getString("product_name");
 				}
-				
+
 				currentItem.setProductName(productName);
-				
-				
+
 			}
 
 		} catch (SQLException e) {
@@ -364,36 +362,35 @@ public class BillOfPurchaseDAOImpl implements BillOfPurchaseDAO {
 
 		return content;
 	}
-	
+
 	public ArrayList<BillOfPurchase> getRemarkedList() {
 		ArrayList<BillOfPurchase> bopList = new ArrayList<BillOfPurchase>();
-		
-		
+
 		try {
 			String sql = "SELECT * FROM BillOfPurchase WHERE remark IS NOT NULL";
-			
+
 			conn = dataSource.getConnection();
 			smt = conn.prepareStatement(sql);
-			
+
 			rs = smt.executeQuery();
-			
+
 			ArrayList<Long> serialList = new ArrayList<Long>();
-			while(rs.next()) {
+			while (rs.next()) {
 				serialList.add(rs.getLong("BOP_serial"));
 			}
-			
+
 			rs.close();
 			smt.close();
-			
-			for(int i = 0; i < serialList.size(); i++) {
+
+			for (int i = 0; i < serialList.size(); i++) {
 				long bopserial = serialList.get(i);
 				BillOfPurchase bop = this.get(bopserial);
 				bopList.add(bop);
 			}
-			
+
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
-		}finally {
+		} finally {
 			try {
 				if (conn != null) {
 					conn.close();
@@ -402,7 +399,7 @@ public class BillOfPurchaseDAOImpl implements BillOfPurchaseDAO {
 				// do nothing
 			}
 		}
-		
+
 		return bopList;
 	}
 

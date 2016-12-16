@@ -480,10 +480,10 @@ public class PurchasingRequisitionDAOImpl implements PurchasingRequisitionDAO {
 			smt.setBoolean(1, true);
 			smt.setLong(2, managerID);
 			smt.setLong(3, prSerial);
-			
+
 			smt.executeUpdate();
 			smt.close();
-			
+
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {

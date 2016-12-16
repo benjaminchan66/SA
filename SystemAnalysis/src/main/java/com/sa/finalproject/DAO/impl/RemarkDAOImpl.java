@@ -85,7 +85,7 @@ public class RemarkDAOImpl implements RemarkDAO {
 		
 		
 		String sql = "SELECT * FROM Reamrks WHERE BOP_serial = ?";
-		
+		int numberOfRemarks = 0;
 		try {
 			conn = dataSource.getConnection();
 			smt = conn.prepareStatement(sql);
@@ -94,7 +94,7 @@ public class RemarkDAOImpl implements RemarkDAO {
 			
 			rs = smt.executeQuery();
 			
-			int numberOfRemarks = 0;
+			numberOfRemarks = 0;
 			while(rs.next()) {
 				numberOfRemarks++;
 			}
@@ -103,7 +103,7 @@ public class RemarkDAOImpl implements RemarkDAO {
 			rs.close();
 			smt.close();
 			
-			return ++numberOfRemarks;
+			
 			
 		} catch(SQLException e) {
 			throw new RuntimeException(e);
@@ -112,12 +112,11 @@ public class RemarkDAOImpl implements RemarkDAO {
 				if(conn != null) {
 					conn.close();
 				}
+				return ++numberOfRemarks;
 			} catch(SQLException exc) {}
 			
-			return 0;
 		}
-		
-		
+		return 0;
 		
 	}
 	public void deleteRemark(long aBopSerial, Remark remark) { //刪除備註

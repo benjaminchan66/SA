@@ -81,7 +81,7 @@
                                             <td>${bopRemark.getSupplierName()}</td>
                                             <td>${bopRemark.getRemarks()}</td>
                                             <td>
-                                                <a type="button" href="BillOfPurchaseDetail?id=${bopRemark.getBopSerial()}" class="btn btn-info">Detail</a>
+                                                <a type="button" href="bopDetailList?id=${bopRemark.getBopSerial()}" class="btn btn-info">Detail</a>
                                             </td>
                                         </tr>
                                     </c:forEach>
