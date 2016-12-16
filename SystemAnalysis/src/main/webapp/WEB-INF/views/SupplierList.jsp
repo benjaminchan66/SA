@@ -67,7 +67,9 @@
                                     <h4>所有廠商</h4>
                                 </div>
                                 <div class="col-lg-2 col-lg-offset-6">
-                                    <button class="btn btn-default" data-toggle="modal" data-target="#myModal">新增廠商</button>
+                                	<sec:authorize access ="hasRole('ROLE_USER_god') or hasRole('ROLE_USER_procurement') or hasRole('ROLE_USER_director')">
+                                    	<button class="btn btn-default" data-toggle="modal" data-target="#myModal">新增廠商</button>
+                                    </sec:authorize>
                                 </div>
                             </div>
                         </div>

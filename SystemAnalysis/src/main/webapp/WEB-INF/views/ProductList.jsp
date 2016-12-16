@@ -68,9 +68,9 @@
                                     <h4>所有商品</h4>
                                 </div>
                                 <div class="col-lg-2 col-lg-offset-6">
-                                	<c:if test="\${staffLevel == 'Purchase' || staffLevel == 'all'}">
+                                	<sec:authorize access ="hasRole('ROLE_USER_god') or hasRole('ROLE_USER_procurement') or hasRole('ROLE_USER_director')">
                                     	<button class="btn btn-default" data-toggle="modal" data-target="#myModal">新增商品</button>
-                                    </c:if>
+                                    </sec:authorize>
                                 </div>
                             </div>
                         </div>
