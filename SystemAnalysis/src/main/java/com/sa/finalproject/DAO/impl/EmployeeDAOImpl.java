@@ -81,6 +81,8 @@ public class EmployeeDAOImpl {
 				employee.setLevel(rs.getString("employee_level"));
 				employee.setDep(rs.getString("employee_dep"));
 			}
+			rs.close();
+			smt.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {

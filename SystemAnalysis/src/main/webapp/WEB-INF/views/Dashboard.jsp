@@ -104,7 +104,7 @@
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge">${prCount}</div>
-                                    <div>請購數</div>
+                                    <div>請購單</div>
                                 </div>
                             </div>
                         </div>
@@ -126,7 +126,7 @@
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge">${wwCount}</div>
-                                    <div>入庫數</div>
+                                    <div>入庫單</div>
                                 </div>
                             </div>
                         </div>

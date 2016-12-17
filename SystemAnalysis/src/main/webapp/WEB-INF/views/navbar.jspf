@@ -57,7 +57,7 @@
                         <li>
                             <a href="#"><i class="fa fa-table fa-fw"></i> 請購單<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                            	<sec:authorize access ="hasRole('ROLE_USER_god') or hasRole('ROLE_USER_procurement')">
+                            	<sec:authorize access ="hasRole('ROLE_USER_god') or hasRole('ROLE_USER_procurement') or hasRole('ROLE_USER_director')">
 	                                <li>
 	                                    <a href="insertRequisition">開立請購單</a>
 	                                </li>
