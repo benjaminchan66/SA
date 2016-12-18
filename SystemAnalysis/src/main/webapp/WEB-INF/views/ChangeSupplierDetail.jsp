@@ -63,48 +63,63 @@
                                 <form role="form" action="updateSupplier" method="POST">
                                 	<input type="hidden" name="supplierID" value="${supplierID}">
                                     <div class="modal-body">
-                                            <div class="form-group">
-                                                <label>廠商名稱</label>
-                                                <input class="form-control" name="supplierName" value="${supplierName}" placeholder="輸入廠商名稱" required="required">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>聯絡電話</label>
-                                                <input class="form-control" name="supplierPhone" value="${supplierPhone}" placeholder="輸入聯絡電話 - 0288444222" required="required">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>廠商地址</label>
-                                                <input class="form-control" name="supplierAddress" value="${supplierAddress}" placeholder="輸入廠商地址" required="required">
-                                            </div>
-                                            <div class="form-group">
-                                           	<sec:authorize access ="hasRole('ROLE_USER_god') or hasRole('ROLE_USER_procurement') or hasRole('ROLE_USER_director')">
-                                                <c:choose>
-                                                	<c:when test="${isClassA}">
-    	                                                <label>分級: </label>
-    	                                                <label class="radio-inline">
-    	                                                    <input type="radio" name="supplierLevel" id="optionsRadiosInline1" value="A" checked required>A
-    	                                                </label>
-    	                                                <label class="radio-inline">
-    	                                                    <input type="radio" name="supplierLevel" id="optionsRadiosInline2" value="B">B
-    	                                                </label>
-    	                                            </c:when>
-    	                                            <c:otherwise>
-    	                                            	<label>分級: </label>
-    	                                                <label class="radio-inline">
-    	                                                    <input type="radio" name="supplierLevel" id="optionsRadiosInline1" value="A" required>A
-    	                                                </label>
-    	                                                <label class="radio-inline">
-    	                                                    <input type="radio" name="supplierLevel" id="optionsRadiosInline2" value="B" checked>B
-    	                                                </label>
-    	                                            </c:otherwise>
-                                                </c:choose>
-                                            </sec:authorize>
-                                            </div>
+                                        <div class="form-group">
+                                            <label>廠商名稱</label>
+                                            <input class="form-control" name="supplierName" value="${supplierName}" placeholder="輸入廠商名稱" required="required">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>聯絡電話</label>
+                                            <input class="form-control" name="supplierPhone" value="${supplierPhone}" placeholder="輸入聯絡電話 - 0288444222" required="required">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>廠商地址</label>
+                                            <input class="form-control" name="supplierAddress" value="${supplierAddress}" placeholder="輸入廠商地址" required="required">
+                                        </div>
+                                <sec:authorize access ="hasRole('ROLE_USER_god') or hasRole('ROLE_USER_director')">
+                                        <div class="form-group">
+                                            <c:choose>
+                                            	<c:when test="${isClassA}">
+	                                                <label>分級: </label>
+	                                                <label class="radio-inline">
+	                                                    <input type="radio" name="supplierLevel" id="optionsRadiosInline1" value="A" checked required>A
+	                                                </label>
+	                                                <label class="radio-inline">
+	                                                    <input type="radio" name="supplierLevel" id="optionsRadiosInline2" value="B">B
+	                                                </label>
+	                                            </c:when>
+	                                            <c:otherwise>
+	                                            	<label>分級: </label>
+	                                                <label class="radio-inline">
+	                                                    <input type="radio" name="supplierLevel" id="optionsRadiosInline1" value="A" required>A
+	                                                </label>
+	                                                <label class="radio-inline">
+	                                                    <input type="radio" name="supplierLevel" id="optionsRadiosInline2" value="B" checked>B
+	                                                </label>
+	                                            </c:otherwise>
+                                            </c:choose>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <a href="SupplierList" class="btn btn-warning">返回</a>
                                         <button type="submit" class="btn btn-primary">Save</button>
                                     </div>
                                 </form>
+                                </sec:authorize>
+                                <sec:authorize access ="hasRole('ROLE_USER_god') or hasRole('ROLE_USER_procurement')">
+                                        <c:choose>
+                                            <c:when test="${isClassA}">                                                    
+                                                <input type="hidden" name="supplierLevel" value="A">
+                                            </c:when>
+                                            <c:otherwise>
+                                                <input type="hidden" name="supplierLevel" value="B">
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="SupplierList" class="btn btn-warning">返回</a>
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </div>
+                                </sec:authorize>
                             <!-- </center> -->
                         </div>
                     </div>
