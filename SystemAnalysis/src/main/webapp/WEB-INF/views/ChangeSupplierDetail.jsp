@@ -105,7 +105,7 @@
                                     </div>
                                 </form>
                                 </sec:authorize>
-                                <sec:authorize access ="hasRole('ROLE_USER_god') or hasRole('ROLE_USER_procurement')">
+                                <sec:authorize access ="hasRole('ROLE_USER_procurement')">
                                         <c:choose>
                                             <c:when test="${isClassA}">                                                    
                                                 <input type="hidden" name="supplierLevel" value="A">

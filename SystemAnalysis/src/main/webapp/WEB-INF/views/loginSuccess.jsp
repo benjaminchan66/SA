@@ -66,8 +66,8 @@
                                     <br>
                                     <img src="resources/img/close-button.png">
                                     <div>
-                                        <h4><span id="jumpTo">5</span>秒後返回上一頁</h4>
-                                        <script type="text/javascript">countDown(5,'Dashboard');</script>
+                                        <h4><span id="jumpTo">3</span>秒後進入</h4>
+                                        <script type="text/javascript">countDown(3,'Dashboard');</script>
                                     </div>
                                 </center>
                             </div>
